@@ -1,6 +1,7 @@
 <?php
 #Teste Vinicius
+#Teste Davi (alteração)
 class A {
-    int A1;
-    int A2;
+    public int $A1;
+    public int $A2;
 }
