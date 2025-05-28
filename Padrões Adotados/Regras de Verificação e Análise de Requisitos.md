@@ -4,11 +4,11 @@
 
 Os requisitos funcionais devem ser precedidos de RF (como RF01), enquanto que os requisitos não funcionais devem ser precedidos de RFN (como RFN01)
 
-- **Padrão de prioridade**: os requisitos devem ser classificados segundo sua importancia para o projeto:
-    - Alta: Requisito imprescindível, parte central da aplicação
-    - Média: Importante, priorizado caso não haja nenhum requisito de alta prioridade
-    - Baixa: Desejável, mas não essencial
-
+- Padrão de Prioridade: Os requisitos do sistema são classificados segundo sua importância para o projeto:
+    - **Essencial**: Requisito imprescindível para o funcionamento do sistema. Sua ausência compromete o propósito central da aplicação.
+    - **Importante**: Requisito cuja ausência não torna o sistema inoperante, mas impacta significativamente a conformidade entre o sistema planejado e o entregue. Deve ser priorizado assim que os requisitos essenciais forem atendidos.
+    - **Desejável**: Requisito que não integra a estrutura central da aplicação. Sua implementação agrega valor ou melhora a experiência do usuário, sendo executada quando não houver pendências de requisitos essenciais ou importantes.
+      
 - **Padrão de commits**: Todos os commits realizados no repositório devem seguir a convenção Conventional Commits, garantindo clareza no histórico de versões, facilitando automações como geração de changelogs e rastreabilidade de alterações.
 
 > Formato:
