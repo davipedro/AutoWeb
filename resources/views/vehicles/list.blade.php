@@ -66,7 +66,7 @@
                             @if($veiculo->status->nome == "vendido")
                                 <span class="status-vendido">Vendido</span>
                             @endif
-                            @if($veiculo->status->nome == "inativo")
+                            @if($veiculo->status->nome == "indisponivel")
                                 <span class="status-indisponivel">Indisponível</span>
                             @endif
                         </span>
