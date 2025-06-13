@@ -9,3 +9,352 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+    }
+    body {
+        background-color: #f0f4fb;
+        padding: 2rem;
+        color: #333;
+    }
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 0.25rem;
+    }
+    p.subheading {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    .filters, .vehicle-list {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .filters input, .filters select {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+    .filter-options {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+    .filter-options input,
+    .filter-options select {
+        flex: 1;
+        min-width: 0;
+        height: 38px;
+        font-size: 16px;
+    }
+    .add-btn {
+        background-color: #2563eb;
+        color: white;
+        padding: 0.6rem 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        float: right;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    th {
+        background-color: #f9fafb;
+        color: #444;
+    }
+    .status-disponivel {
+        background-color: #d1fae5;
+        color: #000000;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+    }
+    .status-vendido {
+        background-color: #facf98;
+        color: #000000;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+    }
+    .status-indisponivel {
+        background-color: #ff6060;
+        color: #000000;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+    }
+    .price-cost {
+        color: #ef4444;
+        font-weight: 600;
+    }
+    .price-sale {
+        color: #10b981;
+        font-weight: 600;
+    }
+    .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-right: 0.5rem;
+    }
+    .action-btn.edit {
+        color: #4b5563;
+    }
+    .action-btn.delete {
+        color: #ef4444;
+    }
+    .status-sold {
+        background-color: #fef2f2;
+        color: #b91c1c;
+    }
+    .edit-btn, .delete-btn, .details-btn {
+        padding: 6px 14px;
+        border-radius: 4px;
+        color: #000000;
+        background: #ffffff;
+        cursor: pointer;
+        font-size: 15px;
+        margin-right: 5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #000000;
+    }
+    .delete-btn i {
+        color: #ff0000;
+        font-size: 16px;
+    }
+    .vehicles-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+/*  Início Página cadastro de veículo  */
+
+    body {
+        background-color: #f8fafc;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+    }
+
+    .add-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        display: flex;
+        align-items: center;
+        color: #6b7280;
+        text-decoration: none;
+        margin-right: 16px;
+        font-size: 14px;
+        transition: color 0.2s;
+        margin-bottom: 4px;
+    }
+
+    .back-button:hover {
+        color: #374151;
+    }
+
+    .back-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 4px 0;
+    }
+
+    .page-subtitle {
+        color: #6b7280;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .form-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .form-section {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #111827;
+        margin: 0 0 8px 0;
+    }
+
+    .section-subtitle {
+        color: #6b7280;
+        font-size: 14px;
+        margin: 0 0 24px 0;
+    }
+
+    .form-grid {
+        display: grid;
+        gap: 16px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: #9ca3af;
+    }
+
+    .form-select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 40px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 100px;
+        font-family: inherit;
+    }
+
+    .error-input {
+        border-color: #ef4444 !important;
+    }
+
+    .error-message {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+    }
+
+    .btn-secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+    }
+
+    .btn-secondary:hover {
+        background: #f9fafb;
+        border-color: #9ca3af;
+    }
+
+    .btn-primary {
+        background: #3b82f6;
+        color: white;
+        border: 1px solid #3b82f6;
+    }
+
+    .btn-primary:hover {
+        background: #2563eb;
+        border-color: #2563eb;
+    }
+
+/*  Fim Página cadastro de veículo  */

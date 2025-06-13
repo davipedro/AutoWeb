@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class VeiculosSeeder extends Seeder
+class VehiclesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,6 +30,7 @@ class VeiculosSeeder extends Seeder
                 'valor_venda'     => 72000.00,
                 'chassi'         => '9BWZZZ377VT004251',
                 'status_id'      => $statusDisponivel,
+                'observacoes' => 'Veículo em excelente estado, revisado recentemente.',
                 'created_at'     => Carbon::now(),
                 'updated_at'     => Carbon::now(),
             ],
@@ -38,11 +39,12 @@ class VeiculosSeeder extends Seeder
                 'modelo'         => 'Gol',
                 'ano'            => 2018,
                 'quilometragem'  => 50000.0,
-                'tipo_combustivel'=> 'Flex',
+                'tipo_combustivel' => 'Flex',
                 'valor_custo'     => 32000.00,
                 'valor_venda'     => 38000.00,
                 'chassi'         => '9BWZZZ377VT004252',
                 'status_id'      => $statusVendido,
+                'observacoes' => 'Vendido em 15/03/2023',
                 'created_at'     => Carbon::now(),
                 'updated_at'     => Carbon::now(),
             ],
@@ -56,6 +58,7 @@ class VeiculosSeeder extends Seeder
                 'valor_venda'     => 29000.00,
                 'chassi'         => null, // Chassi opcional
                 'status_id'      => $statusInativo,
+                'observacoes' => 'Veículo inativo desde 01/01/2024. Motivo: acidente leve.',
                 'created_at'     => Carbon::now(),
                 'updated_at'     => Carbon::now(),
             ],
