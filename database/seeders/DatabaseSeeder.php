@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             StatusSeeder::class,
-            VeiculosSeeder::class,
+            VehiclesSeeder::class,
         ]);
     }
 }
