@@ -199,7 +199,8 @@
                             <label for="status" class="form-label">Status</label>
                             <select id="status"
                                     name="status"
-                                    class="form-select @error('status') error-input @enderror">
+                                    class="form-select @error('status') error-input @enderror"
+                            >
                                 <option value="disponivel" {{ old('status') == 'disponivel' ? 'selected' : '' }}>Disponível</option>
                                 <option value="vendido" {{ old('status') == 'vendido' ? 'selected' : '' }}>Vendido</option>
                                 <option value="indisponivel" {{ old('status') == 'indisponivel' ? 'selected' : '' }}>Indisponível</option>

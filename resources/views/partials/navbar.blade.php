@@ -6,7 +6,7 @@
 
     <ul style="display: flex; gap: 25px; margin-left: 50px; list-style: none;">
         <li><a href="">Dashboard</a></li> {{-- {{ route('dashboard') }} --}}
-        <li><a href="">Veículos</a></li> {{-- {{ route('veiculos.list') }}--}}
+        <li><a href="{{ route('veiculos.list') }}">Veículos</a></li>
         <li><a href="">Clientes</a></li> {{-- {{ route('clientes.list') }} --}}
         <li><a href="">Vendedores</a></li> {{-- {{ route('vendedores.list') }} --}}
         <li><a href="">Nova Venda</a></li> {{-- {{ route('vendas.list') }} --}}
