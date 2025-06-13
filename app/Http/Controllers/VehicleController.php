@@ -47,13 +47,15 @@ class VehicleController extends Controller
         $validated = $request->validate([
             'marca' => 'required|string',
             'modelo' => 'required|string',
+            'cor' => 'required|string',
             'ano' => 'required|integer',
             'quilometragem' => 'required|numeric',
-            'tipoCombustivel' => 'required|string',
-            'valorCusto' => 'required|numeric',
-            'valorVenda' => 'required|numeric',
+            'tipo_combustivel' => 'required|string',
+            'valor_custo' => 'required|numeric',
+            'valor_venda' => 'required|numeric',
             'chassi' => 'nullable|string',
             'status_id' => 'required|exists:status,id',
+            'observacoes' => 'nullable|string',
         ]);
 
         $this->repository->create($validated);
@@ -72,13 +74,15 @@ class VehicleController extends Controller
         $validated = $request->validate([
             'marca' => 'required|string',
             'modelo' => 'required|string',
+            'cor' => 'required|string',
             'ano' => 'required|integer',
             'quilometragem' => 'required|numeric',
-            'tipoCombustivel' => 'required|string',
-            'valorCusto' => 'required|numeric',
-            'valorVenda' => 'required|numeric',
+            'tipo_combustivel' => 'required|string',
+            'valor_custo' => 'required|numeric',
+            'valor_venda' => 'required|numeric',
             'chassi' => 'nullable|string',
             'status_id' => 'required|exists:status,id',
+            'observacoes' => 'nullable|string',
         ]);
 
         $this->repository->update($id, $validated);

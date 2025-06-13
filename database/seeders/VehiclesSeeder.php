@@ -23,6 +23,7 @@ class VehiclesSeeder extends Seeder
             [
                 'marca'          => 'Toyota',
                 'modelo'         => 'Corolla',
+                'cor'            => 'Prata',
                 'ano'            => 2020,
                 'quilometragem'  => 30000.5,
                 'tipo_combustivel'=> 'Gasolina',
@@ -37,6 +38,7 @@ class VehiclesSeeder extends Seeder
             [
                 'marca'          => 'Volkswagen',
                 'modelo'         => 'Gol',
+                'cor'            => 'Vermelho',
                 'ano'            => 2018,
                 'quilometragem'  => 50000.0,
                 'tipo_combustivel' => 'Flex',
@@ -51,6 +53,7 @@ class VehiclesSeeder extends Seeder
             [
                 'marca'          => 'Ford',
                 'modelo'         => 'Fiesta',
+                'cor'            => 'Azul',
                 'ano'            => 2015,
                 'quilometragem'  => 75000.2,
                 'tipo_combustivel'=> 'Álcool',

@@ -42,6 +42,7 @@ class VehicleRepository
                 'vehicles.id',
                 'vehicles.marca',
                 'vehicles.modelo',
+                'vehicles.cor',
                 'vehicles.ano',
                 'vehicles.quilometragem',
                 'vehicles.valor_custo',
