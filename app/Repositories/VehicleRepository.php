@@ -34,11 +34,6 @@ class VehicleRepository
         return Vehicle::destroy($id);
     }
 
-    public function count()
-    {
-        return Vehicle::count();
-    }
-
     public function getVehicles()
     {
         $vehicles = DB::table('vehicles')
