@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\DB;
 
 class VehicleRepository
 {
@@ -36,5 +37,29 @@ class VehicleRepository
     public function count()
     {
         return Vehicle::count();
+    }
+
+    public function getVehicles()
+    {
+        $vehicles = DB::table('vehicles')
+            ->join('status', 'vehicles.status_id', '=', 'status.id')
+            ->select(
+                'vehicles.id',
+                'vehicles.marca',
+                'vehicles.modelo',
+                'vehicles.ano',
+                'vehicles.quilometragem',
+                'vehicles.valor_custo',
+                'vehicles.valor_venda',
+                'vehicles.tipo_combustivel',
+                DB::raw('status.nome as status_nome'),
+                DB::raw('COUNT(*) OVER() as total_count')
+            )
+            ->get();
+
+        return response()->json([
+            'data' => $vehicles,
+            'count' => $vehicles->first()->total_count ?? 0
+        ]);
     }
 }

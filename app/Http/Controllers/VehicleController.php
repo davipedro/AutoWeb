@@ -17,7 +17,10 @@ class VehicleController extends Controller
 
     public function index()
     {
-        $veiculos = $this->repository->all()->map(function ($veiculo) {
+        $response = $this->repository->getVehicles();
+        $content = $response->getData();
+
+        $veiculos = collect($content->data)->map(function ($veiculo) {
             $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
             $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
             $veiculo->ano = (string) $veiculo->ano;
@@ -27,7 +30,7 @@ class VehicleController extends Controller
 
         $veiculosArray = [
             'itens' => $veiculos,
-            'count' => $veiculos->count(),
+            'count' => $content->count ?? 0,
         ];
 
         return view('vehicles.list', compact('veiculosArray'));

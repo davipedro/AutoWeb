@@ -59,14 +59,14 @@
                     <td class="price-sale">R$ {{ $veiculo->valor_venda }}</td>
                     <td>{{ $veiculo->tipo_combustivel }}</td>
                     <td>
-                        <span class="status{{ $veiculo->status->nome }}">
-                            @if($veiculo->status->nome == "disponivel")
+                        <span class="status{{ $veiculo->status_nome }}">
+                            @if($veiculo->status_nome == "disponivel")
                                 <span class="status-disponivel">Disponível</span>
                             @endif
-                            @if($veiculo->status->nome == "vendido")
+                            @if($veiculo->status_nome == "vendido")
                                 <span class="status-vendido">Vendido</span>
                             @endif
-                            @if($veiculo->status->nome == "indisponivel")
+                            @if($veiculo->status_nome == "indisponivel")
                                 <span class="status-indisponivel">Indisponível</span>
                             @endif
                         </span>

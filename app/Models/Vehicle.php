@@ -15,7 +15,8 @@ class Vehicle extends Model
         'valor_custo',
         'valor_venda',
         'chassi',
-        'status_id'
+        'status_id',
+        'observacoes',
     ];
 
     public function status()
