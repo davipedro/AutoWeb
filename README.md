@@ -65,7 +65,7 @@ php artisan serve
 ```
 ## ⚙️ Padronização de Commits
 
-| Tipo de Commit | Titlo                    | Description                                                                                                 |
+| Tipo de Commit | Título                   | Description                                                                                                 |
 | -----------    | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `feat`         | feat                     | Funcionalidade nova                                                                                         | 
 | `fix`          | fix                      | Correção de bug                                                                                             | 
