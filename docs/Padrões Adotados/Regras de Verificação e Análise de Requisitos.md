@@ -50,7 +50,7 @@ Exemplos principais:
 ❌ Incorreto:
 > O software DEVE permitir o registro dos clientes da empresa E não DEVE permitir o registro de dois clientes com o mesmo CNPJ
 
-### 2. Não utilizar frases grandes
+### 2. O requisito dever ser objetivo, se restringindo a comunicar o seu papel
 
 ### Exemplos: <br>
 ✅ Correto: <br>
