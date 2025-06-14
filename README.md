@@ -63,3 +63,33 @@ php artisan migrate
 php artisan serve
 
 ```
+## 🛠️ Padronização de Commits
+
+| Tipo de Commit | Prefixo                  | Descrição                                                                                                   |
+| -----------    | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `feat`         | feat:                    | Funcionalidade nova                                                                                         | 
+| `fix`          | fix:                     | Correção de bug                                                                                             | 
+| `docs`         | docs:                    | Mudança apenas em documentação                                                                              | 
+| `style`        | style:                   | Alterações que não afetam lógica: espaços, ponto e vírgula, etc.                                            | 
+| `refactor`     | refactor:                | Alteração no código que não corrige bug nem adiciona funcionalidade                                         |  
+| `test`         | test:                    | Apenas adição/modificação de testes                                                                         |  
+| `chore`        | chore:                   | Tarefas de manutenção, sem impacto direto no código de produção                                             | 
+
+## 📋 Branches
+- **`main`**: Branch principal do projeto, estável e pronta para deploy
+- **`develop`**: Branch dedicada ao desenvolvimento de funcionalidades  
+- **`test`**: Branch dedicada ao teste de funcionalidades
+
+Criação de branches:
+- Crie novas branches a partir da develop para funcionalidades ou correções.
+- Nomeie usando hífens. Exemplos:
+  - `dev-criando-crud-veículos`  
+  - `dev-criando-crud-clientes`
+ 
+## 🛠️ Boas práticas de programação adotadas
+- Comentar código: adicionar comentários para auxiliar na compreensão e separação de trechos de código.
+- Nomear funções de maneira intuitiva: criar nomes para as funções de modo a permitir uma compreensão inicial do que se trata a função.
+- Indentar o código: fazer a indentação no corpo de uma estrutura.
+- Legibilidade de comandos: separar os comandos longos em várias linhas, quebrando-as em pontos que façam sentido.
+- Tratar erros e exceções adequadamente: implementar mecanismos de tratamento de erros (como try/catch ou verificações de condições) para evitar falhas inesperadas e tornar o sistema mais robusto e seguro.
+- Utilizar controle de versão (como Git): manter o histórico das alterações no código usando sistemas de versionamento. Isso facilita o trabalho em equipe, o rastreamento de mudanças e a reversão em caso de erros.

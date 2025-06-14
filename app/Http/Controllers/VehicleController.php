@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Vehicle;
+use App\Repositories\VehicleRepository;
+use App\Models\Status;
+use Illuminate\Http\Request;
+
+class VehicleController extends Controller
+{
+    public function index()
+    {
+        $response = Vehicle::getVehicles();
+        $content = $response->getData();
+
+        $veiculos = collect($content->data)->map(function ($veiculo) {
+            $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
+            $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
+            $veiculo->ano = (string) $veiculo->ano;
+            $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
+            return $veiculo;
+        });
+
+        $veiculosArray = [
+            'itens' => $veiculos,
+            'count' => $content->count ?? 0,
+        ];
+
+        return view('vehicles.list', compact('veiculosArray'));
+    }
+
+    public function create()
+    {
+        $statusList = Status::all();
+        return view('vehicles.add', compact('statusList'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'cor' => 'required|string',
+            'ano' => 'required|integer',
+            'quilometragem' => 'required|numeric',
+            'tipo_combustivel' => 'required|string',
+            'valor_custo' => 'required|numeric',
+            'valor_venda' => 'required|numeric',
+            'chassi' => 'nullable|string',
+            'status_id' => 'required|exists:status,id',
+            'observacoes' => 'nullable|string',
+        ]);
+
+        return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
+    }
+
+    public function edit($id)
+    {
+        $statusList = Status::all();
+        return view('veiculos.edit', compact('veiculo', 'statusList'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'cor' => 'required|string',
+            'ano' => 'required|integer',
+            'quilometragem' => 'required|numeric',
+            'tipo_combustivel' => 'required|string',
+            'valor_custo' => 'required|numeric',
+            'valor_venda' => 'required|numeric',
+            'chassi' => 'nullable|string',
+            'status_id' => 'required|exists:status,id',
+            'observacoes' => 'nullable|string',
+        ]);
+
+        return redirect()->route('veiculos.index')->with('success', 'Veículo atualizado com sucesso!');
+    }
+
+    public function delete($id)
+    {
+        Vehicle::deleteVehicle($id);
+        return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
+    }
+}
