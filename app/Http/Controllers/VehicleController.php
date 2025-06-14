@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    protected $repository;
-
-    public function __construct(VehicleRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function index()
     {
-        $response = $this->repository->getVehicles();
+        $response = Vehicle::getVehicles();
         $content = $response->getData();
 
         $veiculos = collect($content->data)->map(function ($veiculo) {
@@ -58,13 +52,11 @@ class VehicleController extends Controller
             'observacoes' => 'nullable|string',
         ]);
 
-        $this->repository->create($validated);
         return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
     }
 
     public function edit($id)
     {
-        $veiculo = $this->repository->find($id);
         $statusList = Status::all();
         return view('veiculos.edit', compact('veiculo', 'statusList'));
     }
@@ -85,13 +77,12 @@ class VehicleController extends Controller
             'observacoes' => 'nullable|string',
         ]);
 
-        $this->repository->update($id, $validated);
         return redirect()->route('veiculos.index')->with('success', 'Veículo atualizado com sucesso!');
     }
 
     public function delete($id)
     {
-        $this->repository->delete($id);
+        Vehicle::deleteVehicle($id);
         return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
     }
 }
