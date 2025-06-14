@@ -39,19 +39,13 @@ class VehicleRepository
         $vehicles = DB::table('vehicles')
             ->join('status', 'vehicles.status_id', '=', 'status.id')
             ->select(
-                'vehicles.id',
-                'vehicles.marca',
-                'vehicles.modelo',
-                'vehicles.cor',
-                'vehicles.ano',
-                'vehicles.quilometragem',
-                'vehicles.valor_custo',
-                'vehicles.valor_venda',
-                'vehicles.tipo_combustivel',
+                'vehicles.*',
                 DB::raw('status.nome as status_nome'),
                 DB::raw('COUNT(*) OVER() as total_count')
             )
-            ->get();
+            ->whereNull('vehicles.deleted_at')
+        ->get();
+
 
         return response()->json([
             'data' => $vehicles,
