@@ -65,4 +65,13 @@ php artisan serve
 ```
 ## ⚙️ Padronização de Commits
 
+| Tipo de Commit | Titlo                    | Description                                                                                                 |
+| -----------    | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `feat`         | feat                     | Funcionalidade nova                                                                                         | 
+| `fix`          | fix                      | Correção de bug                                                                                             | 
+| `docs`         | docs                     | Mudança apenas em documentação                                                                              | 
+| `style`        | style                    | Alterações que não afetam lógica: espaços, ponto e vírgula, etc.                                            | 
+| `refactor`     | refactor                 | Alteração no código que não corrige bug nem adiciona funcionalidade                                         |  
+| `test`         | test                     | Apenas adição/modificação de testes                                                                         |  
+| `chore`        | chore                    | Tarefas de manutenção, sem impacto direto no código de produção                                             | 
 
