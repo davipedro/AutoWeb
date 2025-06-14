@@ -63,3 +63,6 @@ php artisan migrate
 php artisan serve
 
 ```
+## ⚙️ Padronização de Commits
+
+
