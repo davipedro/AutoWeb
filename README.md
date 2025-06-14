@@ -63,7 +63,7 @@ php artisan migrate
 php artisan serve
 
 ```
-## ⚙️ Padronização de Commits
+## 🛠️ Padronização de Commits
 
 | Tipo de Commit | Prefixo                  | Descrição                                                                                                   |
 | -----------    | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
@@ -74,4 +74,15 @@ php artisan serve
 | `refactor`     | refactor:                | Alteração no código que não corrige bug nem adiciona funcionalidade                                         |  
 | `test`         | test:                    | Apenas adição/modificação de testes                                                                         |  
 | `chore`        | chore:                   | Tarefas de manutenção, sem impacto direto no código de produção                                             | 
+
+## 📋 Branches
+- **`main`**: Branch principal do projeto, estável e pronta para deploy
+- **`develop`**: Branch dedicada ao desenvolvimento de funcionalidades  
+- **`test`**: Branch dedicada ao teste de funcionalidades  
+
+Criação de Branches:  
+- Para criar novas funcionalidades ou correções, crie branches a partir da branche `develop`
+- Utilize o padrão de nomenclatura separando palavras por hífen. Exemplos:  
+  - `dev-criando-crud-veículos`  
+  - `dev-criando-crud-clientes`
 
