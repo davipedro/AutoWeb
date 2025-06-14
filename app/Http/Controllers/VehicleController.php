@@ -92,6 +92,6 @@ class VehicleController extends Controller
     public function delete($id)
     {
         $this->repository->delete($id);
-        return redirect()->route('veiculos.index')->with('success', 'Veículo removido com sucesso!');
+        return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
     }
 }
