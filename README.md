@@ -78,11 +78,11 @@ php artisan serve
 ## 📋 Branches
 - **`main`**: Branch principal do projeto, estável e pronta para deploy
 - **`develop`**: Branch dedicada ao desenvolvimento de funcionalidades  
-- **`test`**: Branch dedicada ao teste de funcionalidades  
+- **`test`**: Branch dedicada ao teste de funcionalidades
 
-Criação de Branches:  
-- Para criar novas funcionalidades ou correções, crie branches a partir da branche `develop`
-- Utilize o padrão de nomenclatura separando palavras por hífen. Exemplos:  
+Criação de branches:
+- Crie novas branches a partir da develop para funcionalidades ou correções.
+- Nomeie usando hífens. Exemplos:
   - `dev-criando-crud-veículos`  
   - `dev-criando-crud-clientes`
 
