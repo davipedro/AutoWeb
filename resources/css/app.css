@@ -10,25 +10,30 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+/*  Início página listagem de veículos   */
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         font-family: 'Inter', sans-serif;
     }
+
     body {
         background-color: #f0f4fb;
         padding: 2rem;
         color: #333;
     }
+
     h1 {
         font-size: 2rem;
         margin-bottom: 0.25rem;
     }
+
     p.subheading {
         color: #666;
         margin-bottom: 1.5rem;
     }
+
     .filters, .vehicle-list {
         background-color: #fff;
         padding: 1.5rem;
@@ -36,6 +41,7 @@
         margin-bottom: 1.5rem;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
+
     .filters input, .filters select {
         padding: 0.5rem 1rem;
         border: 1px solid #ccc;
@@ -43,6 +49,7 @@
         margin-right: 1rem;
         margin-bottom: 0.5rem;
     }
+
     .filters {
         display: flex;
         flex-wrap: wrap;
@@ -50,11 +57,13 @@
         gap: 1rem;
         justify-content: space-between;
     }
+
     .filter-options {
         display: flex;
         width: 100%;
         justify-content: space-around;
     }
+
     .filter-options input,
     .filter-options select {
         flex: 1;
@@ -62,6 +71,7 @@
         height: 38px;
         font-size: 16px;
     }
+
     .add-btn {
         background-color: #2563eb;
         color: white;
@@ -72,65 +82,94 @@
         text-decoration: none;
         font-weight: bold;
     }
+
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 1rem;
     }
+
     th, td {
         padding: 0.75rem 1rem;
         text-align: left;
         border-bottom: 1px solid #e0e0e0;
     }
+
     th {
         background-color: #f9fafb;
         color: #444;
     }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-align: center;
+        min-width: 100px;
+        white-space: nowrap;
+    }
+
     .status-disponivel {
         background-color: #d1fae5;
-        color: #000000;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.875rem;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
     }
+
     .status-vendido {
         background-color: #facf98;
-        color: #000000;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.875rem;
+        color: #92400e;
+        border: 1px solid #fbbf24;
     }
+
     .status-indisponivel {
-        background-color: #ff6060;
-        color: #000000;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.875rem;
+        background-color: #fecaca;
+        color: #991b1b;
+        border: 1px solid #f87171;
+    }
+
+    .status-reservado {
+        background-color: #ddd6fe;
+        color: #5b21b6;
+        border: 1px solid #a78bfa;
+    }
+
+    .status-manutencao {
+        background-color: #fef3c7;
+        color: #d97706;
+        border: 1px solid #fcd34d;
     }
     .price-cost {
         color: #ef4444;
         font-weight: 600;
     }
+
     .price-sale {
         color: #10b981;
         font-weight: 600;
     }
+
     .action-btn {
         background: none;
         border: none;
         cursor: pointer;
         margin-right: 0.5rem;
     }
+
     .action-btn.edit {
         color: #4b5563;
     }
+
     .action-btn.delete {
         color: #ef4444;
     }
+
     .status-sold {
         background-color: #fef2f2;
         color: #b91c1c;
     }
+
     .edit-btn, .delete-btn, .details-btn {
         padding: 6px 14px;
         border-radius: 4px;
@@ -144,15 +183,242 @@
         gap: 5px;
         border: 1px solid #000000;
     }
+
     .delete-btn i {
         color: #ff0000;
         font-size: 16px;
     }
+
     .vehicles-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
+
+    .custom-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-box {
+        background: #fff;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 460px;
+        margin: 10% auto;
+        padding: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        font-family: Arial, sans-serif;
+        position: relative;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .modal-title {
+        font-size: 18px;
+    }
+
+    .modal-body {
+        color: #555;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .close-btn {
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #888;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .btn-cancel {
+        background: #f5f5f5;
+        border: 1px solid #ccc;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .btn-confirm {
+        background: #e74c3c;
+        color: white;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+/* Estilo para o cabeçalho da lista */
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .collapse-all-btn {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.2s ease;
+    }
+
+    .collapse-all-btn:hover {
+        background-color: #5a6268;
+    }
+
+    .collapse-all-btn:disabled {
+        background-color: #adb5bd;
+        cursor: not-allowed;
+    }
+
+    .vehicle-info-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .info-toggle-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: #666;
+        transition: transform 0.2s ease;
+    }
+
+    .info-toggle-btn:hover {
+        color: #333;
+    }
+
+    .info-toggle-btn.active {
+        transform: rotate(180deg);
+    }
+
+    .vehicle-details-row {
+        background-color: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .vehicle-details-content {
+        padding: 15px 20px;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .detail-item strong {
+        color: #495057;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .detail-item span {
+        color: #212529;
+        font-size: 14px;
+    }
+
+    .observations {
+        border-top: 1px solid #dee2e6;
+        padding-top: 15px;
+    }
+
+    .observations strong {
+        color: #495057;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .observations p {
+        margin: 0;
+        color: #212529;
+        line-height: 1.5;
+        font-size: 14px;
+    }
+
+    .vehicle-details-row {
+        transition: all 0.3s ease;
+    }
+
+    .clear-filters-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.2s ease;
+        margin-top: -10px;
+    }
+
+    .clear-filters-btn:hover {
+        background-color: #c82333;
+    }
+
+    .filter-options {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-options input,
+    .filter-options select {
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .filter-options input {
+        min-width: 200px;
+    }
+
+    .filter-options select {
+        min-width: 120px;
+    }
+/*  Fim página listagem de veículos   */
 
 /*  Início Página cadastro de veículo  */
 
@@ -358,3 +624,5 @@
     }
 
 /*  Fim Página cadastro de veículo  */
+
+
