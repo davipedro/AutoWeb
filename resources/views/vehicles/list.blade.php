@@ -5,7 +5,7 @@
 @section('content')
     <div class="vehicles-header">
         <div>
-            <h1>Gestão de Veículos</h1>
+            <h1 class="page-title">Gestão de Veículos</h1>
             <p class="subheading">Gerencie o estoque de veículos</p>
         </div>
 
@@ -110,7 +110,7 @@
                     <td>{{ $veiculo->quilometragem }} Km</td>
                     <td class="price-cost">R$ {{ $veiculo->valor_custo }}</td>
                     <td class="price-sale">R$ {{ $veiculo->valor_venda }}</td>
-                    <td>{{ $veiculo->tipo_combustivel }}</td>
+                    <td>{{ __('combustiveis.' . $veiculo->tipo_combustivel) }}</td>
                     <td>
                         <span class="status-badge status-{{ $veiculo->status_nome }}">
                             @if($veiculo->status_nome == "disponivel")
@@ -150,9 +150,8 @@
                                     <p>Tem certeza que deseja excluir este veículo?</p>
                                     <p><strong>Item:</strong> <strong>{{ $veiculo->marca }} {{ $veiculo->modelo }}</strong></p>
                                 </div>
-                                <form method="POST" action="{{ route('veiculos.delete', $veiculo->id) }}">
+                                <form method="GET" action="{{ route('veiculos.delete', $veiculo->id) }}">
                                     @csrf
-                                    @method('DELETE')
                                     <div class="modal-footer">
                                         <button type="button" class="btn-cancel" onclick="closeModal({{ $veiculo->id }})">Cancelar</button>
                                         <button type="submit" class="btn-confirm">Excluir</button>
@@ -187,7 +186,7 @@
                                 </div>
                                 <div class="detail-item">
                                     <strong>Transmissão:</strong>
-                                    <span>{{ $veiculo->transmissao ?? 'Não informado' }}</span>
+                                    <span>{{ __('transmissoes.' . $veiculo->transmissao) }}</span>
                                 </div>
                             </div>
                             @if($veiculo->observacoes)
