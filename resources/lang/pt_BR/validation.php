@@ -11,13 +11,14 @@ return [
         'string' => 'O campo :attribute não pode ter mais que :max caracteres.',
         'numeric' => 'O campo :attribute não pode ser maior que :max.',
     ],
+    'unique' => 'O campo :attribute informado já está em uso por outro veículo.',
 
     'attributes' => [
         'marca' => 'marca',
         'modelo' => 'modelo',
         'ano' => 'ano',
         'quilometragem' => 'quilometragem',
-        'combustivel' => 'combustível',
+        'tipo_combustivel' => 'combustível',
         'cor' => 'cor',
         'valor_custo' => 'valor de custo',
         'valor_venda' => 'valor de venda',
