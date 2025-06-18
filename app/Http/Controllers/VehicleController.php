@@ -92,4 +92,14 @@ class VehicleController extends Controller
         return $validator->validate();
     }
 
+    public static function getNumberOfVehicles()
+    {
+        return Vehicle::count();
+    }
+
+    public static function getTotalValueOfVehicles()
+    {
+        return Vehicle::sum('valor_custo');
+    }
+
 }

@@ -16,10 +16,12 @@
             <div class="dashboard-admin__stat-card dashboard-admin__stat-card--primary">
                 <div class="dashboard-admin__stat-content">
                     <div class="dashboard-admin__stat-label">Vendas do Mês</div>
-                    <div class="dashboard-admin__stat-value">{{ $vendasMes ?? 36 }}</div>
-                    <div class="dashboard-admin__stat-growth">
-                        <i class="fas fa-arrow-up"></i> +12% em relação ao mês anterior
-                    </div>
+                    <div class="dashboard-admin__stat-value">{{ $vendasMes ?? '-' }}</div>
+                    @if(isset($porcentAumento))
+                        <div class="dashboard-admin__stat-growth">
+                            <i class="fas fa-arrow-up"></i> {{ $porcentAumento }} % em relação ao mês anterior
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -27,7 +29,7 @@
             <div class="dashboard-admin__stat-card dashboard-admin__stat-card--success">
                 <div class="dashboard-admin__stat-content">
                     <div class="dashboard-admin__stat-label">Veículos Disponíveis</div>
-                    <div class="dashboard-admin__stat-value">{{ $veiculosDisponiveis ?? 127 }}</div>
+                    <div class="dashboard-admin__stat-value">{{ $veiculosDisponiveis ?? '-' }}</div>
                     <div class="dashboard-admin__stat-description">Em estoque</div>
                 </div>
             </div>
@@ -37,7 +39,7 @@
                 <div class="dashboard-admin__stat-content">
                     <div class="dashboard-admin__stat-label">Valor em Estoque</div>
                     <div class="dashboard-admin__stat-value">
-                        R$ {{ number_format($valorEstoque ?? 2800000, 2, ',', '.') }}
+                        R$ {{ number_format($valorEstoque ?? '0', 2, ',', '.') }}
                     </div>
                     <div class="dashboard-admin__stat-description">Total investido</div>
                 </div>
@@ -47,7 +49,7 @@
             <div class="dashboard-admin__stat-card dashboard-admin__stat-card--warning">
                 <div class="dashboard-admin__stat-content">
                     <div class="dashboard-admin__stat-label">Vendedores Ativos</div>
-                    <div class="dashboard-admin__stat-value">{{ $vendedoresAtivos ?? 8 }}</div>
+                    <div class="dashboard-admin__stat-value">{{ $vendedoresAtivos ?? '0' }}</div>
                     <div class="dashboard-admin__stat-description">Equipe de vendas</div>
                 </div>
             </div>

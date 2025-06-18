@@ -1,15 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 
 Route::middleware(['web'])->group(function () {
-//    Route::get('/', function () {
-//        return redirect()->route('veiculos.list');
-//    });
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home');
+
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
 
