@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
+use App\Models\Status;
 
 class VehicleRepository
 {
@@ -17,7 +18,7 @@ class VehicleRepository
         return Vehicle::with('status')->findOrFail($id);
     }
 
-    public function create(array $data)
+    public static function create(array $data)
     {
         return Vehicle::create($data);
     }
@@ -29,12 +30,24 @@ class VehicleRepository
         return $veiculo;
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
-        return Vehicle::destroy($id);
+        $veiculo = Vehicle::findOrFail($id);
+
+        // Busca o status com nome "inativo"
+        $statusInativo = Status::where('nome', 'inativo')->first();
+
+        if (!$statusInativo) {
+            throw new \Exception('Status "inativo" não encontrado. Verifique a tabela status.');
+        }
+
+        $veiculo->status_id = $statusInativo->id;
+        $veiculo->save();
+
+        return $veiculo->delete();
     }
 
-    public function getVehicles()
+    public static function getVehicles()
     {
         $vehicles = DB::table('vehicles')
             ->join('status', 'vehicles.status_id', '=', 'status.id')
@@ -51,5 +64,17 @@ class VehicleRepository
             'data' => $vehicles,
             'count' => $vehicles->first()->total_count ?? 0
         ]);
+    }
+
+    public static function existsPlaca(string $placa): bool
+    {
+        $placa = strtoupper(trim($placa));
+        return Vehicle::whereRaw('UPPER(TRIM(placa)) = ?', [$placa])->exists();
+    }
+
+    public static function existsChassi(string $chassi): bool
+    {
+        $chassi = strtoupper(trim($chassi));
+        return Vehicle::whereRaw('UPPER(TRIM(chassi)) = ?', [$chassi])->exists();
     }
 }

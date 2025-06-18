@@ -20,8 +20,8 @@ class Vehicle extends Model
         'transmissao',
         'valor_custo',
         'valor_venda',
-        'chassi',
         'placa',
+        'chassi',
         'status_id',
         'observacoes',
     ];
@@ -31,27 +31,22 @@ class Vehicle extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public static function getVehicles()
+    public static function verifyInfo()
     {
-        $vehicles = DB::table('vehicles')
-            ->join('status', 'vehicles.status_id', '=', 'status.id')
-            ->select(
-                'vehicles.*',
-                DB::raw('status.nome as status_nome'),
-                DB::raw('COUNT(*) OVER() as total_count')
-            )
-            ->whereNull('vehicles.deleted_at')
-            ->get();
-
-
-        return response()->json([
-            'data' => $vehicles,
-            'count' => $vehicles->first()->total_count ?? 0
-        ]);
-    }
-
-    public static function deleteVehicle($id)
-    {
-        return Vehicle::destroy($id);
+        return [
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'cor' => 'required|string',
+            'ano' => 'required|integer',
+            'quilometragem' => 'required|numeric',
+            'tipo_combustivel' => 'required|string',
+            'transmissao' => 'required|string',
+            'valor_custo' => 'required|numeric',
+            'valor_venda' => 'required|numeric',
+            'placa' => 'required|string|unique:vehicles,placa',
+            'chassi' => 'nullable|string|unique:vehicles,chassi',
+            'status_id' => 'required|exists:status,id',
+            'observacoes' => 'nullable|string',
+        ];
     }
 }
