@@ -10,7 +10,6 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/*  Início página listagem de veículos   */
     * {
         box-sizing: border-box;
         margin: 0;
@@ -18,11 +17,110 @@
         font-family: 'Inter', sans-serif;
     }
 
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
     body {
         background-color: #f0f4fb;
-        padding: 2rem;
         color: #333;
     }
+
+/*  Início do conteúdo da navbar   */
+
+    .navbar {
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 30px;
+        gap: 30px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .logo h1 {
+        font-weight: bold;
+    }
+
+    .logo h1 span {
+        font-weight: normal;
+    }
+
+    .menu-wrapper {
+        flex: 1; /* ocupa o espaço entre logo e usuário */
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+    }
+
+    .usuario {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .usuario span {
+        background-color: #ddd;
+        border-radius: 50%;
+        padding: 8px;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+        padding: 8px 0;
+        position: relative;
+    }
+
+    .menu li a.active {
+        font-weight: bold;
+        color: #007BFF;
+    }
+
+    .menu li a.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #007BFF;
+        border-radius: 2px;
+    }
+
+/*  Fim do conteúdo da navbar   */
+
+/*  Início página listagem de veículos   */
 
     h1 {
         font-size: 2rem;
@@ -428,7 +526,6 @@
     }
 
     .container {
-        max-width: 1200px;
         margin: 0 auto;
         padding: 0 16px;
     }

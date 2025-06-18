@@ -15,7 +15,7 @@
     </head>
 
     <body>
-        {{--@include('partials.navbar') <!-- Aqui importa a navbar -->--}}
+        @include('partials.navbar') <!-- Aqui importa a navbar -->
 
         <main style="padding: 2rem;">
             @yield('content')
