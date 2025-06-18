@@ -93,10 +93,10 @@
                         <!-- Combustível e Cor -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="combustivel" class="form-label">Combustível</label>
-                                <select id="combustivel"
-                                        name="combustivel"
-                                        class="form-select @error('combustivel') error-input @enderror">
+                                <label for="tipo_combustivel" class="form-label">Combustível</label>
+                                <select id="tipo_combustivel"
+                                        name="tipo_combustivel"
+                                        class="form-select @error('tipo_combustivel') error-input @enderror">
                                     <option value="">Tipo de combustível</option>
                                     <option value="gasolina" {{ old('combustivel') == 'gasolina' ? 'selected' : '' }}>Gasolina</option>
                                     <option value="etanol" {{ old('combustivel') == 'etanol' ? 'selected' : '' }}>Etanol</option>
@@ -104,8 +104,11 @@
                                     <option value="diesel" {{ old('combustivel') == 'diesel' ? 'selected' : '' }}>Diesel</option>
                                     <option value="eletrico" {{ old('combustivel') == 'eletrico' ? 'selected' : '' }}>Elétrico</option>
                                     <option value="hibrido" {{ old('combustivel') == 'hibrido' ? 'selected' : '' }}>Híbrido</option>
+                                    <option value="alcool" {{ old('combustivel') == 'alcool' ? 'selected' : '' }}>Álcool</option>
+                                    <option value="gnv" {{ old('combustivel') == 'gnv' ? 'selected' : '' }}>GNV</option>
+                                    <option value="hidrogenio" {{ old('combustivel') == 'hidrogenio' ? 'selected' : '' }}>Hidrogênio</option>
                                 </select>
-                                @error('combustivel')
+                                @error('tipo_combustivel')
                                 <p class="error-message">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -122,6 +125,23 @@
                                 <p class="error-message">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label for="transmissao" class="form-label">Transmissão</label>
+                                <select id="transmissao"
+                                        name="transmissao"
+                                        class="form-select @error('transmissao') error-input @enderror">
+                                    <option value="">Tipo de transmissão</option>
+                                    <option value="automatica" {{ old('transmissao') == 'automatica' ? 'selected' : '' }}>Automática</option>
+                                    <option value="manual" {{ old('transmissao') == 'manual' ? 'selected' : '' }}>Manual</option>
+                                    <option value="cvt" {{ old('transmissao') == 'cvt' ? 'selected' : '' }}>CVT</option>
+                                    <option value="auto_dupla_emb" {{ old('transmissao') == 'auto_dupla_emb' ? 'selected' : '' }}>Automática de Dupla Embreagem</option>
+                                </select>
+                                @error('transmissao')
+                                    <p class="error-message">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -135,8 +155,8 @@
                         <!-- Valores -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="valor_custo" class="form-label">Valor de Custo (R$)</label>
-                                <input type="number"
+                                <label for="valor_custo" class="form-label money">Valor de Custo (R$)</label>
+                                <input type="text"
                                        id="valor_custo"
                                        name="valor_custo"
                                        placeholder="Ex: 77.000,00"
@@ -150,8 +170,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="valor_venda" class="form-label">Valor de Venda (R$)</label>
-                                <input type="number"
+                                <label for="valor_venda" class="form-label money">Valor de Venda (R$)</label>
+                                <input type="text"
                                        id="valor_venda"
                                        name="valor_venda"
                                        placeholder="Ex: 85.000,00"
@@ -196,19 +216,22 @@
 
                         <!-- Status -->
                         <div class="form-group">
-                            <label for="status" class="form-label">Status</label>
-                            <select id="status"
-                                    name="status"
-                                    class="form-select @error('status') error-input @enderror"
-                            >
-                                <option value="disponivel" {{ old('status') == 'disponivel' ? 'selected' : '' }}>Disponível</option>
-                                <option value="vendido" {{ old('status') == 'vendido' ? 'selected' : '' }}>Vendido</option>
-                                <option value="indisponivel" {{ old('status') == 'indisponivel' ? 'selected' : '' }}>Indisponível</option>
-                                <option value="reservado" {{ old('status') == 'reservado' ? 'selected' : '' }}>Reservado</option>
-                                <option value="manutencao" {{ old('status') == 'manutencao' ? 'selected' : '' }}>Em Manutenção</option>
+                            <label for="status_id" class="form-label">Status</label>
+                            <select id="status_id"
+                                    name="status_id"
+                                    class="form-select @error('status_id') error-input @enderror">
+                                <option value="">Selecione um status</option>
+                                @foreach ($statuses as $status)
+                                    @if ($status->nome !== "inativo")
+                                        <option value="{{ $status->id }}"
+                                            {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                            {{ __('status.' . $status->nome) }}
+                                        </option>
+                                    @endif
+                                @endforeach
                             </select>
-                            @error('status')
-                            <p class="error-message">{{ $message }}</p>
+                            @error('status_id')
+                                <p class="error-message">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -242,7 +265,31 @@
 
     @push('scripts')
         <script>
+            function formatCurrency(input) {
+                input.addEventListener('blur', function(e) {
+                    let valor = e.target.value;
+
+                    // Remove pontos e troca vírgula por ponto
+                    valor = valor.replace(/\./g, '').replace(',', '.');
+
+                    const parsed = parseFloat(valor);
+
+                    if (!isNaN(parsed)) {
+                        // Formata como pt-BR: vírgula como decimal, ponto como milhar
+                        e.target.value = parsed.toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                    } else {
+                        e.target.value = '';
+                    }
+                });
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
+
+                const form = document.querySelector('form'); // ajuste se precisar, use o seletor correto
+
                 // Máscara para placa
                 const placaInput = document.getElementById('placa');
                 placaInput.addEventListener('input', function(e) {
@@ -257,15 +304,6 @@
                 const valorCustoInput = document.getElementById('valor_custo');
                 const valorVendaInput = document.getElementById('valor_venda');
 
-                function formatCurrency(input) {
-                    input.addEventListener('blur', function(e) {
-                        const value = parseFloat(e.target.value);
-                        if (!isNaN(value)) {
-                            e.target.value = value.toFixed(2);
-                        }
-                    });
-                }
-
                 formatCurrency(valorCustoInput);
                 formatCurrency(valorVendaInput);
 
@@ -275,7 +313,19 @@
                     let value = e.target.value.replace(/\D/g, '');
                     e.target.value = value;
                 });
+
+                form.addEventListener('submit', function (e) {
+                    // Função para converter "12.345,67" → "12345.67"
+                    function convertBRLToNumber(value) {
+                        if (!value) return '';
+                        return value.replace(/\./g, '').replace(',', '.');
+                    }
+
+                    valorCustoInput.value = convertBRLToNumber(valorCustoInput.value);
+                    valorVendaInput.value = convertBRLToNumber(valorVendaInput.value);
+                });
             });
         </script>
     @endpush
+
 @endsection
