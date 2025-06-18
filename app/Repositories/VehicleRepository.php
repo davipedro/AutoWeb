@@ -23,11 +23,10 @@ class VehicleRepository
         return Vehicle::create($data);
     }
 
-    public function update($id, array $data)
+    public static function update($id, array $data)
     {
-        $veiculo = $this->find($id);
+        $veiculo = Vehicle::findOrFail($id);
         $veiculo->update($data);
-        return $veiculo;
     }
 
     public static function delete($id)
@@ -66,15 +65,26 @@ class VehicleRepository
         ]);
     }
 
-    public static function existsPlaca(string $placa): bool
+    public static function existsPlaca($placa, $ignoreId = null)
     {
-        $placa = strtoupper(trim($placa));
-        return Vehicle::whereRaw('UPPER(TRIM(placa)) = ?', [$placa])->exists();
+        $query = Vehicle::where('placa', $placa);
+
+        if ($ignoreId) {
+            $query->where('id', '!==', $ignoreId);
+        }
+
+        return $query->exists();
     }
 
-    public static function existsChassi(string $chassi): bool
+    public static function existsChassi($chassi, $ignoreId = null)
     {
-        $chassi = strtoupper(trim($chassi));
-        return Vehicle::whereRaw('UPPER(TRIM(chassi)) = ?', [$chassi])->exists();
+        $query = Vehicle::where('chassi', $chassi);
+
+        if ($ignoreId) {
+            $query->where('id', '!==', $ignoreId);
+        }
+
+        return $query->exists();
     }
+
 }

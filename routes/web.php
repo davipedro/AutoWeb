@@ -12,9 +12,14 @@ Route::middleware(['web'])->group(function () {
     })->name('home');
 
     Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
+
     Route::get('/veiculos/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
     Route::post('/veiculos/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
-    Route::get('/veiculos/{id}/excluir', [VehicleController::class, 'delete'])->name('veiculos.delete');
+
+    Route::get('/veiculos/editar/{id}', [VehicleController::class, 'editVehicle'])->name('veiculos.edit');
+    Route::post('/veiculos/atualizar/{id}', [VehicleController::class, 'update'])->name('veiculos.update');
+
+    Route::get('/veiculos/excluir/{id}', [VehicleController::class, 'delete'])->name('veiculos.delete');
 
 });
 

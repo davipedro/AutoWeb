@@ -39,20 +39,7 @@ class VehicleController extends Controller
 
     public function store(Request $request)
     {
-        $rules = Vehicle::verifyInfo();
-
-        $validator = Validator::make($request->all(), $rules);
-
-        $validator->after(function ($validator) use ($request) {
-            if (VehicleRepository::existsPlaca($request->placa)) {
-                $validator->errors()->add('placa', 'Já existe um veículo cadastrado com essa placa.');
-            }
-            if ($request->filled('chassi') && VehicleRepository::existsChassi($request->chassi)) {
-                $validator->errors()->add('chassi', 'Já existe um veículo cadastrado com esse chassi.');
-            }
-        });
-
-        $validated = $validator->validate();
+       $validated = $this->validateData($request);
 
         $veiculo = VehicleRepository::create($validated);
 
@@ -60,20 +47,23 @@ class VehicleController extends Controller
     }
 
 
-    public function edit($id)
+    public function editVehicle($id, Request $request)
     {
-        $statusList = Status::all();
-        return view('veiculos.edit', compact('veiculo', 'statusList'));
+        // Busca o veículo pelo ID no banco
+        $veiculo = Vehicle::findOrFail($id);
+
+        $statuses = Status::all();
+
+        return view('vehicles.edit', compact('veiculo', 'statuses'));
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate(Vehicle::verifyInfo());
+        $validated = $this->validateData($request, $id);
 
-        $veiculo = Vehicle::findOrFail($id);
-        $veiculo->update($validated);
+        VehicleRepository::update($id, $validated);
 
-        return redirect()->route('veiculos.index')->with('success', 'Veículo atualizado com sucesso!');
+        return redirect()->route('veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
     }
 
     public function delete($id)
@@ -81,4 +71,25 @@ class VehicleController extends Controller
         VehicleRepository::delete($id);
         return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
     }
+
+    public function validateData(Request $request, $id = null)
+    {
+        $rules = Vehicle::verifyInfo($id);
+
+        $validator = Validator::make($request->all(), $rules);
+
+        $validator->after(function ($validator) use ($request, $id) {
+            // Ignorar o veículo com id $id na verificação de placa duplicada
+            if (VehicleRepository::existsPlaca($request->placa, $id)) {
+                $validator->errors()->add('placa', 'Já existe um veículo cadastrado com essa placa.');
+            }
+
+            if ($request->filled('chassi') && VehicleRepository::existsChassi($request->chassi, $id)) {
+                $validator->errors()->add('chassi', 'Já existe um veículo cadastrado com esse chassi.');
+            }
+        });
+
+        return $validator->validate();
+    }
+
 }

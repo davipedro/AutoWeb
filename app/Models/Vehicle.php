@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 
 class Vehicle extends Model
@@ -31,7 +32,7 @@ class Vehicle extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public static function verifyInfo()
+    public static function verifyInfo($id = null)
     {
         return [
             'marca' => 'required|string',
@@ -43,8 +44,8 @@ class Vehicle extends Model
             'transmissao' => 'required|string',
             'valor_custo' => 'required|numeric',
             'valor_venda' => 'required|numeric',
-            'placa' => 'required|string|unique:vehicles,placa',
-            'chassi' => 'nullable|string|unique:vehicles,chassi',
+            'placa' => ['required', 'string', Rule::unique('vehicles')->ignore($id)],
+            'chassi' => ['nullable', 'string', Rule::unique('vehicles')->ignore($id)],
             'status_id' => 'required|exists:status,id',
             'observacoes' => 'nullable|string',
         ];
