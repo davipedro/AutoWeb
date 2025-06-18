@@ -722,4 +722,300 @@
 
 /*  Fim Página cadastro de veículo  */
 
+/*  Início dashboard principal */
 
+    /* Container Principal */
+    .dashboard-admin {
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Header */
+    .dashboard-admin__header {
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-admin__title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-admin__subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    /* Grid de Estatísticas */
+    .dashboard-admin__stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Cards de Estatísticas */
+    .dashboard-admin__stat-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        position: relative;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dashboard-admin__stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-admin__stat-card--primary {
+        border-left: 4px solid #3b82f6;
+    }
+
+    .dashboard-admin__stat-card--success {
+        border-left: 4px solid #10b981;
+    }
+
+    .dashboard-admin__stat-card--info {
+        border-left: 4px solid #06b6d4;
+    }
+
+    .dashboard-admin__stat-card--warning {
+        border-left: 4px solid #f59e0b;
+    }
+
+    .dashboard-admin__stat-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dashboard-admin__stat-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        color: #6b7280;
+    }
+
+    .dashboard-admin__stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+        line-height: 1;
+    }
+
+    .dashboard-admin__stat-growth {
+        font-size: 0.75rem;
+        color: #10b981;
+        font-weight: 500;
+    }
+
+    .dashboard-admin__stat-description {
+        font-size: 0.75rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    /* Seção Principal */
+    .dashboard-admin__main-section {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+    }
+
+    /* Seção de Ranking */
+    .dashboard-admin__ranking-section {
+        width: 100%;
+    }
+
+    .dashboard-admin__ranking-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__ranking-header {
+        padding: 1.5rem 1.5rem 1rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .dashboard-admin__ranking-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #3b82f6;
+        margin: 0 0 0.25rem;
+    }
+
+    .dashboard-admin__ranking-subtitle {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-body {
+        padding: 0;
+    }
+
+    .dashboard-admin__ranking-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        transition: background-color 0.2s ease;
+    }
+
+    .dashboard-admin__ranking-item:hover {
+        background-color: #f9fafb;
+    }
+
+    .dashboard-admin__ranking-item--last {
+        border-bottom: none;
+    }
+
+    .dashboard-admin__ranking-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .dashboard-admin__ranking-name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-sales {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-commission {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #3b82f6;
+    }
+
+    /* Seção de Acesso Rápido */
+    .dashboard-admin__quick-access-section {
+        width: 100%;
+    }
+
+    .dashboard-admin__quick-access-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__quick-access-header {
+        padding: 1.5rem 1.5rem 1rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .dashboard-admin__quick-access-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #3b82f6;
+        margin: 0 0 0.25rem;
+    }
+
+    .dashboard-admin__quick-access-subtitle {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .dashboard-admin__quick-access-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Botões de Acesso Rápido */
+    .dashboard-admin__quick-access-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        border: 2px solid;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__quick-access-btn:hover {
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-admin__quick-access-btn--primary {
+        color: #3b82f6;
+        border-color: #3b82f6;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--primary:hover {
+        background-color: #3b82f6;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn--success {
+        color: #10b981;
+        border-color: #10b981;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--success:hover {
+        background-color: #10b981;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn--info {
+        color: #06b6d4;
+        border-color: #06b6d4;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--info:hover {
+        background-color: #06b6d4;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .dashboard-admin__quick-access-icon {
+        font-size: 1.125rem;
+    }
+
+    .dashboard-admin__quick-access-arrow {
+        font-size: 0.875rem;
+        transition: transform 0.2s ease;
+    }
+
+    .dashboard-admin__quick-access-btn:hover .dashboard-admin__quick-access-arrow {
+        transform: translateX(4px);
+    }
+
+/*  Fim dashboard principal */

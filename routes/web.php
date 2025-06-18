@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 
 Route::middleware(['web'])->group(function () {
+//    Route::get('/', function () {
+//        return redirect()->route('veiculos.list');
+//    });
     Route::get('/', function () {
-        return redirect()->route('veiculos.list');
-    });
+        return view('welcome');
+    })->name('home');
 
     Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
     Route::get('/veiculos/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');

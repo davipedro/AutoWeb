@@ -7,7 +7,7 @@
 
         <div class="menu-wrapper">
             <ul class="menu">
-                <li><a href="">Dashboard</a></li>
+                <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Dashboard</a></li>
                 <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
                 <li><a href="">Clientes</a></li>
                 <li><a href="">Vendedores</a></li>
