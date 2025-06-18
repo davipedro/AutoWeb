@@ -19,6 +19,7 @@ class StatusSeeder extends Seeder
             ['nome' => 'indisponivel', 'created_at' => now(), 'updated_at' => now()],
             ['nome' => 'reservado', 'created_at' => now(), 'updated_at' => now()],
             ['nome' => 'manutencao', 'created_at' => now(), 'updated_at' => now()],
+            ['nome' => 'inativo', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }
