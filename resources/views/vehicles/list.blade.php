@@ -127,9 +127,9 @@
                         </span>
                     </td>
                     <td>
-                        <button type="button" class="edit-btn">
+                        <a href="{{ route('veiculos.edit', ['id' => $veiculo->id]) }}" class="edit-btn">
                             <i class="fa fa-edit"></i>
-                        </button>
+                        </a>
                         <button class="delete-btn" onclick="openModal({{ $veiculo->id }})">
                             <i class="fa fa-trash"></i>
                         </button>
