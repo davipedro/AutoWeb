@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'disponivel' => 'Dispónível',
+    'disponivel' => 'Disponível',
     'vendido' => 'Vendido',
     'indisponivel' => 'Indisponível',
     'reservado' => 'Reservado',
