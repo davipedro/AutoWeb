@@ -12,10 +12,9 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        $response = VehicleRepository::getVehicles();
-        $content = $response->getData();
+        $veiculos = VehicleRepository::getVehicles();
 
-        $veiculos = collect($content->data)->map(function ($veiculo) {
+        $veiculos->getCollection()->transform(function ($veiculo) {
             $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
             $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
             $veiculo->ano = (string) $veiculo->ano;
@@ -23,13 +22,9 @@ class VehicleController extends Controller
             return $veiculo;
         });
 
-        $veiculosArray = [
-            'itens' => $veiculos,
-            'count' => $content->count ?? 0,
-        ];
-
-        return view('vehicles.list', compact('veiculosArray'));
+        return view('vehicles.list', compact('veiculos'));
     }
+
 
     public function createVehicle()
     {
@@ -39,13 +34,14 @@ class VehicleController extends Controller
 
     public function store(Request $request)
     {
-       $validated = $this->validateData($request);
-
-        $veiculo = VehicleRepository::create($validated);
-
-        return redirect()->route('veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
+        try {
+            $validated = $this->validateData($request);
+            VehicleRepository::create($validated);
+            return redirect()->route('veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao cadastrar veículo: ' . $e->getMessage());
+        }
     }
-
 
     public function editVehicle($id, Request $request)
     {
@@ -59,11 +55,20 @@ class VehicleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $this->validateData($request, $id);
+        try {
+            if (!$this->isVehicleAvailable($id)) {
+                return redirect()->route('veiculos.list')
+                    ->with('error', 'Veículo não disponível para edição.');
+            }
 
-        VehicleRepository::update($id, $validated);
+            $validated = $this->validateData($request, $id);
 
-        return redirect()->route('veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
+            VehicleRepository::update($id, $validated);
+
+            return redirect()->route('veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar veículo: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
@@ -101,5 +106,18 @@ class VehicleController extends Controller
     {
         return Vehicle::sum('valor_custo');
     }
+
+    protected function isVehicleAvailable(int $id): bool
+    {
+        $vehicle = VehicleRepository::find($id);
+
+        if (!$vehicle) {
+            return false;
+        }
+
+        // Disponível se status_id != 12 e não deletado
+        return $vehicle->status_id != 12 && $vehicle->deleted_at === null;
+    }
+
 
 }

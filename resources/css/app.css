@@ -120,6 +120,53 @@
 
 /*  Fim do conteúdo da navbar   */
 
+/*  Início do conteúdo do pagination   */
+
+    .pagination-container {
+        margin-top: 20px;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .pagination {
+        display: inline-flex;
+        list-style: none;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-left: 0;
+    }
+
+    .pagination li {
+        margin: 0 2px;
+    }
+
+    .pagination li a,
+    .pagination li span {
+        display: block;
+        padding: 8px 12px;
+        color: #333;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        background: #fff;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .pagination li.active span,
+    .pagination li a:hover {
+        background: #007BFF;
+        color: white;
+        border-color: #007BFF;
+    }
+
+    .pagination li.disabled span {
+        color: #aaa;
+        background: #eee;
+        cursor: not-allowed;
+    }
+
+/*  Fim do conteúdo do pagination   */
+
 /*  Início página listagem de veículos   */
 
     h1 {
@@ -130,6 +177,13 @@
     p.subheading {
         color: #666;
         margin-bottom: 1.5rem;
+    }
+
+    .no-vehicles-message {
+        padding: 40px;
+        text-align: center;
+        font-size: 18px;
+        color: #777;
     }
 
     .filters, .vehicle-list {

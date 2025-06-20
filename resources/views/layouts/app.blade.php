@@ -9,9 +9,11 @@
 
         <title>@yield('title')</title>
 
+        <link rel="icon" href="{{ asset('assets/images/logo.svg') }}" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ mix('resources/css/app.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     </head>
 
     <body>
@@ -22,6 +24,7 @@
         </main>
 
         @stack('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     </body>
 
 </html>

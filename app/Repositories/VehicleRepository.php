@@ -13,9 +13,9 @@ class VehicleRepository
         return Vehicle::with('status')->get();
     }
 
-    public function find($id)
+    public static function find($id)
     {
-        return Vehicle::with('status')->findOrFail($id);
+        return Vehicle::with('status')->withTrashed()->find($id);
     }
 
     public static function create(array $data)
@@ -25,7 +25,7 @@ class VehicleRepository
 
     public static function update($id, array $data)
     {
-        $veiculo = Vehicle::findOrFail($id);
+        $veiculo = Vehicle::withTrashed()->findOrFail($id);
         $veiculo->update($data);
     }
 
@@ -52,17 +52,13 @@ class VehicleRepository
             ->join('status', 'vehicles.status_id', '=', 'status.id')
             ->select(
                 'vehicles.*',
-                DB::raw('status.nome as status_nome'),
-                DB::raw('COUNT(*) OVER() as total_count')
+                DB::raw('status.nome as status_nome')
             )
             ->whereNull('vehicles.deleted_at')
-        ->get();
+            ->orderBy('vehicles.marca', 'ASC')
+            ->paginate(10);
 
-
-        return response()->json([
-            'data' => $vehicles,
-            'count' => $vehicles->first()->total_count ?? 0
-        ]);
+        return $vehicles;
     }
 
     public static function existsPlaca($placa, $ignoreId = null)
@@ -86,5 +82,4 @@ class VehicleRepository
 
         return $query->exists();
     }
-
 }
