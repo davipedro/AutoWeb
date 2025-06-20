@@ -224,7 +224,7 @@
                                 @foreach ($statuses as $status)
                                     @if ($status->nome !== "inativo")
                                         <option value="{{ $status->id }}"
-                                            {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                            {{ old('status_id', $status->id == 1 ? $status->id : null) == $status->id ? 'selected' : '' }}>
                                             {{ __('status.' . $status->nome) }}
                                         </option>
                                     @endif
