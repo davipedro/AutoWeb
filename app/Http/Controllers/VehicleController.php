@@ -12,15 +12,7 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        $veiculos = VehicleRepository::getVehicles();
-
-        $veiculos->getCollection()->transform(function ($veiculo) {
-            $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
-            $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
-            $veiculo->ano = (string) $veiculo->ano;
-            $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
-            return $veiculo;
-        });
+        $veiculos = $this->getVehicles();
 
         return view('vehicles.list', compact('veiculos'));
     }
@@ -117,6 +109,21 @@ class VehicleController extends Controller
 
         // Disponível se status_id != 12 e não deletado
         return $vehicle->status_id != 12 && $vehicle->deleted_at === null;
+    }
+
+    public static function getVehicles()
+    {
+        $veiculos = VehicleRepository::getVehicles();
+
+        $veiculos->getCollection()->transform(function ($veiculo) {
+            $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
+            $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
+            $veiculo->ano = (string) $veiculo->ano;
+            $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
+            return $veiculo;
+        });
+
+        return $veiculos;
     }
 
 

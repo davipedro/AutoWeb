@@ -17,7 +17,12 @@
     </head>
 
     <body>
-        @include('partials.navbar') <!-- Aqui importa a navbar -->
+        <!-- Aqui importa a navbar -->
+        @if (request()->routeIs('catalogo'))
+            @include('partials.catalog-navbar')
+        @else
+            @include('partials.navbar')
+        @endif
 
         <main style="padding: 2rem;">
             @yield('content')

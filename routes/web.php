@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\VehicleController;
 Route::middleware(['web'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+    Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalogo');
 
     Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
 
