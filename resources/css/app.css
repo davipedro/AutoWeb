@@ -542,6 +542,7 @@
         gap: 8px;
         transition: background-color 0.2s ease;
         margin-top: -10px;
+        margin-bottom: -10px;
     }
 
     .clear-filters-btn:hover {
@@ -570,6 +571,47 @@
     .filter-options select {
         min-width: 120px;
     }
+
+    .input-field,
+    .input-select {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: white;
+        margin-right: 10px;
+    }
+
+    .filter-btn {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .filter-btn:hover {
+        background-color: #45a049;
+    }
+
+    .clear-filters-btn {
+        padding: 8px 14px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .clear-filters-btn:hover {
+        background-color: #d32f2f;
+    }
+
 /*  Fim página listagem de veículos   */
 
 /*  Início Página cadastro de veículo  */

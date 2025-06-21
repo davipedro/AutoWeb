@@ -97,4 +97,58 @@ class VehicleRepository
 
         return $query->exists();
     }
+
+    public static function getFilteredVehicles(array $filters = [])
+    {
+        $query = DB::table('vehicles')
+            ->join('status', 'vehicles.status_id', '=', 'status.id')
+            ->select(
+                'vehicles.*',
+                DB::raw('status.nome as status_nome')
+            )
+            ->whereNull('vehicles.deleted_at');
+
+        // Filtros
+        if (!empty($filters['modelo'])) {
+            $query->where(DB::raw('LOWER(CONCAT(vehicles.marca, " ", vehicles.modelo))'),
+                'like', '%' . strtolower($filters['modelo']) . '%');
+        }
+
+        if (!empty($filters['marca'])) {
+            $query->where(DB::raw('LOWER(vehicles.marca)'), '=', strtolower($filters['marca']));
+        }
+
+        if (!empty($filters['ano'])) {
+            $query->where('vehicles.ano', '=', $filters['ano']);
+        }
+
+        if (!empty($filters['status'])) {
+            $query->where(DB::raw('LOWER(status.nome)'), '=', strtolower($filters['status']));
+        }
+
+        return $query->orderBy('vehicles.marca', 'ASC')->paginate(10)->appends($filters);
+    }
+
+    public static function getAllMarcas()
+    {
+        return Vehicle::whereNull('deleted_at')
+            ->select('marca')
+            ->distinct()
+            ->orderByRaw('LOWER(marca)')
+            ->pluck('marca');
+    }
+
+    public static function getAllAnos()
+    {
+        return Vehicle::whereNull('deleted_at')
+            ->select('ano')
+            ->distinct()
+            ->orderByDesc('ano')
+            ->pluck('ano');
+    }
+
+    public static function getAllStatusNomes()
+    {
+        return Status::orderBy('nome')->pluck('nome');
+    }
 }

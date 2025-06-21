@@ -14,25 +14,29 @@
         </div>
     </div>
 
-    @php
-        $marcas = $veiculos->getCollection()->pluck('marca')->unique()->sort()->values();
-        $status = $veiculos->getCollection()->pluck('status_nome')->unique()->sort()->values();
-        $anos = $veiculos->getCollection()->pluck('ano')->unique()->sortDesc()->values();
-    @endphp
-
-    <div class="filters">
+    <form method="GET" action="{{ route('veiculos.list') }}" class="filters">
         <div class="filter-options">
-            <input type="text" id="model_search" placeholder="Buscar por modelo..." />
-            <select id="brand_search">
+            <input
+                type="text"
+                name="modelo"
+                class="input-field"
+                placeholder="Buscar por modelo..."
+                value="{{ $filters['modelo'] ?? '' }}"
+            >
+
+            <select name="marca" class="input-select">
                 <option value="">Todas as Marcas</option>
                 @foreach($marcas as $marca)
-                    <option value="{{ $marca }}">{{ $marca }}</option>
+                    <option value="{{ $marca }}" {{ ($filters['marca'] ?? '') === $marca ? 'selected' : '' }}>
+                        {{ $marca }}
+                    </option>
                 @endforeach
             </select>
-            <select id="status_search">
+
+            <select name="status" class="input-select">
                 <option value="">Todos os Status</option>
                 @foreach($status as $statusItem)
-                    <option value="{{ $statusItem }}">
+                    <option value="{{ $statusItem }}" {{ ($filters['status'] ?? '') === $statusItem ? 'selected' : '' }}>
                         @if($statusItem == "disponivel")
                             Disponível
                         @elseif($statusItem == "vendido")
@@ -47,18 +51,66 @@
                     </option>
                 @endforeach
             </select>
-            <select id="year_search">
+
+            <select name="ano" class="input-select">
                 <option value="">Todos os Anos</option>
                 @foreach($anos as $ano)
-                    <option value="{{ $ano }}">{{ $ano }}</option>
+                    <option value="{{ $ano }}" {{ ($filters['ano'] ?? '') == $ano ? 'selected' : '' }}>
+                        {{ $ano }}
+                    </option>
                 @endforeach
             </select>
-            <button type="button" class="clear-filters-btn" onclick="clearAllFilters()">
-                <i class="fa fa-times"></i>
-                Limpar Filtros
+
+            <button type="submit" class="filter-btn">
+                <i class="fa fa-filter"></i> Filtrar
             </button>
+
+            <a href="{{ route('veiculos.list') }}" class="clear-filters-btn">
+                <i class="fa fa-times"></i> Limpar
+            </a>
         </div>
-    </div>
+    </form>
+
+
+    {{--    <div class="filters">--}}
+{{--        <div class="filter-options">--}}
+{{--            <input type="text" id="model_search" placeholder="Buscar por modelo..." />--}}
+{{--            <select id="brand_search">--}}
+{{--                <option value="">Todas as Marcas</option>--}}
+{{--                @foreach($marcas as $marca)--}}
+{{--                    <option value="{{ $marca }}">{{ $marca }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--            <select id="status_search">--}}
+{{--                <option value="">Todos os Status</option>--}}
+{{--                @foreach($status as $statusItem)--}}
+{{--                    <option value="{{ $statusItem }}">--}}
+{{--                        @if($statusItem == "disponivel")--}}
+{{--                            Disponível--}}
+{{--                        @elseif($statusItem == "vendido")--}}
+{{--                            Vendido--}}
+{{--                        @elseif($statusItem == "indisponivel")--}}
+{{--                            Indisponível--}}
+{{--                        @elseif($statusItem == "reservado")--}}
+{{--                            Reservado--}}
+{{--                        @else--}}
+{{--                            Em Manutenção--}}
+{{--                        @endif--}}
+{{--                    </option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--            <select id="year_search">--}}
+{{--                <option value="">Todos os Anos</option>--}}
+{{--                @foreach($anos as $ano)--}}
+{{--                    <option value="{{ $ano }}">{{ $ano }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--            <button type="button" class="clear-filters-btn" onclick="clearAllFilters()">--}}
+{{--                <i class="fa fa-times"></i>--}}
+{{--                Limpar Filtros--}}
+{{--            </button>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div class="vehicle-list">
         <div class="list-header">
@@ -259,65 +311,6 @@
             initializeFilters();
         });
 
-        function initializeFilters() {
-            const modelSearch = document.getElementById('model_search');
-            const brandSearch = document.getElementById('brand_search');
-            const statusSearch = document.getElementById('status_search');
-            const yearSearch = document.getElementById('year_search');
-
-            // Adicionar event listeners para todos os filtros
-            modelSearch.addEventListener('input', filterVehicles);
-            brandSearch.addEventListener('change', filterVehicles);
-            statusSearch.addEventListener('change', filterVehicles);
-            yearSearch.addEventListener('change', filterVehicles);
-        }
-
-        function filterVehicles() {
-            const modelFilter = document.getElementById('model_search').value.toLowerCase();
-            const brandFilter = document.getElementById('brand_search').value.toLowerCase();
-            const statusFilter = document.getElementById('status_search').value.toLowerCase();
-            const yearFilter = document.getElementById('year_search').value;
-
-            const vehicleRows = document.querySelectorAll('.vehicle-row');
-            let visibleCount = 0;
-
-            vehicleRows.forEach(function(row) {
-                const detailsRow = document.querySelector('#details-' + row.dataset.vehicleId);
-
-                // Extrair dados dos data attributes
-                const fullName = row.dataset.fullName || '';
-                const brand = row.dataset.brand || '';
-                const model = row.dataset.model || '';
-                const year = row.dataset.year || '';
-                const status = row.dataset.status || '';
-
-                // Aplicar filtros
-                const matchModel = !modelFilter ||
-                    fullName.includes(modelFilter) ||
-                    model.includes(modelFilter);
-
-                const matchBrand = !brandFilter || brand === brandFilter;
-                const matchStatus = !statusFilter || status === statusFilter;
-                const matchYear = !yearFilter || year === yearFilter;
-
-                if (matchModel && matchBrand && matchStatus && matchYear) {
-                    row.style.display = '';
-                    if (detailsRow && detailsRow.style.display === 'table-row') {
-                        detailsRow.style.display = 'table-row';
-                    }
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                    if (detailsRow) {
-                        detailsRow.style.display = 'none';
-                    }
-                }
-            });
-
-            // Atualizar contador
-            updateVehicleCount(visibleCount);
-        }
-
         function updateVehicleCount(count) {
             const totalElement = document.getElementById('total-vehicles-text');
             const totalVehicles = {{ $veiculos->total() }};
@@ -327,15 +320,6 @@
             } else {
                 totalElement.textContent = `Mostrando: ${count} de ${totalVehicles} veículos`;
             }
-        }
-
-        function clearAllFilters() {
-            document.getElementById('model_search').value = '';
-            document.getElementById('brand_search').value = '';
-            document.getElementById('status_search').value = '';
-            document.getElementById('year_search').value = '';
-
-            filterVehicles(); // Aplicar filtros limpos
         }
 
         function openModal(id) {

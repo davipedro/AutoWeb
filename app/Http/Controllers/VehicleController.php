@@ -11,11 +11,26 @@ use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $veiculos = $this->getVehicles();
+        $filters = $request->only(['modelo', 'marca', 'ano', 'status']);
+        $filtrosAtivos = collect($filters)->filter()->isNotEmpty();
 
-        return view('vehicles.list', compact('veiculos'));
+        $veiculos = VehicleRepository::getFilteredVehicles($filters);
+
+        if ($filtrosAtivos) {
+            // Com filtro → extrai apenas das opções filtradas
+            $collection = $veiculos->getCollection();
+            $marcas = $collection->pluck('marca')->unique()->sort()->values();
+            $anos = $collection->pluck('ano')->unique()->sortDesc()->values();
+            $status = $collection->pluck('status_nome')->unique()->sort()->values();
+        } else {
+            // Sem filtros → traz tudo do banco
+            $marcas = VehicleRepository::getAllMarcas();
+            $anos = VehicleRepository::getAllAnos();
+            $status = VehicleRepository::getAllStatusNomes();
+        }
+        return view('vehicles.list', compact('veiculos', 'filters', 'marcas', 'status', 'anos'));
     }
 
 
@@ -114,27 +129,7 @@ class VehicleController extends Controller
 
     public static function getVehicles()
     {
-        $currentRoute = Route::currentRouteName();
-
-        // Se a rota for "catalogo", retorna todos (scroll infinito)
-        if ($currentRoute === 'catalogo') {
-            $veiculos = VehicleRepository::getVehiclesCatalog();
-        }
-        else {
-            // Se não for a rota de catálogo, retorna apenas os veículos disponíveis
-            $veiculos = VehicleRepository::getVehicles();
-
-            $veiculos->getCollection()->transform(function ($veiculo) {
-                $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
-                $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
-                $veiculo->ano = (string) $veiculo->ano;
-                $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
-                return $veiculo;
-            });
-
-
-        }
-
+        $veiculos = VehicleRepository::getVehiclesCatalog();
         return $veiculos;
     }
 
