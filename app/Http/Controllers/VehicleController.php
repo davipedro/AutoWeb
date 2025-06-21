@@ -6,83 +6,133 @@ use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $response = Vehicle::getVehicles();
-        $content = $response->getData();
+        $filters = $request->only(['modelo', 'marca', 'ano', 'status']);
+        $filtrosAtivos = collect($filters)->filter()->isNotEmpty();
 
-        $veiculos = collect($content->data)->map(function ($veiculo) {
-            $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
-            $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
-            $veiculo->ano = (string) $veiculo->ano;
-            $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
-            return $veiculo;
-        });
+        $veiculos = VehicleRepository::getFilteredVehicles($filters);
 
-        $veiculosArray = [
-            'itens' => $veiculos,
-            'count' => $content->count ?? 0,
-        ];
-
-        return view('vehicles.list', compact('veiculosArray'));
+        if ($filtrosAtivos) {
+            // Com filtro → extrai apenas das opções filtradas
+            $collection = $veiculos->getCollection();
+            $marcas = $collection->pluck('marca')->unique()->sort()->values();
+            $anos = $collection->pluck('ano')->unique()->sortDesc()->values();
+            $status = $collection->pluck('status_nome')->unique()->sort()->values();
+        } else {
+            // Sem filtros → traz tudo do banco
+            $marcas = VehicleRepository::getAllMarcas();
+            $anos = VehicleRepository::getAllAnos();
+            $status = VehicleRepository::getAllStatusNomes();
+        }
+        return view('vehicles.list', compact('veiculos', 'filters', 'marcas', 'status', 'anos'));
     }
 
-    public function create()
+
+    public function createVehicle()
     {
-        $statusList = Status::all();
-        return view('vehicles.add', compact('statusList'));
+        $statuses = Status::all();
+        return view('vehicles.add', compact('statuses'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'marca' => 'required|string',
-            'modelo' => 'required|string',
-            'cor' => 'required|string',
-            'ano' => 'required|integer',
-            'quilometragem' => 'required|numeric',
-            'tipo_combustivel' => 'required|string',
-            'valor_custo' => 'required|numeric',
-            'valor_venda' => 'required|numeric',
-            'chassi' => 'nullable|string',
-            'status_id' => 'required|exists:status,id',
-            'observacoes' => 'nullable|string',
-        ]);
-
-        return redirect()->route('veiculos.index')->with('success', 'Veículo cadastrado com sucesso!');
+        try {
+            $validated = $this->validateData($request);
+            VehicleRepository::create($validated);
+            return redirect()->route('veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao cadastrar veículo: ' . $e->getMessage())->withInput();
+        }
     }
 
-    public function edit($id)
+    public function editVehicle($id, Request $request)
     {
-        $statusList = Status::all();
-        return view('veiculos.edit', compact('veiculo', 'statusList'));
+        // Busca o veículo pelo ID no banco
+        $veiculo = Vehicle::findOrFail($id);
+
+        $statuses = Status::all();
+
+        return view('vehicles.edit', compact('veiculo', 'statuses'));
     }
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'marca' => 'required|string',
-            'modelo' => 'required|string',
-            'cor' => 'required|string',
-            'ano' => 'required|integer',
-            'quilometragem' => 'required|numeric',
-            'tipo_combustivel' => 'required|string',
-            'valor_custo' => 'required|numeric',
-            'valor_venda' => 'required|numeric',
-            'chassi' => 'nullable|string',
-            'status_id' => 'required|exists:status,id',
-            'observacoes' => 'nullable|string',
-        ]);
+        try {
+            if (!$this->isVehicleAvailable($id)) {
+                return redirect()->route('veiculos.list')
+                    ->with('error', 'Veículo não disponível para edição.');
+            }
 
-        return redirect()->route('veiculos.index')->with('success', 'Veículo atualizado com sucesso!');
+            $validated = $this->validateData($request, $id);
+
+            VehicleRepository::update($id, $validated);
+
+            return redirect()->route('veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar veículo: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
     {
-        Vehicle::deleteVehicle($id);
+        VehicleRepository::delete($id);
         return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
     }
+
+    public function validateData(Request $request, $id = null)
+    {
+        $rules = Vehicle::verifyInfo($id);
+
+        $validator = Validator::make($request->all(), $rules);
+
+        $validator->after(function ($validator) use ($request, $id) {
+            // Ignorar o veículo com id $id na verificação de placa duplicada
+            if (VehicleRepository::existsPlaca($request->placa, $id)) {
+                $validator->errors()->add('placa', 'Já existe um veículo cadastrado com essa placa.');
+            }
+
+            if ($request->filled('chassi') && VehicleRepository::existsChassi($request->chassi, $id)) {
+                $validator->errors()->add('chassi', 'Já existe um veículo cadastrado com esse chassi.');
+            }
+        });
+
+        return $validator->validate();
+    }
+
+    public static function getNumberOfVehicles()
+    {
+        return Vehicle::count();
+    }
+
+    public static function getTotalValueOfVehicles()
+    {
+        return Vehicle::sum('valor_custo');
+    }
+
+    protected function isVehicleAvailable(int $id): bool
+    {
+        $vehicle = VehicleRepository::find($id);
+
+        if (!$vehicle) {
+            return false;
+        }
+
+        // Disponível se status_id != 12 e não deletado
+        return $vehicle->status_id != 12 && $vehicle->deleted_at === null;
+    }
+
+    public static function getVehicles()
+    {
+        $veiculos = VehicleRepository::getVehiclesCatalog();
+        return $veiculos;
+    }
+
 }

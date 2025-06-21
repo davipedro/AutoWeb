@@ -10,7 +10,6 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/*  Início página listagem de veículos   */
     * {
         box-sizing: border-box;
         margin: 0;
@@ -18,11 +17,157 @@
         font-family: 'Inter', sans-serif;
     }
 
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
     body {
         background-color: #f0f4fb;
-        padding: 2rem;
         color: #333;
     }
+
+/*  Início do conteúdo da navbar   */
+
+    .navbar {
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 30px;
+        gap: 30px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    .logo h1 {
+        font-weight: bold;
+    }
+
+    .logo h1 span {
+        font-weight: normal;
+    }
+
+    .menu-wrapper {
+        flex: 1; /* ocupa o espaço entre logo e usuário */
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+    }
+
+    .usuario {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .usuario span {
+        background-color: #ddd;
+        border-radius: 50%;
+        padding: 8px;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+        padding: 8px 0;
+        position: relative;
+    }
+
+    .menu li a.active {
+        font-weight: bold;
+        color: #007BFF;
+    }
+
+    .menu li a.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 3px;
+        background-color: #007BFF;
+        border-radius: 2px;
+    }
+
+/*  Fim do conteúdo da navbar   */
+
+/*  Início do conteúdo do pagination   */
+
+    .pagination-container {
+        margin-top: 20px;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .pagination {
+        display: inline-flex;
+        list-style: none;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-left: 0;
+    }
+
+    .pagination li {
+        margin: 0 2px;
+    }
+
+    .pagination li a,
+    .pagination li span {
+        display: block;
+        padding: 8px 12px;
+        color: #333;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        background: #fff;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .pagination li.active span,
+    .pagination li a:hover {
+        background: #007BFF;
+        color: white;
+        border-color: #007BFF;
+    }
+
+    .pagination li.disabled span {
+        color: #aaa;
+        background: #eee;
+        cursor: not-allowed;
+    }
+
+/*  Fim do conteúdo do pagination   */
+
+/*  Início página listagem de veículos   */
 
     h1 {
         font-size: 2rem;
@@ -32,6 +177,13 @@
     p.subheading {
         color: #666;
         margin-bottom: 1.5rem;
+    }
+
+    .no-vehicles-message {
+        padding: 40px;
+        text-align: center;
+        font-size: 18px;
+        color: #777;
     }
 
     .filters, .vehicle-list {
@@ -390,6 +542,7 @@
         gap: 8px;
         transition: background-color 0.2s ease;
         margin-top: -10px;
+        margin-bottom: -10px;
     }
 
     .clear-filters-btn:hover {
@@ -418,6 +571,47 @@
     .filter-options select {
         min-width: 120px;
     }
+
+    .input-field,
+    .input-select {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: white;
+        margin-right: 10px;
+    }
+
+    .filter-btn {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .filter-btn:hover {
+        background-color: #45a049;
+    }
+
+    .clear-filters-btn {
+        padding: 8px 14px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .clear-filters-btn:hover {
+        background-color: #d32f2f;
+    }
+
 /*  Fim página listagem de veículos   */
 
 /*  Início Página cadastro de veículo  */
@@ -428,7 +622,6 @@
     }
 
     .container {
-        max-width: 1200px;
         margin: 0 auto;
         padding: 0 16px;
     }
@@ -625,4 +818,670 @@
 
 /*  Fim Página cadastro de veículo  */
 
+/*  Início dashboard principal */
 
+    /* Container Principal */
+    .dashboard-admin {
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Header */
+    .dashboard-admin__header {
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-admin__title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-admin__subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    /* Grid de Estatísticas */
+    .dashboard-admin__stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Cards de Estatísticas */
+    .dashboard-admin__stat-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        position: relative;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dashboard-admin__stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-admin__stat-card--primary {
+        border-left: 4px solid #3b82f6;
+    }
+
+    .dashboard-admin__stat-card--success {
+        border-left: 4px solid #10b981;
+    }
+
+    .dashboard-admin__stat-card--info {
+        border-left: 4px solid #06b6d4;
+    }
+
+    .dashboard-admin__stat-card--warning {
+        border-left: 4px solid #f59e0b;
+    }
+
+    .dashboard-admin__stat-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dashboard-admin__stat-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        color: #6b7280;
+    }
+
+    .dashboard-admin__stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+        line-height: 1;
+    }
+
+    .dashboard-admin__stat-growth {
+        font-size: 0.75rem;
+        color: #10b981;
+        font-weight: 500;
+    }
+
+    .dashboard-admin__stat-description {
+        font-size: 0.75rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    /* Seção Principal */
+    .dashboard-admin__main-section {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+    }
+
+    /* Seção de Ranking */
+    .dashboard-admin__ranking-section {
+        width: 100%;
+    }
+
+    .dashboard-admin__ranking-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__ranking-header {
+        padding: 1.5rem 1.5rem 1rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .dashboard-admin__ranking-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #3b82f6;
+        margin: 0 0 0.25rem;
+    }
+
+    .dashboard-admin__ranking-subtitle {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-body {
+        padding: 0;
+    }
+
+    .dashboard-admin__ranking-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+        transition: background-color 0.2s ease;
+    }
+
+    .dashboard-admin__ranking-item:hover {
+        background-color: #f9fafb;
+    }
+
+    .dashboard-admin__ranking-item--last {
+        border-bottom: none;
+    }
+
+    .dashboard-admin__ranking-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .dashboard-admin__ranking-name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-sales {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+    }
+
+    .dashboard-admin__ranking-commission {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #3b82f6;
+    }
+
+    /* Seção de Acesso Rápido */
+    .dashboard-admin__quick-access-section {
+        width: 100%;
+    }
+
+    .dashboard-admin__quick-access-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__quick-access-header {
+        padding: 1.5rem 1.5rem 1rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .dashboard-admin__quick-access-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #3b82f6;
+        margin: 0 0 0.25rem;
+    }
+
+    .dashboard-admin__quick-access-subtitle {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .dashboard-admin__quick-access-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Botões de Acesso Rápido */
+    .dashboard-admin__quick-access-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        border: 2px solid;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-admin__quick-access-btn:hover {
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-admin__quick-access-btn--primary {
+        color: #3b82f6;
+        border-color: #3b82f6;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--primary:hover {
+        background-color: #3b82f6;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn--success {
+        color: #10b981;
+        border-color: #10b981;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--success:hover {
+        background-color: #10b981;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn--info {
+        color: #06b6d4;
+        border-color: #06b6d4;
+        background-color: transparent;
+    }
+
+    .dashboard-admin__quick-access-btn--info:hover {
+        background-color: #06b6d4;
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn--danger:hover {
+        background-color: rgba(4, 5, 5, 0.49);
+        color: #ffffff;
+    }
+
+    .dashboard-admin__quick-access-btn-content {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .dashboard-admin__quick-access-icon {
+        font-size: 1.125rem;
+    }
+
+    .dashboard-admin__quick-access-arrow {
+        font-size: 0.875rem;
+        transition: transform 0.2s ease;
+    }
+
+    .dashboard-admin__quick-access-btn:hover .dashboard-admin__quick-access-arrow {
+        transform: translateX(4px);
+    }
+
+/*  Fim dashboard principal */
+
+/*  Início catálogo de veículos */
+
+    .catalog-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 30px 16px;
+    }
+
+    /* Filtros */
+    .filter-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .filter-box h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .filter-subtitle {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .filter-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .filter-options input,
+    .filter-options select {
+        flex: 1 1 180px;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .clear-filters-btn {
+        padding: 10px 16px;
+        background-color: #e53935;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .clear-filters-btn:hover {
+        background-color: #c62828;
+    }
+
+    /* Contador */
+    .vehicle-count {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    /* Cards */
+    .vehicle-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .vehicle-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .vehicle-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .vehicle-image {
+        height: 150px;
+        background-color: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+    }
+
+    .vehicle-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Para manter proporção e preencher */
+        display: block; /* Remove espaço em branco abaixo da imagem */
+    }
+
+    .vehicle-info {
+        padding: 16px;
+    }
+
+    .vehicle-info h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .vehicle-info .price {
+        color: #0a9c3d;
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .vehicle-info ul {
+        list-style: none;
+        padding: 0;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 12px;
+    }
+
+    .vehicle-info ul li {
+        margin-bottom: 2px;
+    }
+
+    .badge {
+        display: inline-block;
+        background-color: #f2f2f2;
+        color: #555;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* RESPONSIVO */
+    @media (min-width: 640px) {
+        .vehicle-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .vehicle-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .filter-options {
+            flex-wrap: nowrap;
+        }
+    }
+
+    .interest-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+    }
+
+    .interest-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Modal do catálogo de veículos */
+    .catalog-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+    }
+
+    .catalog-modal-box {
+        background: #fff;
+        margin: 40px auto;
+        padding: 24px;
+        border-radius: 12px;
+        border: 2px solid #265cd0;
+        max-width: 600px;
+        width: 100%;
+        animation: fadeIn 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Cabeçalho */
+    .catalog-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 8px;
+    }
+
+    .catalog-modal-title {
+        font-size: 20px;
+        color: #000000;
+    }
+
+    .catalog-modal .close-btn {
+        font-size: 26px;
+        font-weight: bold;
+        color: #999;
+        cursor: pointer;
+    }
+
+    /* Corpo */
+    .catalog-modal-body {
+        color: #444;
+        font-size: 14px;
+    }
+
+    .catalog-modal-subtitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+        color: #444;
+    }
+
+    .vehicle-details p {
+        margin: 4px 0;
+        font-size: 14px;
+    }
+
+    /* Rodapé */
+    .catalog-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+    }
+
+    /* Responsividade (celulares) */
+
+    @media (max-width: 600px) {
+        .catalog-modal-box {
+            padding: 16px;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        .catalog-modal-title {
+            font-size: 17px;
+        }
+
+        .catalog-modal-subtitle {
+            font-size: 14px;
+        }
+
+        .vehicle-details p {
+            font-size: 13px;
+        }
+
+        .catalog-modal-footer {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .catalog-btn-cancel,
+        .catalog-btn-confirm {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* Animação */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Fim modal do catálogo de veículos */
+
+/* Fim catálogo de veículos */
+
+/* Inicio navbar catálogo */
+
+    .catalog-navbar {
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 16px 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .catalog-navbar-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .logo-title-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-self: center;
+    }
+
+    .logo-catalog {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-img-catalog {
+        width: 40px;
+        height: auto;
+    }
+
+    .logo-catalog h1 {
+        font-weight: bold;
+    }
+
+    .logo-catalog h1 span {
+        font-weight: normal;
+    }
+
+    .app-subtitle {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .logo-title-block {
+            align-items: center;
+            text-align: center;
+        }
+
+        .app-subtitle {
+            margin-left: 0;
+        }
+
+        .clear-filters-btn {
+            margin-top: 10px;
+        }
+    }
+
+/* Fim navbar catálogo */

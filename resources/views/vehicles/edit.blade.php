@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Novo Veículo')
+@section('title', 'Editar Veículo')
 
 @section('content')
     <div class="container">
@@ -13,14 +13,15 @@
                 Voltar
             </a>
             <div>
-                <h1 class="page-title">Cadastrar Novo Veículo</h1>
-                <p class="page-subtitle">Preencha as informações do veículo</p>
+                <h1 class="page-title">Editar Veículo</h1>
+                <p class="page-subtitle">Atualize as informações do veículo</p>
             </div>
         </div>
 
         <!-- Form -->
-        <form action="{{ route('veiculos.store') }}" method="POST">
+        <form action="{{ route('veiculos.update', $veiculo->id) }}" method="POST">
             @csrf
+            @method('POST')
 
             <div class="form-container">
                 <!-- Informações Básicas -->
@@ -37,7 +38,7 @@
                                        id="marca"
                                        name="marca"
                                        placeholder="Ex: Honda"
-                                       value="{{ old('marca') }}"
+                                       value="{{ old('marca', $veiculo->marca) }}"
                                        class="form-input @error('marca') error-input @enderror">
                                 @error('marca')
                                 <p class="error-message">{{ $message }}</p>
@@ -50,7 +51,7 @@
                                        id="modelo"
                                        name="modelo"
                                        placeholder="Ex: Civic, Nivus"
-                                       value="{{ old('modelo') }}"
+                                       value="{{ old('modelo', $veiculo->modelo) }}"
                                        class="form-input @error('modelo') error-input @enderror">
                                 @error('modelo')
                                 <p class="error-message">{{ $message }}</p>
@@ -66,7 +67,7 @@
                                        id="ano"
                                        name="ano"
                                        placeholder="Ex: 2022"
-                                       value="{{ old('ano') }}"
+                                       value="{{ old('ano', $veiculo->ano) }}"
                                        min="1900"
                                        max="{{ date('Y') + 1 }}"
                                        class="form-input @error('ano') error-input @enderror">
@@ -80,8 +81,8 @@
                                 <input type="number"
                                        id="quilometragem"
                                        name="quilometragem"
-                                       placeholder="Ex: 15.000Km"
-                                       value="{{ old('quilometragem') }}"
+                                       placeholder="Ex: 15000"
+                                       value="{{ old('quilometragem', $veiculo->quilometragem) }}"
                                        min="0"
                                        class="form-input @error('quilometragem') error-input @enderror">
                                 @error('quilometragem')
@@ -90,7 +91,7 @@
                             </div>
                         </div>
 
-                        <!-- Combustível e Cor -->
+                        <!-- Combustível, Cor e Transmissão -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="tipo_combustivel" class="form-label">Combustível</label>
@@ -98,15 +99,14 @@
                                         name="tipo_combustivel"
                                         class="form-select @error('tipo_combustivel') error-input @enderror">
                                     <option value="">Tipo de combustível</option>
-                                    <option value="gasolina" {{ old('combustivel') == 'gasolina' ? 'selected' : '' }}>Gasolina</option>
-                                    <option value="etanol" {{ old('combustivel') == 'etanol' ? 'selected' : '' }}>Etanol</option>
-                                    <option value="flex" {{ old('combustivel') == 'flex' ? 'selected' : '' }}>Flex</option>
-                                    <option value="diesel" {{ old('combustivel') == 'diesel' ? 'selected' : '' }}>Diesel</option>
-                                    <option value="eletrico" {{ old('combustivel') == 'eletrico' ? 'selected' : '' }}>Elétrico</option>
-                                    <option value="hibrido" {{ old('combustivel') == 'hibrido' ? 'selected' : '' }}>Híbrido</option>
-                                    <option value="alcool" {{ old('combustivel') == 'alcool' ? 'selected' : '' }}>Álcool</option>
-                                    <option value="gnv" {{ old('combustivel') == 'gnv' ? 'selected' : '' }}>GNV</option>
-                                    <option value="hidrogenio" {{ old('combustivel') == 'hidrogenio' ? 'selected' : '' }}>Hidrogênio</option>
+                                    @php
+                                        $combustiveis = ['gasolina', 'etanol', 'flex', 'diesel', 'eletrico', 'hibrido', 'alcool', 'gnv', 'hidrogenio'];
+                                    @endphp
+                                    @foreach ($combustiveis as $combustivel)
+                                        <option value="{{ $combustivel }}" {{ old('tipo_combustivel', $veiculo->tipo_combustivel) == $combustivel ? 'selected' : '' }}>
+                                            {{ __('combustiveis.' . $combustivel) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('tipo_combustivel')
                                 <p class="error-message">{{ $message }}</p>
@@ -119,7 +119,7 @@
                                        id="cor"
                                        name="cor"
                                        placeholder="Ex: Branco, Prata"
-                                       value="{{ old('cor') }}"
+                                       value="{{ old('cor', $veiculo->cor) }}"
                                        class="form-input @error('cor') error-input @enderror">
                                 @error('cor')
                                 <p class="error-message">{{ $message }}</p>
@@ -132,16 +132,24 @@
                                         name="transmissao"
                                         class="form-select @error('transmissao') error-input @enderror">
                                     <option value="">Tipo de transmissão</option>
-                                    <option value="automatica" {{ old('transmissao') == 'automatica' ? 'selected' : '' }}>Automática</option>
-                                    <option value="manual" {{ old('transmissao') == 'manual' ? 'selected' : '' }}>Manual</option>
-                                    <option value="cvt" {{ old('transmissao') == 'cvt' ? 'selected' : '' }}>CVT</option>
-                                    <option value="auto_dupla_emb" {{ old('transmissao') == 'auto_dupla_emb' ? 'selected' : '' }}>Automática de Dupla Embreagem</option>
+                                    @php
+                                        $transmissoes = [
+                                            'automatica',
+                                            'manual',
+                                            'cvt',
+                                            'auto_dupla_emb'
+                                        ];
+                                    @endphp
+                                    @foreach ($transmissoes as $key => $transmissao)
+                                        <option value="{{ $transmissao }}" {{ old('transmissao', $veiculo->transmissao) == $transmissao ? 'selected' : '' }}>
+                                            {{ __('transmissoes.' . $transmissao) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('transmissao')
-                                    <p class="error-message">{{ $message }}</p>
+                                <p class="error-message">{{ $message }}</p>
                                 @enderror
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -159,10 +167,8 @@
                                 <input type="text"
                                        id="valor_custo"
                                        name="valor_custo"
-                                       placeholder="Ex: 77.000,00"
-                                       value="{{ old('valor_custo') }}"
-                                       step="0.01"
-                                       min="0"
+                                       placeholder="Ex: 77000,00"
+                                       value="{{ old('valor_custo', number_format($veiculo->valor_custo, 2, ',', '.')) }}"
                                        class="form-input @error('valor_custo') error-input @enderror">
                                 @error('valor_custo')
                                 <p class="error-message">{{ $message }}</p>
@@ -174,10 +180,8 @@
                                 <input type="text"
                                        id="valor_venda"
                                        name="valor_venda"
-                                       placeholder="Ex: 85.000,00"
-                                       value="{{ old('valor_venda') }}"
-                                       step="0.01"
-                                       min="0"
+                                       placeholder="Ex: 85000,00"
+                                       value="{{ old('valor_venda', number_format($veiculo->valor_venda, 2, ',', '.')) }}"
                                        class="form-input @error('valor_venda') error-input @enderror">
                                 @error('valor_venda')
                                 <p class="error-message">{{ $message }}</p>
@@ -193,7 +197,7 @@
                                        id="placa"
                                        name="placa"
                                        placeholder="Ex: ABC-1234"
-                                       value="{{ old('placa') }}"
+                                       value="{{ old('placa', $veiculo->placa) }}"
                                        class="form-input @error('placa') error-input @enderror">
                                 @error('placa')
                                 <p class="error-message">{{ $message }}</p>
@@ -206,7 +210,7 @@
                                        id="chassi"
                                        name="chassi"
                                        placeholder="Número do chassi"
-                                       value="{{ old('chassi') }}"
+                                       value="{{ old('chassi', $veiculo->chassi) }}"
                                        class="form-input @error('chassi') error-input @enderror">
                                 @error('chassi')
                                 <p class="error-message">{{ $message }}</p>
@@ -223,15 +227,14 @@
                                 <option value="">Selecione um status</option>
                                 @foreach ($statuses as $status)
                                     @if ($status->nome !== "inativo")
-                                        <option value="{{ $status->id }}"
-                                            {{ old('status_id', $status->id == 1 ? $status->id : null) == $status->id ? 'selected' : '' }}>
+                                        <option value="{{ $status->id }}" {{ old('status_id', $veiculo->status_id) == $status->id ? 'selected' : '' }}>
                                             {{ __('status.' . $status->nome) }}
                                         </option>
                                     @endif
                                 @endforeach
                             </select>
                             @error('status_id')
-                                <p class="error-message">{{ $message }}</p>
+                            <p class="error-message">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -242,7 +245,7 @@
                                       name="observacoes"
                                       rows="4"
                                       placeholder="Informações adicionais sobre o veículo..."
-                                      class="form-textarea @error('observacoes') error-input @enderror">{{ old('observacoes') }}</textarea>
+                                      class="form-textarea @error('observacoes') error-input @enderror">{{ old('observacoes', $veiculo->observacoes) }}</textarea>
                             @error('observacoes')
                             <p class="error-message">{{ $message }}</p>
                             @enderror
@@ -253,12 +256,8 @@
 
             <!-- Botões de Ação -->
             <div class="form-actions">
-                <a href="{{ route('veiculos.list') }}" class="btn btn-secondary">
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Cadastrar Veículo
-                </button>
+                <a href="{{ route('veiculos.list') }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             </div>
         </form>
     </div>
@@ -335,7 +334,7 @@
 
                     Toastify({
                         text: errorMessages.trim(),
-                        duration: 5000,
+                        duration: 6000,
                         close: true,
                         gravity: "top",
                         position: "right",

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
@@ -10,16 +12,16 @@ Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
         Route::prefix('/veiculos')->group(function () {
             Route::get('/', [VehicleController::class, 'index'])->name('veiculos.list');
-            Route::get('/cadastrar', [VehicleController::class, 'create'])->name('veiculos.add');
+            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
             Route::post('/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
-            Route::delete('/{id}/excluir', [VehicleController::class, 'delete'])->name('veiculos.delete');
+            Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('veiculos.edit');
+            Route::post('/atualizar/{id}', [VehicleController::class, 'update'])->name('veiculos.update');
+            Route::get('/excluir/{id}', [VehicleController::class, 'delete'])->name('veiculos.delete');
         });
-
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('admin.dashboard');
 
         Route::post('register', [RegisteredUserController::class, 'store']);
         Route::get('register', [RegisteredUserController::class, 'create'])
