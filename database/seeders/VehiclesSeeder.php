@@ -2,116 +2,73 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class VehiclesSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Pegando os status existentes
-        $statusDisponivel = DB::table('status')->where('nome', 'disponível')->value('id');
-        $statusVendido = DB::table('status')->where('nome', 'vendido')->value('id');
-        $statusManutencao = DB::table('status')->where('nome', 'manutencao')->value('id');
-        $statusIndisponivel = DB::table('status')->where('nome', 'indisponivel')->value('id');
-        $statusReservado = DB::table('status')->where('nome', 'reservado')->value('id');
+        $faker = \Faker\Factory::create('pt_BR');
 
-        DB::table('vehicles')->insert([
-            [
-                'marca'          => 'Toyota',
-                'modelo'         => 'Corolla',
-                'cor'            => 'Prata',
-                'ano'            => 2020,
-                'quilometragem'  => 30000.5,
-                'tipo_combustivel'=> 'Gasolina',
-                'transmissao'    => 'Automática',
-                'valor_custo'     => 65000.00,
-                'valor_venda'     => 72000.00,
-                'chassi'         => '9BWZZZ377VT004251',
-                'placa'          => 'UAI2U34',
-                'status_id'      => $statusDisponivel,
-                'observacoes' => 'Veículo em excelente estado, revisado recentemente.',
-                'deleted_at'    => null, // Coluna opcional para soft delete
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
-            [
-                'marca'          => 'Volkswagen',
-                'modelo'         => 'Gol',
-                'cor'            => 'Vermelho',
-                'ano'            => 2018,
-                'quilometragem'  => 50000.0,
-                'tipo_combustivel' => 'Flex',
-                'transmissao'    => 'Manual',
-                'valor_custo'     => 32000.00,
-                'valor_venda'     => 38000.00,
-                'chassi'         => '9BWZZZ377VT004252',
-                'placa'          => 'XYZ5678',
-                'status_id'      => $statusVendido,
-                'observacoes' => 'Vendido em 15/03/2023',
-                'deleted_at'    => null, // Coluna opcional para soft delete
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
-            [
-                'marca'          => 'Ford',
-                'modelo'         => 'Fiesta',
-                'cor'            => 'Azul',
-                'ano'            => 2015,
-                'quilometragem'  => 75000.2,
-                'tipo_combustivel'=> 'Álcool',
-                'transmissao'    => 'Automática',
-                'valor_custo'     => 25000.00,
-                'valor_venda'     => 29000.00,
-                'chassi'         => null, // Chassi opcional
-                'placa'          => 'ABC1234',
-                'status_id'      => $statusManutencao,
-                'observacoes' => 'Veículo inativo desde 01/01/2024. Motivo: acidente leve.',
-                'deleted_at'    => null, // Coluna opcional para soft delete
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
-            [
-                'marca'          => 'Fiat',
-                'modelo'         => 'Fastback',
-                'cor'            => 'Verde pantano',
-                'ano'            => 2025,
-                'quilometragem'  => 123000,
-                'tipo_combustivel'=> 'Diesel',
-                'transmissao'    => 'CVT',
-                'valor_custo'     => 182750.00,
-                'valor_venda'     => 200000.00,
-                'chassi'         => '95PPE3TABRJNV3281',
-                'placa'          => 'CFG6Y54',
-                'status_id'      => $statusReservado,
-                'observacoes' => 'Veículo reservado para exibição no CarFestival 2025.',
-                'deleted_at'    => null, // Coluna opcional para soft delete
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
-            [
-                'marca'          => 'Nissan',
-                'modelo'         => 'Sentra',
-                'cor'            => 'Azul escuro',
-                'ano'            => 2022,
-                'quilometragem'  => 15000.0,
-                'tipo_combustivel'=> 'Gasolina',
-                'transmissao'    => 'Automática Dupla Embreagem',
-                'valor_custo'     => 175000.00,
-                'valor_venda'     => 180000.00,
-                'chassi'         => '4VJ3C95EY45CV6646',
-                'placa'          => 'BRA2E19',
-                'status_id'      => $statusIndisponivel,
-                'observacoes' => 'Veículo indisponível para venda. Motivo: aguardando documentação.',
-                'deleted_at'    => null, // Coluna opcional para soft delete
-                'created_at'     => Carbon::now(),
-                'updated_at'     => Carbon::now(),
-            ],
+        // IDs de status buscados pelo nome
+        $statusDisponivel   = DB::table('status')->where('nome', 'disponível')->value('id');
+        $statusVendido      = DB::table('status')->where('nome', 'vendido')->value('id');
+        $statusManutencao   = DB::table('status')->where('nome', 'manutencao')->value('id');
+        $statusIndisponivel = DB::table('status')->where('nome', 'indisponivel')->value('id');
+        $statusReservado    = DB::table('status')->where('nome', 'reservado')->value('id');
+
+        $statusIds = array_filter([
+            $statusDisponivel,
+            $statusVendido,
+            $statusManutencao,
+            $statusIndisponivel,
+            $statusReservado
         ]);
+
+        $brands = [
+            'Fiat', 'Chevrolet', 'Volkswagen', 'Ford', 'Toyota', 'Honda', 'Hyundai', 'Renault', 'Nissan',
+            'Jeep', 'Peugeot', 'Citroën', 'Mitsubishi', 'Kia', 'Suzuki', 'BMW', 'Mercedes-Benz', 'Audi',
+            'Volvo', 'Land Rover', 'Subaru', 'Tesla', 'Chery', 'JAC Motors', 'Lexus', 'Mazda', 'Dodge',
+            'Mini', 'Jaguar'
+        ];
+
+        $models = [
+            'Uno', 'Palio', 'Punto', 'Strada', 'Toro', 'Onix', 'Prisma', 'Cruze', 'Spin', 'S10',
+            'Gol', 'Voyage', 'Fusca', 'Fox', 'Tiguan', 'Jetta', 'Passat', 'Corolla', 'Yaris',
+            'Hilux', 'Civic', 'City', 'HR-V', 'Fit', 'Renegade', 'Compass', '3008', 'C3', 'ASX',
+            'Sportage', 'Sorento', 'X1', 'X3', 'A3', 'A4', 'XC60', 'Discovery', 'Impreza',
+            'Model S', 'Model 3', 'Tiggo', 'iEV20', 'Jac T40', 'RX', 'CX-5', 'Challenger',
+            'Cooper', 'XF'
+        ];
+
+        $transmissions = ['anual', 'automatico', 'cvt', 'auto_dupla_emb'];
+        $fuelTypes = ['gasolina', 'etanol', 'flex', 'diesel', 'eletrico', 'hibrido', 'gnv', 'hidrogenio', 'alcool'];
+
+        $veiculos = [];
+
+        for ($i = 0; $i < 100; $i++) {
+            $valorCusto = $faker->randomFloat(2, 10000, 150000);
+
+            $veiculos[] = [
+                'marca' => $faker->randomElement($brands),
+                'modelo' => $faker->randomElement($models),
+                'cor' => $faker->safeColorName(),
+                'ano' => $faker->numberBetween(2000, 2024),
+                'quilometragem' => $faker->numberBetween(0, 300000),
+                'tipo_combustivel' => $faker->randomElement($fuelTypes),
+                'transmissao' => $faker->randomElement($transmissions),
+                'valor_custo' => $valorCusto,
+                'valor_venda' => $valorCusto + rand(3000, 20000),
+                'placa' => strtoupper($faker->unique()->bothify('???-####')),
+                'chassi' => strtoupper($faker->unique()->bothify(str_repeat('#', 17))),
+                'status_id' => $faker->randomElement($statusIds),
+                'observacoes' => $faker->optional()->sentence(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        DB::table('vehicles')->insert($veiculos);
     }
 }
