@@ -71,47 +71,6 @@
         </div>
     </form>
 
-
-    {{--    <div class="filters">--}}
-{{--        <div class="filter-options">--}}
-{{--            <input type="text" id="model_search" placeholder="Buscar por modelo..." />--}}
-{{--            <select id="brand_search">--}}
-{{--                <option value="">Todas as Marcas</option>--}}
-{{--                @foreach($marcas as $marca)--}}
-{{--                    <option value="{{ $marca }}">{{ $marca }}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--            <select id="status_search">--}}
-{{--                <option value="">Todos os Status</option>--}}
-{{--                @foreach($status as $statusItem)--}}
-{{--                    <option value="{{ $statusItem }}">--}}
-{{--                        @if($statusItem == "disponivel")--}}
-{{--                            Disponível--}}
-{{--                        @elseif($statusItem == "vendido")--}}
-{{--                            Vendido--}}
-{{--                        @elseif($statusItem == "indisponivel")--}}
-{{--                            Indisponível--}}
-{{--                        @elseif($statusItem == "reservado")--}}
-{{--                            Reservado--}}
-{{--                        @else--}}
-{{--                            Em Manutenção--}}
-{{--                        @endif--}}
-{{--                    </option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--            <select id="year_search">--}}
-{{--                <option value="">Todos os Anos</option>--}}
-{{--                @foreach($anos as $ano)--}}
-{{--                    <option value="{{ $ano }}">{{ $ano }}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--            <button type="button" class="clear-filters-btn" onclick="clearAllFilters()">--}}
-{{--                <i class="fa fa-times"></i>--}}
-{{--                Limpar Filtros--}}
-{{--            </button>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
     <div class="vehicle-list">
         <div class="list-header">
             <div>
@@ -160,9 +119,9 @@
                             </div>
                         </td>
                         <td>{{ $veiculo->ano }}</td>
-                        <td>{{ $veiculo->quilometragem }} Km</td>
-                        <td class="price-cost">R$ {{ $veiculo->valor_custo }}</td>
-                        <td class="price-sale">R$ {{ $veiculo->valor_venda }}</td>
+                        <td>{{ number_format($veiculo->quilometragem, 0, ',', '.') }} Km</td>
+                        <td class="price-cost">R$ {{ number_format($veiculo->valor_custo, 2, ',', '.') }}</td>
+                        <td class="price-sale">R$ {{ number_format($veiculo->valor_venda, 2, ',', '.') }}</td>
                         <td>{{ __('combustiveis.' . $veiculo->tipo_combustivel) }}</td>
                         <td>
                     <span class="status-badge status-{{ $veiculo->status_nome }}">
