@@ -69,6 +69,7 @@ class VehicleRepository
                 'vehicles.*',
                 DB::raw('status.nome as status_nome')
             )
+            ->where('status.nome', '=', 'disponível')
             ->whereNull('vehicles.deleted_at')
             ->orderBy('vehicles.marca', 'ASC')
             ->get();

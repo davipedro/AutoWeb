@@ -42,7 +42,7 @@ class VehiclesSeeder extends Seeder
             'Cooper', 'XF'
         ];
 
-        $transmissions = ['manual', 'automatico', 'cvt', 'auto_dupla_emb'];
+        $transmissions = ['manual', 'automatica', 'cvt', 'auto_dupla_emb'];
         $fuelTypes = ['gasolina', 'etanol', 'flex', 'diesel', 'eletrico', 'hibrido', 'gnv', 'hidrogenio', 'alcool'];
 
         $veiculos = [];
