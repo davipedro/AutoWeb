@@ -325,6 +325,46 @@
                     valorVendaInput.value = convertBRLToNumber(valorVendaInput.value);
                 });
             });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                @if ($errors->any())
+                    let errorMessages = '';
+                    @foreach ($errors->all() as $error)
+                        errorMessages += '• {{ $error }}\n';
+                    @endforeach
+
+                    Toastify({
+                        text: errorMessages.trim(),
+                        duration: 5000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                    }).showToast();
+                @endif
+
+                @if(session('error'))
+                    Toastify({
+                        text: "{{ session('error') }}",
+                        duration: 4000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                    }).showToast();
+                @endif
+
+                @if(session('success'))
+                    Toastify({
+                        text: "{{ session('success') }}",
+                        duration: 4000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }).showToast();
+                @endif
+            });
         </script>
     @endpush
 

@@ -46,8 +46,10 @@ class VehicleController extends Controller
             $validated = $this->validateData($request);
             VehicleRepository::create($validated);
             return redirect()->route('veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao cadastrar veículo: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erro ao cadastrar veículo: ' . $e->getMessage())->withInput();
         }
     }
 
