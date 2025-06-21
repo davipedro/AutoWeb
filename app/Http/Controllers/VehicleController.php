@@ -6,6 +6,7 @@ use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
@@ -113,18 +114,28 @@ class VehicleController extends Controller
 
     public static function getVehicles()
     {
-        $veiculos = VehicleRepository::getVehicles();
+        $currentRoute = Route::currentRouteName();
 
-        $veiculos->getCollection()->transform(function ($veiculo) {
-            $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
-            $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
-            $veiculo->ano = (string) $veiculo->ano;
-            $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
-            return $veiculo;
-        });
+        // Se a rota for "catalogo", retorna todos (scroll infinito)
+        if ($currentRoute === 'catalogo') {
+            $veiculos = VehicleRepository::getVehiclesCatalog();
+        }
+        else {
+            // Se não for a rota de catálogo, retorna apenas os veículos disponíveis
+            $veiculos = VehicleRepository::getVehicles();
+
+            $veiculos->getCollection()->transform(function ($veiculo) {
+                $veiculo->valor_custo = number_format($veiculo->valor_custo, 2, ',', '.');
+                $veiculo->valor_venda = number_format($veiculo->valor_venda, 2, ',', '.');
+                $veiculo->ano = (string) $veiculo->ano;
+                $veiculo->quilometragem = number_format($veiculo->quilometragem, 0, ',', '.');
+                return $veiculo;
+            });
+
+
+        }
 
         return $veiculos;
     }
-
 
 }

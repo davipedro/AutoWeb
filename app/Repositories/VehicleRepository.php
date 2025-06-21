@@ -61,6 +61,21 @@ class VehicleRepository
         return $vehicles;
     }
 
+    public static function getVehiclesCatalog()
+    {
+        $vehicles = DB::table('vehicles')
+            ->join('status', 'vehicles.status_id', '=', 'status.id')
+            ->select(
+                'vehicles.*',
+                DB::raw('status.nome as status_nome')
+            )
+            ->whereNull('vehicles.deleted_at')
+            ->orderBy('vehicles.marca', 'ASC')
+            ->get();
+
+        return $vehicles;
+    }
+
     public static function existsPlaca($placa, $ignoreId = null)
     {
         $query = Vehicle::where('placa', $placa);

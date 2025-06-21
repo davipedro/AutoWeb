@@ -4,9 +4,9 @@
 
 @section('content')
     @php
-        $marcas = $veiculosDisponiveis->getCollection()->pluck('marca')->unique()->sort()->values();
-        $status = $veiculosDisponiveis->getCollection()->pluck('status_nome')->unique()->sort()->values();
-        $anos = $veiculosDisponiveis->getCollection()->pluck('ano')->unique()->sortDesc()->values();
+        $marcas = $veiculosDisponiveis->pluck('marca')->unique()->sort()->values();
+        $status = $veiculosDisponiveis->pluck('status_nome')->unique()->sort()->values();
+        $anos = $veiculosDisponiveis->pluck('ano')->unique()->sortDesc()->values();
     @endphp
 
     <div class="catalog-container">
@@ -40,7 +40,7 @@
 
         <!-- CONTADOR -->
         <div id="total-vehicles-text" class="vehicle-count">
-            Total: {{ $veiculosDisponiveis->total() }} veículos cadastrados
+            Total de Veículos exibidos: {{ $veiculosDisponiveis->count() }}
         </div>
 
         <!-- GRID DE VEÍCULOS -->
@@ -50,12 +50,16 @@
                      data-vehicle-id="{{ $veiculo->id }}"
                      data-model="{{ strtolower($veiculo->modelo) }}"
                      data-brand="{{ strtolower($veiculo->marca) }}"
-                     data-status="{{ strtolower($veiculo->status_nome) }}"
                      data-year="{{ $veiculo->ano }}"
                      data-full-name="{{ strtolower($veiculo->marca . ' ' . $veiculo->modelo) }}"
                 >
                     <div class="vehicle-image">
-                        <span>Imagem</span>
+                        @php
+                            $marca = strtolower(str_replace(' ', '_', $veiculo->marca));
+                            $modelo = strtolower(str_replace(' ', '_', $veiculo->modelo));
+                            $veiculo->imagem = $marca . '_' . $modelo . '.png';
+                        @endphp
+                        <img src="{{ asset('assets/images/vehicles/' . $veiculo->imagem) }}" alt="Imagem do Veículo" />
                     </div>
                     <div class="vehicle-info">
                         <div style="display: flex; justify-content: space-between">
@@ -64,7 +68,7 @@
                                 <i class="fa fa-info-circle"></i>
                             </a>
                         </div>
-                        <p class="price">R$ {{ $veiculo->valor_venda }}</p>
+                        <p class="price">R$ {{ number_format($veiculo->valor_venda, 2, ',', '.') }}</p>
                         <ul>
                             <li>{{ $veiculo->ano }}</li>
                             <li>{{ __('combustiveis.' . $veiculo->tipo_combustivel) }}</li>
@@ -94,7 +98,7 @@
                                 <p><strong>Quilometragem:</strong> {{ $veiculo->quilometragem }} Km</p>
                                 <p><strong>Cor:</strong> {{ $veiculo->cor }}</p>
                                 <p><strong>Transmissão:</strong> {{ __('transmissoes.' . $veiculo->transmissao) }}</p>
-                                <p><strong>Valor de Venda:</strong> R$ {{ $veiculo->valor_venda }}</p>
+                                <p><strong>Valor de Venda:</strong> R$ {{ number_format($veiculo->valor_venda, 2, ',', '.') }}</p>
                             </div>
                         </div>
 
@@ -142,7 +146,7 @@
 
         function updateVehicleCount(count) {
             const totalElement = document.getElementById('total-vehicles-text');
-            const totalVehicles = {{ $veiculosDisponiveis->total() }};
+            const totalVehicles = {{ $veiculosDisponiveis->count() }};
 
             if (count === totalVehicles) {
                 totalElement.textContent = `Total: ${totalVehicles} veículos cadastrados`;
