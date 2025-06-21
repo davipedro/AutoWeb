@@ -149,6 +149,15 @@
                             </div>
                             <i class="fas fa-arrow-right dashboard-admin__quick-access-arrow"></i>
                         </a>
+
+                        <!-- Catálogo de veículos -->
+                        <a href="{{ route('catalogo') }}" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--danger">
+                            <div class="dashboard-admin__quick-access-btn-content">
+                                <i class="fas fa-chart-bar dashboard-admin__quick-access-icon"></i>
+                                <span>Catálogo de Veículos</span>
+                            </div>
+                            <i class="fas fa-arrow-right dashboard-admin__quick-access-arrow"></i>
+                        </a>
                     </div>
                 </div>
             </div>

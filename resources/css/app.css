@@ -1095,6 +1095,11 @@
         color: #ffffff;
     }
 
+    .dashboard-admin__quick-access-btn--danger:hover {
+        background-color: rgba(4, 5, 5, 0.49);
+        color: #ffffff;
+    }
+
     .dashboard-admin__quick-access-btn-content {
         display: flex;
         align-items: center;
