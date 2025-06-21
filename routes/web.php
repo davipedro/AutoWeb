@@ -7,9 +7,9 @@ use App\Http\Controllers\VehicleController;
 
 Route::middleware(['web'])->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
 
-    Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalogo');
+    Route::get('/', [CatalogController::class, 'index'])->name('catalogo');
 
     Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
 
