@@ -9,6 +9,6 @@ class CatalogController extends Controller
     public function index()
     {
         $veiculosDisponiveis = VehicleController::getVehicles();
-        return view('catalog/catalogo', compact('veiculosDisponiveis'));
+        return view('catalog.catalogo', compact('veiculosDisponiveis'));
     }
 }

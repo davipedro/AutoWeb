@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 
     <head>
-        @vite('resources/css/app.css')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,7 +18,7 @@
 
     <body>
         <!-- Aqui importa a navbar -->
-        @if (request()->routeIs('catalogo'))
+        @if (request()->routeIs('catalogo') && !(auth()->check()))
             @include('partials.catalog-navbar')
         @else
             @include('partials.navbar')

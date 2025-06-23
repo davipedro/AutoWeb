@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -32,6 +33,24 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function seller() {
+        return $this->hasOne(Seller::class);
+    }
+
+    public function admin() {
+        return $this->hasOne(Admin::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isSeller(): bool
+    {
+        return $this->role === 'seller';
+    }
 
     /**
      * Get the attributes that should be cast.
