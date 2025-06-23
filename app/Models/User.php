@@ -42,6 +42,16 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isSeller(): bool
+    {
+        return $this->role === 'seller';
+    }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function adminDashboard()
     {
         $veiculosDisponiveis = VehicleController::getNumberOfVehicles();
         $valorEstoque = VehicleController::getTotalValueOfVehicles();
-        return view('dashboard', compact('veiculosDisponiveis', 'valorEstoque'));
+        return view('admin.dashboard', compact('veiculosDisponiveis', 'valorEstoque'));
+    }
+
+    public function sellerDashboard()
+    {
+        $veiculosDisponiveis = VehicleController::getNumberOfVehicles();
+        $valorEstoque = VehicleController::getTotalValueOfVehicles();
+        return view('seller.dashboard', compact('veiculosDisponiveis', 'valorEstoque'));
     }
 }

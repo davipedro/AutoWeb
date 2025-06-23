@@ -8,14 +8,13 @@ use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
-    Route::get('/', function () {})->middleware('home.redirect');
+    Route::get('/', function () {})->middleware('home.redirect')->name('home');
 
     Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 
         Route::prefix('/veiculos')->group(function () {
-            Route::get('/', [VehicleController::class, 'index'])->name('veiculos.list');
             Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
             Route::post('/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
             Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('veiculos.edit');
@@ -24,15 +23,16 @@ Route::middleware(['web'])->group(function () {
         });
 
         Route::post('register', [RegisteredUserController::class, 'store']);
-        Route::get('register', [RegisteredUserController::class, 'create'])
+        Route::get('/register', [RegisteredUserController::class, 'create'])
             ->name('register');
     });
 
     Route::prefix('seller')->middleware(['auth', 'seller'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('seller.dashboard');
-        })->name('seller.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller.dashboard');
     });
+
+    Route::get('/veiculos', [VehicleController::class, 'index'])->name('veiculos.list');
+    Route::get('/catalogo', [CatalogController::class, 'index'])->name('catalogo');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
