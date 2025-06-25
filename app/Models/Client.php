@@ -36,7 +36,7 @@ class Client extends Model
         $minDate = now()->subYears(18)->format('Y-m-d');
 
         return [
-            'nome_completo'     => 'required|string|max:255',
+            'nome_completo'     => 'required|string|max:255|min:2',
             'data_nascimento'   => "required|date|before_or_equal:$minDate|before_or_equal:$today",
             'cpf'               => ['required', 'string', 'size:14', Rule::unique('clients')->ignore($id)],
             'rg'                => 'nullable|string|max:20',

@@ -69,6 +69,7 @@
                                    id="nome_completo"
                                    name="nome_completo"
                                    placeholder="Insira o nome do cliente"
+                                   minlength="2"
                                    value="{{ old('nome_completo') }}"
                                    class="form-input @error('nome_completo') error-input @enderror">
                             @error('nome_completo')
