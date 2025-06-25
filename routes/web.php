@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::middleware(['web'])->group(function () {
             Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('clientes.delete');
         });
 
+        Route::get('/relatorio', [ReportController::class, 'adminReport'])->name('admin.report');
 
     });
 
@@ -55,6 +57,8 @@ Route::middleware(['web'])->group(function () {
             Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('clientes.add');
             Route::post('/salvar', [ClientController::class, 'store'])->name('clientes.store');
         });
+
+        Route::get('/relatorio', [ReportController::class, 'sellerReport'])->name('seller.report');
 
     });
 

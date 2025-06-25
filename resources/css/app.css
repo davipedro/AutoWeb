@@ -1731,3 +1731,168 @@ th {
     }
 
 /* Fim página dashboard do vendedor */
+
+/* Início página relatório de vendas (Vendedor */
+
+    .relatorio-vendas {
+        padding: 2rem;
+        background-color: #f5faff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .relatorio-vendas__titulo {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .relatorio-vendas__subtitulo {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .relatorio-vendas__filtros {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .relatorio-vendas__filtros-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .relatorio-vendas__input {
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        margin-top: 0.3rem;
+        width: 200px;
+    }
+
+    .relatorio-vendas__card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+        min-width: 250px;
+        flex: 1;
+        border-left: 6px solid transparent;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .relatorio-vendas__cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .relatorio-vendas__card-label {
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .relatorio-vendas__card-valor {
+        font-size: 1.8rem;
+        color: #1f2937;
+        margin: 0.3rem 0;
+        font-weight: bold;
+    }
+
+    .relatorio-vendas__card-sub {
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    .border-left-blue {
+        border-left-color: #3b82f6;
+    }
+
+    .border-left-cyan {
+        border-left-color: #06b6d4;
+    }
+
+    .border-left-green {
+        border-left-color: #10b981;
+    }
+
+    .border-left-orange {
+        border-left-color: #f59e0b;
+    }
+
+    .relatorio-vendas__tabela {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .relatorio-vendas__tabela-titulo {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .relatorio-vendas__tabela-subtitulo {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 1rem;
+    }
+
+    .relatorio-vendas__tabela-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .relatorio-vendas__tabela-table th,
+    .relatorio-vendas__tabela-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .relatorio-vendas__acao-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .green {
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+    .purple {
+        color: #9c27b0;
+        font-weight: bold;
+    }
+
+    .relatorio-vendas__botao-filtrar {
+        padding: 0.6rem 1.5rem;
+        background-color: #3b82f6; /* azul */
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        height: 42px;
+    }
+
+    .relatorio-vendas__botao-filtrar:hover {
+        background-color: #2563eb;
+    }
+
+    .relatorio-vendas__filtros-group--button {
+        display: flex;
+        align-items: end;
+    }
+
+/* Fim página relatório de vendas (Vendedor) */

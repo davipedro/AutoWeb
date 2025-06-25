@@ -16,7 +16,7 @@
                     <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
                     <li><a href="" >Vendedores</a></li>
                     <li><a href="">Nova Venda</a></li>
-                    <li><a href="">Relatórios</a></li>
+                    <li><a href="{{ route('admin.report') }}" class="{{ request()->routeIs('admin.report') ? 'active' : '' }}">Relatórios</a></li>
                 @endif
                 @if(auth()->user()->isSeller())
                     <li><a href="{{ route('catalogo') }}" class="{{ request()->routeIs('catalogo') ? 'active' : '' }}">Catálogo</a></li>
@@ -24,7 +24,7 @@
                     <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
                     <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
                     <li><a href="">Nova Venda</a></li>
-                    <li><a href="">Relatório</a></li>
+                    <li><a href="{{ route('seller.report') }}" class="{{ request()->routeIs('seller.report') ? 'active' : '' }}">Relatório</a></li>
                 @endif
             </ul>
         </div>

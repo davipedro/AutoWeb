@@ -142,7 +142,7 @@
                         </a>
 
                         <!-- Relatório de Vendas -->
-                        <a href="" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--info">
+                        <a href="{{ route('admin.report') }}" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--info">
                             <div class="dashboard-admin__quick-access-btn-content">
                                 <i class="fas fa-chart-bar dashboard-admin__quick-access-icon"></i>
                                 <span>Relatório de Vendas</span>
