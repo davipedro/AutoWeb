@@ -15,8 +15,7 @@ class DashboardController extends Controller
 
     public function sellerDashboard()
     {
-        $veiculosDisponiveis = VehicleController::getNumberOfVehicles();
-        $valorEstoque = VehicleController::getTotalValueOfVehicles();
-        return view('seller.dashboard', compact('veiculosDisponiveis', 'valorEstoque'));
+        $veiculosDisponiveis = VehicleController::getNumberOfAvailableVehicles();
+        return view('seller.dashboard', compact('veiculosDisponiveis'));
     }
 }

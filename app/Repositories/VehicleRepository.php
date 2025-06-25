@@ -152,4 +152,13 @@ class VehicleRepository
     {
         return Status::orderBy('nome')->pluck('nome');
     }
+
+    public static function getNumberOfAvailableVehicles()
+    {
+        return Vehicle::whereNull('deleted_at')
+            ->whereHas('status', function ($query) {
+                $query->where('nome', 'disponível');
+            })
+            ->count();
+    }
 }

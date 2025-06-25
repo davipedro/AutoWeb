@@ -112,6 +112,11 @@ class VehicleController extends Controller
         return Vehicle::count();
     }
 
+    public static function getNumberOfAvailableVehicles()
+    {
+        return VehicleRepository::getNumberOfAvailableVehicles();
+    }
+
     public static function getTotalValueOfVehicles()
     {
         return Vehicle::sum('valor_custo');

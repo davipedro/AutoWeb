@@ -1590,3 +1590,144 @@ th {
 }
 
 /*  Fim página listagem de clientes   */
+
+/*  Início página dashboard do vendedor   */
+
+    .dashboard-vendedor {
+        padding: 2rem;
+        background-color: #f5faff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .dashboard-vendedor__title {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .dashboard-vendedor__subtitle {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-vendedor__filtro {
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-vendedor__resumo-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-vendedor__card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+        min-width: 250px;
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        border-left: 6px solid transparent;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .dashboard-vendedor__card-titulo {
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .dashboard-vendedor__card-valor {
+        font-size: 1.8rem;
+        color: #1f2937;
+        margin: 0.3rem 0;
+        font-weight: bold;
+    }
+
+    .dashboard-vendedor__card-sub {
+        color: #666;
+        font-size: 0.85rem;
+    }
+
+    .border-left-blue {
+        border-left-color: #3b82f6;
+    }
+    .border-left-green {
+        border-left-color: #10b981;
+    }
+    .border-left-cyan {
+        border-left-color: #06b6d4;
+    }
+    .border-left-orange {
+        border-left-color: #f59e0b;
+    }
+
+    .dashboard-vendedor__filtro {
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-vendedor__filtro-select {
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #fff;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='gray' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position-x: 95%;
+        background-position-y: 50%;
+        background-size: 1.2em;
+        cursor: pointer;
+        width: 15%;
+    }
+
+    .dashboard-vendedor__tabela-vendas {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .dashboard-vendedor__tabela-titulo {
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+        font-weight: bold;
+    }
+
+    .dashboard-vendedor__tabela-subtitulo {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-vendedor__tabela {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .dashboard-vendedor__tabela th,
+    .dashboard-vendedor__tabela td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .green {
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+    .gray {
+        color: #999;
+    }
+
+    .purple {
+        color: #9c27b0;
+        font-weight: bold;
+    }
+
+/* Fim página dashboard do vendedor */
