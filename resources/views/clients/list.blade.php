@@ -148,43 +148,49 @@
                         </td>
                         <td>{{ $cliente->cidade}}</td>
                         <td>
-                            <a href="{{ route('clientes.edit', $cliente->id) }}" class="edit-btn">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <button class="delete-btn" onclick="openModal({{ $cliente->id }})">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                            <button type="button" class="info-toggle-btn"
-                                    onclick="toggleClientInfo({{ $cliente->id }})">
-                                <i class="fa fa-chevron-down" id="icon-{{ $cliente->id }}"></i>
-                            </button>
+                            @if(auth()->user() && auth()->user()->role === 'admin')
+                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="edit-btn">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <button class="delete-btn" onclick="openModal({{ $cliente->id }})">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button type="button" class="info-toggle-btn"
+                                        onclick="toggleClientInfo({{ $cliente->id }})">
+                                    <i class="fa fa-chevron-down" id="icon-{{ $cliente->id }}"></i>
+                                </button>
 
-                            <div id="modal-{{ $cliente->id }}" class="custom-modal">
-                                <div class="modal-box">
-                                    <div class="modal-header">
-                                <span class="modal-title">
-                                    <i class="fa fa-trash text-danger"></i>
-                                    <strong class="text-danger"> Confirmar Exclusão</strong>
-                                </span>
-                                        <span class="close-btn" onclick="closeModal({{ $cliente->id }})">&times;</span>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Tem certeza que deseja excluir este cliente?</p>
-                                        <p><strong>Item:</strong>
-                                            <strong>{{ $cliente->nome_completo }} - {{ $cliente->cpf }}</strong></p>
-                                    </div>
-                                    <form method="GET" action="{{ route('clientes.delete', $cliente->id) }}">
-                                        @csrf
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn-cancel"
-                                                    onclick="closeModal({{ $cliente->id }})">Cancelar
-                                            </button>
-                                            <button type="submit" class="btn-confirm">Excluir</button>
+                                <div id="modal-{{ $cliente->id }}" class="custom-modal">
+                                    <div class="modal-box">
+                                        <div class="modal-header">
+                                            <span class="modal-title">
+                                                <i class="fa fa-trash text-danger"></i>
+                                                <strong class="text-danger"> Confirmar Exclusão</strong>
+                                            </span>
+                                            <span class="close-btn" onclick="closeModal({{ $cliente->id }})">&times;</span>
                                         </div>
-                                    </form>
+                                        <div class="modal-body">
+                                            <p>Tem certeza que deseja excluir este cliente?</p>
+                                            <p><strong>Item:</strong>
+                                                <strong>{{ $cliente->nome_completo }} - {{ $cliente->cpf }}</strong></p>
+                                        </div>
+                                        <form method="GET" action="{{ route('clientes.delete', $cliente->id) }}">
+                                            @csrf
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn-cancel"
+                                                        onclick="closeModal({{ $cliente->id }})">Cancelar
+                                                </button>
+                                                <button type="submit" class="btn-confirm">Excluir</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-
+                            @elseif(auth()->user() && auth()->user()->role === 'seller')
+                                <button type="button" class="info-toggle-btn"
+                                        onclick="toggleClientInfo({{ $cliente->id }})">
+                                    <i class="fa fa-chevron-down" id="icon-{{ $cliente->id }}"></i>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                     <tr class="client-details-row" id="details-{{ $cliente->id }}" style="display: none;">

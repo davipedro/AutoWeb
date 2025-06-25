@@ -22,7 +22,7 @@
                     <li><a href="{{ route('catalogo') }}" class="{{ request()->routeIs('catalogo') ? 'active' : '' }}">Catálogo</a></li>
                     <li><a href="{{ route('home') }}" class="{{ request()->routeIs('seller.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                     <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
-                    li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
+                    <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
                     <li><a href="">Nova Venda</a></li>
                     <li><a href="">Relatório</a></li>
                 @endif
