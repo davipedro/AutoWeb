@@ -75,7 +75,11 @@
                             <li>{{ $veiculo->quilometragem }} Km</li>
                         </ul>
                         <span class="badge">{{ $veiculo->cor ?? 'Branco' }}</span>
-                        <a href="https://api.whatsapp.com/send?phone=5538998546298" class="interest-button">Tenho Interesse</a>
+                        <a
+                            href="https://wa.me/5538998546298?text=Olá,%20tudo%20bem?%20Gostaria%20de%20mais%20informações%20sobre%20o%20veículo%20{{ $veiculo->marca }}%20{{ $veiculo->modelo }}%20na%20cor%20{{ $veiculo->cor }}."
+                            class="interest-button">
+                            Tenho Interesse
+                        </a>
                     </div>
                 </div>
 
@@ -115,6 +119,15 @@
             document.getElementById('year_search').addEventListener('change', filterVehicles);
         }
 
+        function clearAllFilters() {
+            document.getElementById('model_search').value = '';
+            document.getElementById('brand_search').value = '';
+            // Removida limpeza do status_search pois não existe no HTML
+            document.getElementById('year_search').value = '';
+
+            filterVehicles();
+        }
+
         function filterVehicles() {
             const modelFilter = document.getElementById('model_search').value.toLowerCase();
             const brandFilter = document.getElementById('brand_search').value.toLowerCase();
@@ -131,7 +144,8 @@
 
                 const matchModel = !modelFilter || fullName.includes(modelFilter) || model.includes(modelFilter);
                 const matchBrand = !brandFilter || brand === brandFilter;
-                const matchYear = !yearFilter || year === yearFilter;
+                // Comparar valores como string para evitar falha de comparação
+                const matchYear = !yearFilter || String(year) === yearFilter;
 
                 if (matchModel && matchBrand && matchYear) {
                     row.style.display = '';
@@ -153,15 +167,6 @@
             } else {
                 totalElement.textContent = `Mostrando: ${count} de ${totalVehicles} veículos`;
             }
-        }
-
-        function clearAllFilters() {
-            document.getElementById('model_search').value = '';
-            document.getElementById('brand_search').value = '';
-            document.getElementById('status_search').value = '';
-            document.getElementById('year_search').value = '';
-
-            filterVehicles();
         }
 
         function openModal(id) {
