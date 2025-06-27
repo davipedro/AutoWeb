@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\DashboardPeriodEnum;
+use App\Repositories\SaleRepository;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Seller extends Model
+{
+    use SoftDeletes, HasFactory;
+
+    protected $table = 'sellers';
+    protected $fillable = [
+        'comissao',
+        'telefone',
+        'observacoes',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class, 'seller_id');
+    }
+
+    /**
+     * Orquestra a busca e formatação dos dados para o dashboard deste vendedor.
+     *
+     * @return array
+     */
+    /**
+     * Orquestra a busca de dados do dashboard com base em um objeto Carbon.
+     *
+     * @param int    $userId O ID do usuário/vendedor.
+     * @param Carbon $periodDate Um objeto Carbon que representa o período desejado (geralmente o início dele).
+     * @return array
+     */
+    public static function getDashboardData(int $userId, string $period): array
+    {
+        $periodDate = DashboardPeriodEnum::getDateRange($period);
+
+        [$startDate, $endDate] = $periodDate;
+
+        $salesCount = SaleRepository::getSalesCountForSeller($userId, $startDate, $endDate);
+        $totalSalesValue = SaleRepository::getTotalValueSoldForSeller($userId, $startDate, $endDate);
+        $accumulatedCommissions = SaleRepository::getAccumulatedCommissionsForSeller($userId, $startDate, $endDate);
+
+        $paginatedSales = SaleRepository::getPaginatedSalesForSeller($userId, $startDate, $endDate);
+
+        return [
+            'salesCount'             => $salesCount,
+            'totalSalesValue'        => $totalSalesValue,
+            'accumulatedCommissions' => $accumulatedCommissions,
+            'sales'                  => $paginatedSales,
+        ];
+    }
+}
