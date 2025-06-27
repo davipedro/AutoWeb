@@ -1,89 +1,96 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard do Vendedor')
+@section('title', 'Seller Dashboard')
 
 @section('content')
-
-    @php
-        $meses = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-    @endphp
-    <div class="dashboard-vendedor">
-        <h1 class="dashboard-vendedor__title">Dashboard do Vendedor</h1>
-        <p class="dashboard-vendedor__subtitle">Acompanhe seu desempenho de vendas</p>
-
-        <div class="dashboard-vendedor__filtro">
-            <select class="dashboard-vendedor__filtro-select">
-                <option>Selecione um mês</option>
-                @foreach($meses as $mes)
-                    <option value="{{ strtolower($mes) }}">
-                        {{ $mes }}
-                    </option>
-                @endforeach
-            </select>
-            <select class="dashboard-vendedor__filtro-select">
-                <option>Selecione um ano</option>
-                @foreach($meses as $mes)
-                    <option value="{{ strtolower($mes) }}">
-                        {{ $mes }}
-                    </option>
-                @endforeach
-            </select>
+    <div class="p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-1">Dashboard do Vendedor</h1>
+            <p class="text-gray-600">Acompanhe seu desempenho de vendas</p>
         </div>
 
-        <div class="dashboard-vendedor__resumo-cards">
-            <div class="dashboard-vendedor__card border-left-blue">
-                <p class="dashboard-vendedor__card-titulo">VENDAS DO MÊS</p>
-                <h2 class="dashboard-vendedor__card-valor">-</h2>
-                <p class="dashboard-vendedor__card-sub">Em estoque</p>
+        <form method="GET" action="{{ route('seller.dashboard') }}" class="mb-8">
+            <div class="flex items-center space-x-3 bg-white p-4 rounded-lg shadow-sm border">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500">
+                    <path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>
+                </svg>
+
+                <select name="period" class="w-48 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <option value="current_month" @selected($currentPeriod == 'current_month')>Mês Atual</option>
+                    <option value="last_month" @selected($currentPeriod == 'last_month')>Mês Passado</option>
+                    <option value="last_quarter" @selected($currentPeriod == 'last_quarter')>Último Trimestre</option>
+                    <option value="current_year" @selected($currentPeriod == 'current_year')>Ano Atual</option>
+                </select>
+
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Filtrar
+                </button>
+
+                <a href="{{ route('seller.dashboard') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Limpar
+                </a>
             </div>
-            <div class="dashboard-vendedor__card border-left-green">
-                <p class="dashboard-vendedor__card-titulo">VEÍCULOS DISPONÍVEIS</p>
-                <h2 class="dashboard-vendedor__card-valor">{{ $veiculosDisponiveis }}</h2>
-                <p class="dashboard-vendedor__card-sub">Disponíveis para venda</p>
+        </form>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
+                <p class="text-sm font-medium text-gray-600">Vendas Realizadas</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $salesCount ?? '0' }}</p>
             </div>
-            <div class="dashboard-vendedor__card border-left-orange">
-                <p class="dashboard-vendedor__card-titulo">TOTAL DE VENDAS</p>
-                <h2 class="dashboard-vendedor__card-valor">0</h2>
-                <p class="dashboard-vendedor__card-sub">Contagem total</p>
+            <div class="bg-white p-5 rounded-lg shadow border-l-4 border-green-500">
+                <p class="text-sm font-medium text-gray-600">Valor Total Vendido</p>
+                <p class="text-3xl font-bold text-gray-800">$ {{ number_format($totalSalesValue ?? 0, 2, '.', ',') }}</p>
+            </div>
+            <div class="bg-white p-5 rounded-lg shadow border-l-4 border-purple-500">
+                <p class="text-sm font-medium text-gray-600">Comissões Acumuladas</p>
+                <p class="text-3xl font-bold text-gray-800">$ {{ number_format($accumulatedCommissions ?? 0, 2, '.', ',') }}</p>
             </div>
         </div>
 
-        <div class="dashboard-vendedor__tabela-vendas">
-            <h3 class="dashboard-vendedor__tabela-titulo">Últimas Vendas</h3>
-            <p class="dashboard-vendedor__tabela-subtitulo">Histórico das suas vendas recentes</p>
-            <table class="dashboard-vendedor__tabela">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Veículo</th>
-                    <th>Valor de Venda</th>
-                    <th>Comissão</th>
-                    <th>Data</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ([
-                    ['Carlos Silva', 'R$ 85.000', 'R$8.400,00'],
-                    ['Ana Costa', 'R$ 85.000', 'R$5.400,00'],
-                    ['Pedro Santos', 'R$ 85.000', 'R$3.400,00'],
-                    ['Maria Oliveira', 'R$ 85.000', 'R$1.400,00'],
-                    ['João Pereira', 'R$ 85.000', 'R$4.400,00'],
-                ] as $venda)
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-5 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-800">Últimas Vendas</h2>
+                <p class="text-sm text-gray-500 mt-1">Histórico das suas vendas recentes</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <td>C001</td>
-                        <td>{{ $venda[0] }}</td>
-                        <td>Honda Civic 2022</td>
-                        <td class="green">{{ $venda[1] }}</td>
-                        <td class="purple">{{ $venda[2] }}</td>
-                        <td>15/01/2023</td>
+                        <th scope="col" class="px-6 py-3">ID</th>
+                        <th scope="col" class="px-6 py-3">Cliente</th>
+                        <th scope="col" class="px-6 py-3">Veículo</th>
+                        <th scope="col" class="px-6 py-3">Valor da Venda</th>
+                        <th scope="col" class="px-6 py-3">Comissão</th>
+                        <th scope="col" class="px-6 py-3">Data</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @forelse($sales ?? [] as $sale)
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ str_pad($sale->id, 4, 0, STR_PAD_LEFT) }}</td>
+                            <td class="px-6 py-4">{{ $sale->client->nome_completo ?? 'N/A' }}</td>
+                            <td class="px-6 py-4">{{ $sale->vehicle->modelo ?? 'N/A' }}</td>
+                            <td class="px-6 py-4 font-medium text-green-600">$ {{ number_format($sale->valor_total, 2, '.', ',') }}</td>
+                            <td class="px-6 py-4">
+                                    <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                        $ {{ number_format($sale->comissao, 2, '.', ',') }}
+                                    </span>
+                            </td>
+                            <td class="px-6 py-4">{{ \Carbon\Carbon::parse($sale->date)->format('m/d/Y') }}</td>
+                        </tr>
+                    @empty
+                        <tr class="bg-white border-b">
+                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">Nenhuma venda encontrada.</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="pagination-container">
+            {{ $sales->links('partials.pagination') }}
+        </div>
+
     </div>
 @endsection

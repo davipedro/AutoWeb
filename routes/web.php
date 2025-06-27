@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,8 @@ Route::middleware(['web'])->group(function () {
             Route::post('/atualizar/{id}', [ClientController::class, 'update'])->name('clientes.update');
             Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('clientes.delete');
         });
+
+        Route::get('/sellers/cadastrar', [SellerController::class, 'createSeller'])->name('sellers.add');
 
         Route::get('/relatorio', [ReportController::class, 'adminReport'])->name('admin.report');
 
