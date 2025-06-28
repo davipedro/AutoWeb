@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::table('sellers', function (Blueprint $table) {
             $table->double('salario', 10, 2)->after('comissao');
             $table->date('data_admissao')->nullable()->after('salario');
-            $table->string('cpf')->unique()->after('data_admissao');
             $table->string('rg')->after('cpf');
             $table->string('endereco')->nullable()->after('rg');
             $table->string('complemento')->nullable()->after('endereco');
