@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\VehicleStatusEnum;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
 use App\Models\Status;
@@ -10,12 +11,12 @@ class VehicleRepository
 {
     public function all()
     {
-        return Vehicle::with('status')->get();
+        return Vehicle::all();
     }
 
     public static function find($id)
     {
-        return Vehicle::with('status')->withTrashed()->find($id);
+        return Vehicle::withTrashed()->find($id);
     }
 
     public static function create(array $data)
@@ -32,15 +33,7 @@ class VehicleRepository
     public static function delete($id)
     {
         $veiculo = Vehicle::findOrFail($id);
-
-        // Busca o status com nome "inativo"
-        $statusInativo = Status::where('nome', 'inativo')->first();
-
-        if (!$statusInativo) {
-            throw new \Exception('Status "inativo" não encontrado. Verifique a tabela status.');
-        }
-
-        $veiculo->status_id = $statusInativo->id;
+        $veiculo->status = VehicleStatusEnum::Inactive->value;
         $veiculo->save();
 
         return $veiculo->delete();
@@ -64,27 +57,24 @@ class VehicleRepository
     public static function getVehiclesCatalog($includeVehicleId = null)
     {
         $query = DB::table('vehicles')
-            ->join('status', 'vehicles.status_id', '=', 'status.id')
-            ->select(
-                'vehicles.*',
-                DB::raw('status.nome as status_nome')
-            )
+            ->select('vehicles.*',)
+            ->where('status', '=', VehicleStatusEnum::Available->value)
             ->whereNull('vehicles.deleted_at')
-            ->orderBy('vehicles.marca', 'ASC');
+            ->orderBy('vehicles.marca', 'ASC')
+            ->get();
 
-        // Se um veículo específico deve ser incluído, mesmo que não esteja "disponível"
-        if ($includeVehicleId) {
-            $query->where(function ($q) use ($includeVehicleId) {
-                $q->where('status.nome', '=', 'disponível')
-                    ->orWhere('vehicles.id', '=', $includeVehicleId);
-            });
-        } else {
-            $query->where('status.nome', '=', 'disponível');
-        }
+            // Se um veículo específico deve ser incluído, mesmo que não esteja "disponível"
+            if ($includeVehicleId) {
+                $query->where(function ($q) use ($includeVehicleId) {
+                    $q->where('status.nome', '=', 'disponível')
+                        ->orWhere('vehicles.id', '=', $includeVehicleId);
+                });
+            } else {
+                $query->where('status.nome', '=', 'disponível');
+            }
 
-        return $query->get();
+            return $query->get();
     }
-
 
     public static function existsPlaca($placa, $ignoreId = null)
     {
@@ -111,12 +101,9 @@ class VehicleRepository
     public static function getFilteredVehicles(array $filters = [])
     {
         $query = DB::table('vehicles')
-            ->join('status', 'vehicles.status_id', '=', 'status.id')
-            ->select(
-                'vehicles.*',
-                DB::raw('status.nome as status_nome')
-            )
-            ->whereNull('vehicles.deleted_at');
+            ->select('vehicles.*',)
+            ->whereNull('vehicles.deleted_at')
+            ->where('vehicles.status', '!=', VehicleStatusEnum::Inactive->value);
 
         // Filtros
         if (!empty($filters['modelo'])) {
@@ -133,7 +120,7 @@ class VehicleRepository
         }
 
         if (!empty($filters['status'])) {
-            $query->where(DB::raw('LOWER(status.nome)'), '=', strtolower($filters['status']));
+            $query->where('vehicles.status', '=', $filters['status']);
         }
 
         return $query->orderBy('vehicles.marca', 'ASC')->paginate(10)->appends($filters);
@@ -157,17 +144,10 @@ class VehicleRepository
             ->pluck('ano');
     }
 
-    public static function getAllStatusNomes()
-    {
-        return Status::orderBy('nome')->pluck('nome');
-    }
-
     public static function getNumberOfAvailableVehicles()
     {
         return Vehicle::whereNull('deleted_at')
-            ->whereHas('status', function ($query) {
-                $query->where('nome', 'disponível');
-            })
+            ->where('status', '=', VehicleStatusEnum::Available->value)
             ->count();
     }
 }

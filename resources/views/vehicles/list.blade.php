@@ -110,7 +110,7 @@
                         data-model="{{ strtolower($veiculo->modelo) }}"
                         data-full-name="{{ strtolower($veiculo->marca . ' ' . $veiculo->modelo) }}"
                         data-year="{{ $veiculo->ano }}"
-                        data-status="{{ $veiculo->status_nome }}"
+                        data-status="{{ $veiculo->status }}"
                     >
                         <td>{{ $veiculo->id }}</td>
                         <td>
@@ -124,16 +124,16 @@
                         <td class="price-sale">R$ {{ number_format($veiculo->valor_venda, 2, ',', '.') }}</td>
                         <td>{{ __('combustiveis.' . $veiculo->tipo_combustivel) }}</td>
                         <td>
-                    <span class="status-badge status-{{ $veiculo->status_nome }}">
-                        @if($veiculo->status_nome == "disponivel")
+                    <span class="status-badge status-{{ $veiculo->status }}">
+                        @if($veiculo->status == "disponivel")
                             Disponível
-                        @elseif($veiculo->status_nome == "vendido")
+                        @elseif($veiculo->status == "vendido")
                             Vendido
-                        @elseif($veiculo->status_nome == "indisponivel")
+                        @elseif($veiculo->status == "indisponivel")
                             Indisponível
-                        @elseif($veiculo->status_nome == "reservado")
+                        @elseif($veiculo->status == "reservado")
                             Reservado
-                        @elseif($veiculo->status_nome == "manutencao")
+                        @elseif($veiculo->status == "manutencao")
                             Em Manutenção
                         @endif
                     </span>

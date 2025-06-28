@@ -26,14 +26,13 @@ class Vehicle extends Model
         'valor_venda',
         'placa',
         'chassi',
-        'status_id',
+        'status',
         'observacoes',
     ];
 
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
+    protected $casts = [
+        'status' => 'string',
+    ];
 
     public static function verifyInfo($id = null)
     {
@@ -49,7 +48,7 @@ class Vehicle extends Model
             'valor_venda' => 'required|numeric',
             'placa' => ['required', 'string', Rule::unique('vehicles')->ignore($id)],
             'chassi' => ['nullable', 'string', Rule::unique('vehicles')->ignore($id)],
-            'status_id' => 'required|exists:status,id',
+            'status' => ['required', 'in:disponivel, vendido, indisponivel, reservado, manutencao, inativo'],
             'observacoes' => 'nullable|string',
         ];
     }

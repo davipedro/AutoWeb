@@ -5,7 +5,7 @@
 @section('content')
     @php
         $marcas = $veiculosDisponiveis->pluck('marca')->unique()->sort()->values();
-        $status = $veiculosDisponiveis->pluck('status_nome')->unique()->sort()->values();
+        $status = $veiculosDisponiveis->pluck('status')->unique()->sort()->values();
         $anos = $veiculosDisponiveis->pluck('ano')->unique()->sortDesc()->values();
     @endphp
 
