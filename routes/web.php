@@ -40,6 +40,15 @@ Route::middleware(['web'])->group(function () {
             Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('admin.clientes.delete');
         });
 
+        Route::prefix('vendedores')->group(function () {
+            Route::get('/', [SellerController::class, 'index'])->name('admin.vendedores.list');
+            Route::get('/cadastrar', [SellerController::class, 'createSeller'])->name('admin.vendedores.add');
+            Route::post('/salvar', [SellerController::class, 'store'])->name('admin.vendedores.store');
+            Route::get('/editar/{id}', [SellerController::class, 'editSeller'])->name('admin.vendedores.edit');
+            Route::post('/atualizar/{id}', [SellerController::class, 'update'])->name('admin.vendedores.update');
+            Route::get('/excluir/{id}', [SellerController::class, 'delete'])->name('admin.vendedores.delete');
+        });
+
         Route::prefix('sale')->group(function () {
             Route::get('/cadastrar', [SaleController::class, 'createSale'])->name('admin.sell.add');
             Route::post('/salvar', [SaleController::class, 'storeSale'])->name('admin.sell.store');
@@ -63,9 +72,6 @@ Route::middleware(['web'])->group(function () {
             Route::get('/', [VehicleController::class, 'index'])->name('seller.veiculos.list');
             Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('seller.veiculos.add');
             Route::post('/salvar', [VehicleController::class, 'store'])->name('seller.veiculos.store');
-            Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('seller.veiculos.edit');
-            Route::post('/atualizar/{id}', [VehicleController::class, 'update'])->name('seller.veiculos.update');
-            Route::get('/excluir/{id}', [VehicleController::class, 'delete'])->name('seller.veiculos.delete');
         });
 
         Route::prefix('sale')->group(function () {

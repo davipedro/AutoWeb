@@ -52,6 +52,13 @@ class User extends Authenticatable
         return $this->role === 'seller';
     }
 
+    public static function verifyInfo($id = null){
+        return [
+            'name' => 'required|string|max:255|min:2',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+        ];
+    }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -133,13 +133,23 @@
                         </a>
 
                         <!-- Cadastrar Novo Vendedor -->
-                        <a href="" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--success">
+                        <a href="#" onclick="abrirModalConfirmacao()" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--success">
                             <div class="dashboard-admin__quick-access-btn-content">
                                 <i class="fas fa-user-plus dashboard-admin__quick-access-icon"></i>
                                 <span>Cadastrar Novo Vendedor</span>
                             </div>
                             <i class="fas fa-arrow-right dashboard-admin__quick-access-arrow"></i>
                         </a>
+
+                        <div id="modalConfirmacao" class="modal-confirmacao">
+                            <div class="modal-confirmacao__content">
+                                <p>O vendedor já possui acesso ao sistema?</p>
+                                <div class="modal-confirmacao__botoes">
+                                    <button onclick="redirecionarPara('sim')" class="modal-confirmacao__btn modal-confirmacao__btn--sim">Sim</button>
+                                    <button onclick="redirecionarPara('nao')" class="modal-confirmacao__btn modal-confirmacao__btn--nao">Não</button>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Relatório de Vendas -->
                         <a href="{{ route('admin.report') }}" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--info">
@@ -166,11 +176,72 @@
 
     @push('scripts')
         <script>
-            // Atualização automática dos dados a cada 5 minutos
             setInterval(function() {
-                // Aqui você pode implementar uma chamada AJAX para atualizar os dados
                 console.log('Atualizando dados do dashboard...');
             }, 300000); // 5 minutos
+
+            function abrirModalConfirmacao() {
+                document.getElementById('modalConfirmacao').style.display = 'flex';
+            }
+
+            function redirecionarPara(resposta) {
+                const modal = document.getElementById('modalConfirmacao');
+                modal.style.display = 'none';
+
+                if (resposta === 'sim') {
+                    window.location.href = "{{ route('admin.vendedores.add') }}";
+                } else {
+                    window.location.href = "{{ url('/register') }}";
+                }
+            }
         </script>
     @endpush
+
+    <style>
+        .modal-confirmacao {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-confirmacao__content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .modal-confirmacao__botoes {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal-confirmacao__btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-confirmacao__btn--sim {
+            background-color: #38c172; /* verde */
+            color: white;
+        }
+
+        .modal-confirmacao__btn--nao {
+            background-color: #e3342f; /* vermelho */
+            color: white;
+        }
+    </style>
 @endsection

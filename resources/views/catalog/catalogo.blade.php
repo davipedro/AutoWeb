@@ -75,8 +75,7 @@
                             <li>{{ $veiculo->quilometragem }} Km</li>
                         </ul>
                         <span class="badge">{{ $veiculo->cor ?? 'Branco' }}</span>
-                        <a
-                            href="https://wa.me/5538998546298?text=Olá,%20tudo%20bem?%20Gostaria%20de%20mais%20informações%20sobre%20o%20veículo%20{{ $veiculo->marca }}%20{{ $veiculo->modelo }}%20na%20cor%20{{ $veiculo->cor }}."
+                        <a href="https://wa.me/5538998546298?text=Olá,%20tudo%20bem?%20Gostaria%20de%20mais%20informações%20sobre%20o%20veículo%20{{ $veiculo->marca }}%20{{ $veiculo->modelo }}%20na%20cor%20{{ $veiculo->cor }}."
                             class="interest-button">
                             Tenho Interesse
                         </a>
@@ -122,7 +121,6 @@
         function clearAllFilters() {
             document.getElementById('model_search').value = '';
             document.getElementById('brand_search').value = '';
-            // Removida limpeza do status_search pois não existe no HTML
             document.getElementById('year_search').value = '';
 
             filterVehicles();
