@@ -130,10 +130,8 @@
                                     @php
                                         $methods = [
                                             'Cartão de Crédito',
-                                            'Cartão de Débito',
                                             'PIX',
                                             'Dinheiro',
-                                            'Boleto',
                                             'Transferência Bancária',
                                         ];
                                     @endphp

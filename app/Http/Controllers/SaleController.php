@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatusEnum;
 use App\Models\Sale;
 use App\Models\Seller;
 use App\Models\Status;
@@ -53,12 +54,6 @@ class SaleController extends Controller
             if ($filtrosAtivos) {
                 // Com filtro → extrai apenas das opções filtradas
                 $collection = $vendas->getCollection();
-                $cidades = $collection->pluck('cidade')->unique()->sort()->values();
-                $estados = $collection->pluck('estado')->unique()->sortDesc()->values();
-            } else {
-                // Sem filtros → traz tudo do banco
-                $cidades = SaleRepository::getAllCidades();
-                $estados = SaleRepository::getAllEstados();
             }
 
         return view('sales.list', compact('vendas', 'filters', 'clientesDisponiveis'));
@@ -96,8 +91,10 @@ class SaleController extends Controller
             $id = SaleRepository::create($validated);
 
             $veiculo = Vehicle::find($validated['veiculo_id']);
+            $veiculo = Vehicle::find($validated['veiculo_id']);
+
             if ($veiculo) {
-                $veiculo->status_id = Status::where('nome', 'vendido')->value('id'); // Ou coloque o ID direto
+                $veiculo->status = VehicleStatusEnum::Sold->value;
                 $veiculo->save();
             }
 
@@ -143,7 +140,7 @@ class SaleController extends Controller
                 // Atualiza o status do veículo para "disponível"
                 $veiculo = Vehicle::find($venda->veiculo_id);
                 if ($veiculo) {
-                    $veiculo->status_id = Status::where('nome', 'disponível')->value('id');
+                    $veiculo->status = VehicleStatusEnum::Available->value;
                     $veiculo->save();
                 }
             }
@@ -192,18 +189,16 @@ class SaleController extends Controller
 
             // Atualiza status dos veículos
             if ($veiculoAntigoId != $validated['veiculo_id']) {
-                // Veículo antigo → volta para disponível
-                $veiculoAntigo = Vehicle::find($veiculoAntigoId);
-                if ($veiculoAntigo) {
-                    $veiculoAntigo->status_id = Status::where('nome', 'disponivel')->value('id');
+                // Antigo volta para disponível
+                if ($veiculoAntigo = Vehicle::find($veiculoAntigoId)) {
+                    $veiculoAntigo->status = VehicleStatusEnum::Available->value;
                     $veiculoAntigo->save();
                 }
             }
 
-            // Veículo novo → define como vendido
-            $veiculoNovo = Vehicle::find($validated['veiculo_id']);
-            if ($veiculoNovo) {
-                $veiculoNovo->status_id = Status::where('nome', 'vendido')->value('id');
+            // Novo fica como vendido
+            if ($veiculoNovo = Vehicle::find($validated['veiculo_id'])) {
+                $veiculoNovo->status = VehicleStatusEnum::Sold->value;
                 $veiculoNovo->save();
             }
 

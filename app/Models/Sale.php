@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SalePaymentMethodEnum;
+use App\Enums\VehicleStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -47,7 +48,7 @@ class Sale extends Model
     public static function verifyInfo()
     {
 
-        $inactiveStatusId = Status::where('nome', 'inativo')->value('id');
+        $inactiveStatusId = VehicleStatusEnum::Inactive->value;
 
         return [
             'cliente_id' => [
@@ -62,7 +63,7 @@ class Sale extends Model
                 'required',
                 Rule::exists('vehicles', 'id')
                     ->whereNull('deleted_at')
-                    ->where('status_id', '!=', $inactiveStatusId),
+                    ->where('status', '!=', $inactiveStatusId),
             ],
             'data_venda'   => ['required', 'date'],
             'metodo_pagamento' => ['required', 'string'],

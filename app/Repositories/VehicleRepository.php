@@ -42,10 +42,8 @@ class VehicleRepository
     public static function getVehicles()
     {
         $vehicles = DB::table('vehicles')
-            ->join('status', 'vehicles.status_id', '=', 'status.id')
             ->select(
                 'vehicles.*',
-                DB::raw('status.nome as status_nome')
             )
             ->whereNull('vehicles.deleted_at')
             ->orderBy('vehicles.marca', 'ASC')

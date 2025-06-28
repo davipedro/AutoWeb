@@ -6,7 +6,7 @@
     <div class="container">
         <!-- Header -->
         <div class="add-header">
-            <a href="{{ route('veiculos.list') }}" class="back-button">
+            <a href="{{ route(auth()->user()->role .'.veiculos.list') }}" class="back-button">
                 <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -220,20 +220,21 @@
 
                         <!-- Status -->
                         <div class="form-group">
-                            <label for="status_id" class="form-label">Status</label>
-                            <select id="status_id"
-                                    name="status_id"
-                                    class="form-select @error('status_id') error-input @enderror">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status"
+                                    name="status"
+                                    class="form-select @error('status') error-input @enderror">
                                 <option value="">Selecione um status</option>
                                 @foreach ($statuses as $status)
-                                    @if ($status->nome !== "inativo")
-                                        <option value="{{ $status->id }}" {{ old('status_id', $veiculo->status_id) == $status->id ? 'selected' : '' }}>
-                                            {{ __('status.' . $status->nome) }}
+                                    @if ($status !== 'inativo')
+                                        <option value="{{ $status }}"
+                                            {{ old('status', $veiculo->status->value ?? 'disponivel') == $status ? 'selected' : '' }}>
+                                            {{ __('status.' . $status) }}
                                         </option>
                                     @endif
                                 @endforeach
                             </select>
-                            @error('status_id')
+                            @error('status')
                             <p class="error-message">{{ $message }}</p>
                             @enderror
                         </div>

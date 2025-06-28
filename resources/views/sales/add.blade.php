@@ -118,12 +118,10 @@
                                 <select name="metodo_pagamento" id="metodo_pagamento"
                                         class="form-select @error('metodo_pagamento') error-input @enderror">
                                     <option value="">Selecione o método</option>
-                                    <option value="credito" {{ old('metodo_pagamento') == 'credito' ? 'selected' : '' }}>Cartão de Crédito</option>
-                                    <option value="debito" {{ old('metodo_pagamento') == 'debito' ? 'selected' : '' }}>Cartão de Débito</option>
-                                    <option value="dinheiro" {{ old('metodo_pagamento') == 'dinheiro' ? 'selected' : '' }}>Dinheiro</option>
-                                    <option value="pix" {{ old('metodo_pagamento') == 'pix' ? 'selected' : '' }}>PIX</option>
-                                    <option value="boleto" {{ old('metodo_pagamento') == 'boleto' ? 'selected' : '' }}>Boleto Bancário</option>
-                                    <option value="transferencia" {{ old('metodo_pagamento') == 'transferencia' ? 'selected' : '' }}>Transferência</option>
+                                    <option value="Cartão de Crédito" {{ old('metodo_pagamento') == 'Cartão de Crédito' ? 'selected' : '' }}>Cartão de Crédito</option>
+                                    <option value="Dinheiro" {{ old('metodo_pagamento') == 'Dinheiro' ? 'selected' : '' }}>Dinheiro</option>
+                                    <option value="PIX" {{ old('metodo_pagamento') == 'PIX' ? 'selected' : '' }}>PIX</option>
+                                    <option value="Transferência Bancária" {{ old('metodo_pagamento') == 'Transferência Bancária' ? 'selected' : '' }}>Transferência</option>
                                 </select>
                                 @error('metodo_pagamento') <p class="error-message">{{ $message }}</p> @enderror
                             </div>

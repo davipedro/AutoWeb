@@ -216,21 +216,22 @@
 
                         <!-- Status -->
                         <div class="form-group">
-                            <label for="status_id" class="form-label">Status</label>
-                            <select id="status_id"
-                                    name="status_id"
-                                    class="form-select @error('status_id') error-input @enderror">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status"
+                                    name="status"
+                                    class="form-select @error('status') error-input @enderror">
                                 <option value="">Selecione um status</option>
-                                @foreach ($statuses as $index => $status)
+                                @foreach ($statuses as $status)
                                     @if ($status !== "inativo")
-                                        <option value="{{ $index }}"
-                                            {{ old('status', $index == 1 ? $index : null) == $index ? 'selected' : '' }}>
+                                        <option value="{{ $status }}"
+                                            {{ old('status', $registro->status ?? 'disponivel') == $status ? 'selected' : '' }}>
                                             {{ __('status.' . $status) }}
                                         </option>
+
                                     @endif
                                 @endforeach
                             </select>
-                            @error('status_id')
+                            @error('status')
                                 <p class="error-message">{{ $message }}</p>
                             @enderror
                         </div>

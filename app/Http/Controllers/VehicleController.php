@@ -44,6 +44,11 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->merge([
+                'valor_custo' => $this->sanitizeMoney($request->input('valor_custo')),
+                'valor_venda' => $this->sanitizeMoney($request->input('valor_venda')),
+            ]);
+
             $validated = $this->validateData($request);
             VehicleRepository::create($validated);
             return redirect()->route(auth()->user()->role . '.veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
@@ -59,7 +64,7 @@ class VehicleController extends Controller
         // Busca o veículo pelo ID no banco
         $veiculo = Vehicle::findOrFail($id);
 
-        $statuses = Status::all();
+        $statuses = VehicleStatusEnum::getAllValues();
 
         return view('vehicles.edit', compact('veiculo', 'statuses'));
     }
@@ -71,6 +76,11 @@ class VehicleController extends Controller
                 return redirect()->route(auth()->user()->role . '.veiculos.list')
                     ->with('error', 'Veículo não disponível para edição.');
             }
+
+            $request->merge([
+                'valor_custo' => $this->sanitizeMoney($request->input('valor_custo')),
+                'valor_venda' => $this->sanitizeMoney($request->input('valor_venda')),
+            ]);
 
             $validated = $this->validateData($request, $id);
 
@@ -138,6 +148,15 @@ class VehicleController extends Controller
     {
         $veiculos = VehicleRepository::getVehiclesCatalog($vehicleId);
         return $veiculos;
+    }
+
+    private function sanitizeMoney(string|null $valor): float
+    {
+        if (!$valor) return 0;
+
+        $limpo = preg_replace('/[^\d,]/', '', $valor); // remove R$ e pontos
+        $limpo = str_replace(',', '.', $limpo); // troca vírgula por ponto
+        return (float) $limpo;
     }
 
 }

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\VehicleStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 
 class Vehicle extends Model
@@ -31,7 +33,7 @@ class Vehicle extends Model
     ];
 
     protected $casts = [
-        'status' => 'string',
+        'status' => VehicleStatusEnum::class,
     ];
 
     public static function verifyInfo($id = null)
@@ -48,7 +50,7 @@ class Vehicle extends Model
             'valor_venda' => 'required|numeric',
             'placa' => ['required', 'string', Rule::unique('vehicles')->ignore($id)],
             'chassi' => ['nullable', 'string', Rule::unique('vehicles')->ignore($id)],
-            'status' => ['required', 'in:disponivel, vendido, indisponivel, reservado, manutencao, inativo'],
+            'status' => ['required', new Enum(VehicleStatusEnum::class)],
             'observacoes' => 'nullable|string',
         ];
     }
