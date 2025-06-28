@@ -48,13 +48,7 @@ class VehicleFactory extends Factory
             'valor_venda' => $valorCusto + rand(3000, 20000),
             'placa' => strtoupper($this->faker->unique()->bothify('???-####')),
             'chassi' => strtoupper($this->faker->unique()->bothify(str_repeat('#', 17))),
-            'status_id' => function () {
-                $statusIds = DB::table('status')
-                    ->whereIn('nome', ['disponível', 'vendido', 'manutencao', 'indisponivel', 'reservado'])
-                    ->pluck('id')
-                    ->toArray();
-                return $this->faker->randomElement($statusIds);
-            },
+            'status' => $this->faker->randomElement(['disponivel', 'vendido', 'indisponivel', 'reservado', 'manutencao', 'inativo']),
             'observacoes' => $this->faker->optional()->sentence(),
         ];
     }

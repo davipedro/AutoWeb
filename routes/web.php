@@ -66,16 +66,16 @@ Route::middleware(['web'])->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller.dashboard');
 
-        Route::prefix('veiculos')->group(function () {
-            Route::get('/', [VehicleController::class, 'index'])->name('veiculos.list');
-            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
-            Route::post('/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
+        Route::prefix('clientes')->group(function () {
+            Route::get('/', [ClientController::class, 'index'])->name('seller.clientes.list');
+            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('seller.clientes.add');
+            Route::post('/salvar', [ClientController::class, 'store'])->name('seller.clientes.store');
         });
 
-        Route::prefix('clientes')->group(function () {
-            Route::get('/', [ClientController::class, 'indexSeller'])->name('clientes.list');
-            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('clientes.add');
-            Route::post('/salvar', [ClientController::class, 'store'])->name('clientes.store');
+        Route::prefix('veiculos')->group(function () {
+            Route::get('/', [VehicleController::class, 'index'])->name('seller.veiculos.list');
+            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('seller.veiculos.add');
+            Route::post('/salvar', [VehicleController::class, 'store'])->name('seller.veiculos.store');
         });
 
         Route::prefix('vendas')->group(function () {

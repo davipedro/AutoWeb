@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
+            $table->string('cpf', 14)->unique();
             $table->foreignId('user_id')->constrained();
-            $table->decimal('comissao', 8, 2);
+            $table->decimal('comissao', 5, 4);
             $table->string('telefone');
             $table->text('observacoes')->nullable();
             $table->timestamps();

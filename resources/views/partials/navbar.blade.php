@@ -11,9 +11,9 @@
             <ul class="menu">
                 @if (auth()->user()->isAdmin())
                     <li><a href="{{ route('catalogo') }}" class="{{ request()->routeIs('catalogo') ? 'active' : '' }}">Catálogo</a></li>
-                    <li><a href="{{ route('home') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
-                    <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
-                    <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
+                    <li><a href="{{ route('admin.veiculos.list') }}" class="{{ request()->routeIs('admin.veiculos.*') ? 'active' : '' }}">Veículos</a></li>
+                    <li><a href="{{ route('admin.clientes.list') }}" class="{{ request()->routeIs('admin.clientes.*') ? 'active' : '' }}">Clientes</a></li>
                     <li><a href="{{ route('admin.vendedores.list') }}" class="{{ request()->routeIs('admin.vendedores.*') ? 'active' : '' }}">Vendedores</a></li>
                     <li><a href="{{ route('admin.vendas.list') }}" class="{{ request()->routeIs('admin.vendas.*') ? 'active' : '' }}">Vendas</a></li>
                     <li><a href="{{ route('admin.report') }}" class="{{ request()->routeIs('admin.report') ? 'active' : '' }}">Relatórios</a></li>
@@ -21,9 +21,9 @@
                 @if(auth()->user()->isSeller())
                     <li><a href="{{ route('catalogo') }}" class="{{ request()->routeIs('catalogo') ? 'active' : '' }}">Catálogo</a></li>
                     <li><a href="{{ route('seller.dashboard') }}" class="{{ request()->routeIs('seller.dashboard') ? 'active' : '' }}">Dashboard</a></li>
-                    <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
-                    <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
-                    <li><a href="{{ route('seller.vendas.list') }}" class="{{ request()->routeIs('seller.vendas.*') ? 'active' : '' }}">Vendas</a></li>
+                    <li><a href="{{ route('seller.veiculos.list') }}" class="{{ request()->routeIs('seller.veiculos.*') ? 'active' : '' }}">Veículos</a></li>
+                    <li><a href="{{ route('seller.clientes.list') }}" class="{{ request()->routeIs('seller.clientes.*') ? 'active' : '' }}">Clientes</a></li>
+                        <li><a href="{{ route('seller.vendas.list') }}" class="{{ request()->routeIs('seller.vendas.*') ? 'active' : '' }}">Vendas</a></li>
                     <li><a href="{{ route('seller.report') }}" class="{{ request()->routeIs('seller.report') ? 'active' : '' }}">Relatório</a></li>
                 @endif
             </ul>

@@ -124,7 +124,7 @@
                     </div>
                     <div class="dashboard-admin__quick-access-body">
                         <!-- Cadastrar Novo Veículo -->
-                        <a href="{{ route('veiculos.add') }}" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--primary">
+                        <a href="{{ route(auth()->user()->role . '.veiculos.add') }}" class="dashboard-admin__quick-access-btn dashboard-admin__quick-access-btn--primary">
                             <div class="dashboard-admin__quick-access-btn-content">
                                 <i class="fas fa-car dashboard-admin__quick-access-icon"></i>
                                 <span>Cadastrar Novo Veículo</span>

@@ -31,6 +31,12 @@ class Seller extends Model
         'observacoes',
     ];
 
+    public static function getCommissionPercentage($userId): float
+    {
+        $seller = self::where('user_id', $userId)->first();
+        return $seller ? $seller->comissao : 0.0;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -39,6 +45,38 @@ class Seller extends Model
     public function sales()
     {
         return $this->hasMany(Sale::class, 'seller_id');
+    }
+
+    /**
+     * Orquestra a busca e formatação dos dados para o dashboard deste vendedor.
+     *
+     * @return array
+     */
+    /**
+     * Orquestra a busca de dados do dashboard com base em um objeto Carbon.
+     *
+     * @param int    $userId O ID do usuário/vendedor.
+     * @param Carbon $periodDate Um objeto Carbon que representa o período desejado (geralmente o início dele).
+     * @return array
+     */
+    public static function getDashboardData(int $userId, string $period): array
+    {
+        $periodDate = DashboardPeriodEnum::getDateRange($period);
+
+        [$startDate, $endDate] = $periodDate;
+
+        $salesCount = SaleRepository::getSalesCountForSeller($userId, $startDate, $endDate);
+        $totalSalesValue = SaleRepository::getTotalValueSoldForSeller($userId, $startDate, $endDate);
+        $accumulatedCommissions = SaleRepository::getAccumulatedCommissionsForSeller($userId, $startDate, $endDate);
+
+        $paginatedSales = SaleRepository::getPaginatedSalesForSeller($userId, $startDate, $endDate);
+
+        return [
+            'salesCount'             => $salesCount,
+            'totalSalesValue'        => $totalSalesValue,
+            'accumulatedCommissions' => $accumulatedCommissions,
+            'sales'                  => $paginatedSales,
+        ];
     }
 
     public static function verifyInfo($id = null, $userId = null)

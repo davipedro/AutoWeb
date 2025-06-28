@@ -19,7 +19,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('veiculos.update', $veiculo->id) }}" method="POST">
+        <form action="{{ route('admin.veiculos.update', $veiculo->id) }}" method="POST">
             @csrf
             @method('POST')
 
@@ -256,7 +256,7 @@
 
             <!-- Botões de Ação -->
             <div class="form-actions">
-                <a href="{{ route('veiculos.list') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route(auth()->user()->role . '.veiculos.list') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             </div>
         </form>

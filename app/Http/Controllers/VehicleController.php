@@ -46,7 +46,7 @@ class VehicleController extends Controller
         try {
             $validated = $this->validateData($request);
             VehicleRepository::create($validated);
-            return redirect()->route('veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
+            return redirect()->route(auth()->user()->role . '.veiculos.list')->with('success', 'Veículo cadastrado com sucesso!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
@@ -68,7 +68,7 @@ class VehicleController extends Controller
     {
         try {
             if (!$this->isVehicleAvailable($id)) {
-                return redirect()->route('veiculos.list')
+                return redirect()->route(auth()->user()->role . '.veiculos.list')
                     ->with('error', 'Veículo não disponível para edição.');
             }
 
@@ -76,7 +76,7 @@ class VehicleController extends Controller
 
             VehicleRepository::update($id, $validated);
 
-            return redirect()->route('veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
+            return redirect()->route(auth()->user()->role . '.veiculos.list')->with('success', 'Veículo atualizado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar veículo: ' . $e->getMessage());
         }
@@ -85,7 +85,7 @@ class VehicleController extends Controller
     public function delete($id)
     {
         VehicleRepository::delete($id);
-        return redirect()->route('veiculos.list')->with('success', 'Veículo removido com sucesso!');
+        return redirect()->route(auth()->user()->role . '.veiculos.list')->with('success', 'Veículo removido com sucesso!');
     }
 
     public function validateData(Request $request, $id = null)
