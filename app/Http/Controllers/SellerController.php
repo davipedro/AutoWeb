@@ -168,5 +168,14 @@ class SellerController extends Controller
         }
     }
 
+    public static function getNumberOfSellers()
+    {
+        return Seller::whereNull('deleted_at')->count();
+    }
+
+    public static function getSellers()
+    {
+        return SellerRepository::getSellers();
+    }
 
 }

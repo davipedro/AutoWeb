@@ -12,7 +12,8 @@ class DashboardController extends Controller
     {
         $veiculosDisponiveis = VehicleController::getNumberOfVehicles();
         $valorEstoque = VehicleController::getTotalValueOfVehicles();
-        return view('admin.dashboard', compact('veiculosDisponiveis', 'valorEstoque'));
+        $vendedoresAtivos = SellerController::getNumberOfSellers();
+        return view('admin.dashboard', compact('veiculosDisponiveis', 'valorEstoque', 'vendedoresAtivos'));
     }
 
     public function sellerDashboard(Request $request)

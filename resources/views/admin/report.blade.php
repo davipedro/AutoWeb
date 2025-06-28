@@ -6,12 +6,6 @@
 
     @php
         // Dados fictícios para facilitar testes e visualização
-        $vendedores = collect([
-            (object) ['id' => 1, 'nome' => 'Carlos Silva'],
-            (object) ['id' => 2, 'nome' => 'Ana Costa'],
-            (object) ['id' => 3, 'nome' => 'Pedro Santos'],
-        ]);
-
         $totalVendas = 25;
         $totalVendasVendedor = 10;
         $vendedorSelecionadoNome = 'Carlos Silva';
@@ -50,6 +44,7 @@
         <h1 class="relatorio-vendas__titulo">Relatório Administrativo de Vendas</h1>
         <p class="relatorio-vendas__subtitulo">Analise suas vendas de forma detalhada e por vendedor</p>
 
+        {{--Lembrar de colocar o action para fazer os filtros--}}
         <form method="GET" action="" class="relatorio-vendas__filtros" style="display:flex; gap:1rem; flex-wrap: wrap;">
             <div class="relatorio-vendas__filtros-group">
                 <label>Data Inicial</label>
@@ -65,7 +60,7 @@
                     <option value="">Todos</option>
                     @foreach ($vendedores as $vendedor)
                         <option value="{{ $vendedor->id }}" {{ request('vendedor') == $vendedor->id ? 'selected' : '' }}>
-                            {{ $vendedor->nome }}
+                            {{ $vendedor->nome_completo }}
                         </option>
                     @endforeach
                 </select>

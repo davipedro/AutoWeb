@@ -8,7 +8,8 @@ class ReportController extends Controller
 {
     public function adminReport()
     {
-        return view('admin.report');
+        $vendedores = SellerController::getSellers();
+        return view('admin.report', compact('vendedores'));
     }
 
     public function sellerReport()

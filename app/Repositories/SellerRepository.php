@@ -132,4 +132,14 @@ class SellerRepository
         }
         return null;
     }
+
+    public static function getSellers()
+    {
+        $query = DB::table('sellers')
+            ->select('sellers.*', 'users.email as email', 'users.name as nome_completo')
+            ->leftJoin('users', 'users.id', '=', 'sellers.user_id')
+            ->whereNull('sellers.deleted_at');
+
+        return $query->orderBy('nome_completo', 'ASC')->get();
+    }
 }
