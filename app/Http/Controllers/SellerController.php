@@ -49,7 +49,7 @@ class SellerController extends Controller
         }
     }
 
-    protected function getSAvailableSellers()
+    public static function getSAvailableSellers()
     {
         // IDs de usuários que já são vendedores
         $userIdsVinculados = Seller::pluck('user_id')->toArray();

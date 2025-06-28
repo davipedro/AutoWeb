@@ -98,4 +98,15 @@ class ClientRepository
         }
         return null;
     }
+
+    public static function getAvailableClients()
+    {
+        $query = DB::table('clients')
+            ->select('clients.*',)
+            ->whereNull('clients.deleted_at');
+
+        $clientesDisponiveis = $query->orderBy('clients.nome_completo', 'ASC')->get();
+
+        return $clientesDisponiveis;
+    }
 }

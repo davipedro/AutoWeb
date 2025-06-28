@@ -129,4 +129,9 @@ class ClientController extends Controller
         return $veiculos;
     }
 
+    public static function getAvailableClients()
+    {
+        return ClientRepository::getAvailableClients();
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Validation\Rule;
 
 class Sale extends Model
 {
@@ -17,6 +18,10 @@ class Sale extends Model
         'valor_total',
         'comissao',
         'metodo_pagamento',
+        'vendedor_id',
+        'cliente_id',
+        'veiculo_id',
+        'observacoes',
     ];
 
     public function seller()
@@ -32,5 +37,33 @@ class Sale extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'veiculo_id');
+    }
+
+    public static function verifyInfo()
+    {
+
+        $inactiveStatusId = Status::where('nome', 'inativo')->value('id');
+
+        return [
+            'cliente_id' => [
+                'required',
+                Rule::exists('clients', 'id')->whereNull('deleted_at'),
+            ],
+            'vendedor_id' => [
+                'required',
+                Rule::exists('sellers', 'id')->whereNull('deleted_at'),
+            ],
+            'veiculo_id' => [
+                'required',
+                Rule::exists('vehicles', 'id')
+                    ->whereNull('deleted_at')
+                    ->where('status_id', '!=', $inactiveStatusId),
+            ],
+            'data_venda'   => ['required', 'date'],
+            'metodo_pagamento' => ['required', 'string'],
+            'valor_total'  => ['required', 'string'],
+            'comissao'     => ['required', 'string'],
+            'observacoes'  => ['nullable', 'string'],
+        ];
     }
 }

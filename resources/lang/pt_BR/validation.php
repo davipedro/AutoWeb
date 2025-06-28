@@ -40,6 +40,14 @@ return [
         'estado' => 'estado',
         'cep' => 'CEP',
 
+        //Vendas
+        'cliente_id' => 'cliente',
+        'veiculo_id' => 'veículo',
+        'vendedor_id' => 'vendedor',
+        'valor_venda' => 'valor da venda',
+        'data_venda' => 'data da venda',
+        'forma_pagamento' => 'forma de pagamento',
+
         'observacoes' => 'observações',
     ],
 ];

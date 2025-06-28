@@ -134,9 +134,9 @@ class VehicleController extends Controller
         return $vehicle->status_id != 12 && $vehicle->deleted_at === null;
     }
 
-    public static function getVehicles()
+    public static function getVehicles($vehicleId = null)
     {
-        $veiculos = VehicleRepository::getVehiclesCatalog();
+        $veiculos = VehicleRepository::getVehiclesCatalog($vehicleId);
         return $veiculos;
     }
 

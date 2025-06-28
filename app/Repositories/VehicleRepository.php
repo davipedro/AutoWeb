@@ -61,21 +61,30 @@ class VehicleRepository
         return $vehicles;
     }
 
-    public static function getVehiclesCatalog()
+    public static function getVehiclesCatalog($includeVehicleId = null)
     {
-        $vehicles = DB::table('vehicles')
+        $query = DB::table('vehicles')
             ->join('status', 'vehicles.status_id', '=', 'status.id')
             ->select(
                 'vehicles.*',
                 DB::raw('status.nome as status_nome')
             )
-            ->where('status.nome', '=', 'disponível')
             ->whereNull('vehicles.deleted_at')
-            ->orderBy('vehicles.marca', 'ASC')
-            ->get();
+            ->orderBy('vehicles.marca', 'ASC');
 
-        return $vehicles;
+        // Se um veículo específico deve ser incluído, mesmo que não esteja "disponível"
+        if ($includeVehicleId) {
+            $query->where(function ($q) use ($includeVehicleId) {
+                $q->where('status.nome', '=', 'disponível')
+                    ->orWhere('vehicles.id', '=', $includeVehicleId);
+            });
+        } else {
+            $query->where('status.nome', '=', 'disponível');
+        }
+
+        return $query->get();
     }
+
 
     public static function existsPlaca($placa, $ignoreId = null)
     {
