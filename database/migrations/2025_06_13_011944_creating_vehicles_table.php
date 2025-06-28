@@ -20,12 +20,8 @@ return new class extends Migration
             $table->string('tipo_combustivel');
             $table->double('valor_custo', 10, 2);
             $table->double('valor_venda', 10, 2);
-
-            $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('restrict');
-
+            $table->enum('status', ['disponivel', 'vendido', 'indisponivel', 'reservado', 'manutencao', 'inativo']);
             $table->string('chassi')->nullable()->unique();
-
             $table->timestamps();
         });
     }
