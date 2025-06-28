@@ -15,10 +15,17 @@ class Seller extends Model
 
     protected $table = 'sellers';
     protected $fillable = [
+        'cpf',
         'comissao',
         'telefone',
         'observacoes',
     ];
+
+    public static function getCommissionPercentage($userId): float
+    {
+        $seller = self::where('user_id', $userId)->first();
+        return $seller ? $seller->comissao : 0.0;
+    }
 
     public function user()
     {

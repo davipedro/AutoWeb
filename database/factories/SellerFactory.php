@@ -18,7 +18,8 @@ class SellerFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory(),
-            'comissao' => $this->faker->randomFloat(2, 50, 5000),
+            'cpf' => $this->faker->unique()->numerify('###.###.###-##'),
+            'comissao' => $this->faker->randomFloat(4, 0, 1),
             'telefone' => $this->faker->phoneNumber,
             'observacoes' => $this->faker->optional()->text(100),
         ];

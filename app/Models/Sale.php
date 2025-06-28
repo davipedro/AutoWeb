@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SalePaymentMethodEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +18,10 @@ class Sale extends Model
         'valor_total',
         'comissao',
         'metodo_pagamento',
+    ];
+
+    protected $casts = [
+        'metodo_pagamento' => SalePaymentMethodEnum::class,
     ];
 
     public function seller()

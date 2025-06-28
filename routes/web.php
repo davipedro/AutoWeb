@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -22,24 +23,27 @@ Route::middleware(['web'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 
         Route::prefix('veiculos')->group(function () {
-            Route::get('/', [VehicleController::class, 'index'])->name('veiculos.list');
-            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
-            Route::post('/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
-            Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('veiculos.edit');
-            Route::post('/atualizar/{id}', [VehicleController::class, 'update'])->name('veiculos.update');
-            Route::get('/excluir/{id}', [VehicleController::class, 'delete'])->name('veiculos.delete');
+            Route::get('/', [VehicleController::class, 'index'])->name('admin.veiculos.list');
+            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('admin.veiculos.add');
+            Route::post('/salvar', [VehicleController::class, 'store'])->name('admin.veiculos.store');
+            Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('admin.veiculos.edit');
+            Route::post('/atualizar/{id}', [VehicleController::class, 'update'])->name('admin.veiculos.update');
+            Route::get('/excluir/{id}', [VehicleController::class, 'delete'])->name('admin.veiculos.delete');
         });
 
         Route::prefix('clientes')->group(function () {
-            Route::get('/', [ClientController::class, 'index'])->name('clientes.list');
-            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('clientes.add');
-            Route::post('/salvar', [ClientController::class, 'store'])->name('clientes.store');
-            Route::get('/editar/{id}', [ClientController::class, 'editClient'])->name('clientes.edit');
-            Route::post('/atualizar/{id}', [ClientController::class, 'update'])->name('clientes.update');
-            Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('clientes.delete');
+            Route::get('/', [ClientController::class, 'index'])->name('admin.clientes.list');
+            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('admin.clientes.add');
+            Route::post('/salvar', [ClientController::class, 'store'])->name('admin.clientes.store');
+            Route::get('/editar/{id}', [ClientController::class, 'editClient'])->name('admin.clientes.edit');
+            Route::post('/atualizar/{id}', [ClientController::class, 'update'])->name('admin.clientes.update');
+            Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('admin.clientes.delete');
         });
 
-        Route::get('/sellers/cadastrar', [SellerController::class, 'createSeller'])->name('sellers.add');
+        Route::prefix('sale')->group(function () {
+            Route::get('/cadastrar', [SaleController::class, 'createSale'])->name('admin.sell.add');
+            Route::post('/salvar', [SaleController::class, 'storeSale'])->name('admin.sell.store');
+        });
 
         Route::get('/relatorio', [ReportController::class, 'adminReport'])->name('admin.report');
 
@@ -49,16 +53,24 @@ Route::middleware(['web'])->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'sellerDashboard'])->name('seller.dashboard');
 
-        Route::prefix('veiculos')->group(function () {
-            Route::get('/', [VehicleController::class, 'index'])->name('veiculos.list');
-            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('veiculos.add');
-            Route::post('/salvar', [VehicleController::class, 'store'])->name('veiculos.store');
+        Route::prefix('clientes')->group(function () {
+            Route::get('/', [ClientController::class, 'index'])->name('seller.clientes.list');
+            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('seller.clientes.add');
+            Route::post('/salvar', [ClientController::class, 'store'])->name('seller.clientes.store');
         });
 
-        Route::prefix('clientes')->group(function () {
-            Route::get('/', [ClientController::class, 'index'])->name('clientes.list');
-            Route::get('/cadastrar', [ClientController::class, 'createClient'])->name('clientes.add');
-            Route::post('/salvar', [ClientController::class, 'store'])->name('clientes.store');
+        Route::prefix('veiculos')->group(function () {
+            Route::get('/', [VehicleController::class, 'index'])->name('seller.veiculos.list');
+            Route::get('/cadastrar', [VehicleController::class, 'createVehicle'])->name('seller.veiculos.add');
+            Route::post('/salvar', [VehicleController::class, 'store'])->name('seller.veiculos.store');
+            Route::get('/editar/{id}', [VehicleController::class, 'editVehicle'])->name('seller.veiculos.edit');
+            Route::post('/atualizar/{id}', [VehicleController::class, 'update'])->name('seller.veiculos.update');
+            Route::get('/excluir/{id}', [VehicleController::class, 'delete'])->name('seller.veiculos.delete');
+        });
+
+        Route::prefix('sale')->group(function () {
+            Route::get('/cadastrar', [SaleController::class, 'createSale'])->name('seller.sell.add');
+            Route::post('/salvar', [SaleController::class, 'storeSale'])->name('seller.sell.store');
         });
 
         Route::get('/relatorio', [ReportController::class, 'sellerReport'])->name('seller.report');
