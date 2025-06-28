@@ -39,6 +39,9 @@ git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
 # Acesse o diretório do projeto
 cd NOME_DO_REPOSITORIO
 
+# Instancie o .env
+Crie uma cópia do .env.example e remova o ".example" do arquivo.
+
 # Inicialize o sail
 sail up -d
 
