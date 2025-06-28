@@ -100,24 +100,4 @@ class Seller extends Model
             'observacoes'       => 'nullable|string|max:1000',
         ];
     }
-
-    public static function getDashboardData(int $userId, string $period): array
-    {
-        $periodDate = DashboardPeriodEnum::getDateRange($period);
-
-        [$startDate, $endDate] = $periodDate;
-
-        $salesCount = SaleRepository::getSalesCountForSeller($userId, $startDate, $endDate);
-        $totalSalesValue = SaleRepository::getTotalValueSoldForSeller($userId, $startDate, $endDate);
-        $accumulatedCommissions = SaleRepository::getAccumulatedCommissionsForSeller($userId, $startDate, $endDate);
-
-        $paginatedSales = SaleRepository::getPaginatedSalesForSeller($userId, $startDate, $endDate);
-
-        return [
-            'salesCount'             => $salesCount,
-            'totalSalesValue'        => $totalSalesValue,
-            'accumulatedCommissions' => $accumulatedCommissions,
-            'sales'                  => $paginatedSales,
-        ];
-    }
 }

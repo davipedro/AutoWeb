@@ -215,4 +215,31 @@ class SaleController extends Controller
         }
     }
 
+    public static function getSales($dataInicio = null, $dataFim = null , $vendedor = null)
+    {
+        $userId = auth()->user()->id;
+        $vendedorId = Seller::where('user_id', $userId)->value('id');
+
+        $filters = [
+            'data_venda_inicio' => $dataInicio,
+            'data_venda_fim' => $dataFim,
+        ];
+
+        if (auth()->user()->role === 'admin') {
+            return SaleRepository::getFilteredSale($filters, $vendedor);
+        } else {
+            return SaleRepository::getFilteredSale([], $vendedorId);
+        }
+    }
+
+    public static function getTotalSalesBySeller($sellerId)
+    {
+        return SaleRepository::getFilteredSale([], $sellerId);
+    }
+
+    public static function getTotalValueOfSales()
+    {
+        return SaleRepository::getTotalValueOfSales();
+    }
+
 }

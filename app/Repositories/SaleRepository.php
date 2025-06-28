@@ -90,6 +90,16 @@ class SaleRepository
             ->first();
     }
 
+    public static function getTotalValueOfSales(): ?Sale
+    {
+        return Sale::select(
+            DB::raw('SUM(valor_total) as total_vendas'),
+        )
+            ->whereNull('deleted_at')
+            ->first();
+    }
+
+
     /**
      * Retorna a contagem de Sales de um vendedor para um intervalo de datas específico.
      */

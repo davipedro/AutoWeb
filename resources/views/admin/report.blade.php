@@ -5,39 +5,7 @@
 @section('content')
 
     @php
-        // Dados fictícios para facilitar testes e visualização
-        $totalVendas = 25;
-        $totalVendasVendedor = 10;
-        $vendedorSelecionadoNome = 'Carlos Silva';
-        $valorTotalVendas = 125000.75;
-        $valorComissoesPagas = 8750.50;
-
-        $vendas = collect([
-            (object)[
-                'id' => 'C001',
-                'vendedor_nome' => 'Carlos Silva',
-                'veiculo' => 'Honda Civic 2022',
-                'valor_venda' => 85000,
-                'comissao' => 8400,
-                'data' => \Carbon\Carbon::createFromFormat('d/m/Y', '15/01/2023')
-            ],
-            (object)[
-                'id' => 'C002',
-                'vendedor_nome' => 'Ana Costa',
-                'veiculo' => 'Toyota Corolla 2021',
-                'valor_venda' => 75000,
-                'comissao' => 5400,
-                'data' => \Carbon\Carbon::createFromFormat('d/m/Y', '10/02/2023')
-            ],
-            (object)[
-                'id' => 'C003',
-                'vendedor_nome' => 'Pedro Santos',
-                'veiculo' => 'Ford Focus 2020',
-                'valor_venda' => 60000,
-                'comissao' => 3400,
-                'data' => \Carbon\Carbon::createFromFormat('d/m/Y', '28/02/2023')
-            ],
-        ]);
+        use Carbon\Carbon;
     @endphp
 
     <div class="relatorio-vendas">
@@ -48,11 +16,11 @@
         <form method="GET" action="" class="relatorio-vendas__filtros" style="display:flex; gap:1rem; flex-wrap: wrap;">
             <div class="relatorio-vendas__filtros-group">
                 <label>Data Inicial</label>
-                <input type="date" name="data_inicial" class="relatorio-vendas__input" value="{{ request('data_inicial') }}">
+                <input type="date" name="data_venda_inicio" class="relatorio-vendas__input" value="{{ request('data_venda_inicio') }}">
             </div>
             <div class="relatorio-vendas__filtros-group">
                 <label>Data Final</label>
-                <input type="date" name="data_final" class="relatorio-vendas__input" value="{{ request('data_final') }}">
+                <input type="date" name="data_venda_fim" class="relatorio-vendas__input" value="{{ request('data_venda_fim') }}">
             </div>
             <div class="relatorio-vendas__filtros-group">
                 <label>Vendedor</label>
@@ -119,16 +87,18 @@
                     <tr>
                         <td>{{ $venda->id }}</td>
                         <td>{{ $venda->vendedor_nome }}</td>
-                        <td>{{ $venda->veiculo }}</td>
-                        <td class="green">R$ {{ number_format($venda->valor_venda, 2, ',', '.') }}</td>
+                        <td>{{ $venda->veiculo_nome }}</td>
+                        <td class="green">R$ {{ number_format($venda->valor_total, 2, ',', '.') }}</td>
                         <td class="purple">R$ {{ number_format($venda->comissao, 2, ',', '.') }}</td>
                         @if($vendedorSelecionadoNome === null || $vendedorSelecionadoNome === '')
                             <td>{{ $venda->vendedor_nome }}</td>
                         @endif
-                        <td>{{ $venda->data->format('d/m/Y') }}</td>
+                        <td>{{ $venda->data_venda ? Carbon::parse($venda->data_venda)->format('d/m/Y') : 'Não informada' }}</td>
                         <td>
                             <button class="relatorio-vendas__acao-btn">
-                                <img src="{{ asset('icons/edit.svg') }}" alt="Editar">
+                                <a href="{{ route('admin.vendas.edit', $venda->id) }}" class="edit-btn">
+                                    <i class="fa fa-edit"></i>
+                                </a>
                             </button>
                         </td>
                     </tr>
@@ -140,6 +110,11 @@
                 @endif
                 </tbody>
             </table>
+            <div class="pagination-container">
+                {{ $vendas->links('partials.pagination') }}
+            </div>
         </div>
+
     </div>
+
 @endsection
