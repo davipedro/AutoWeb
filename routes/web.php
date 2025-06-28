@@ -39,7 +39,14 @@ Route::middleware(['web'])->group(function () {
             Route::get('/excluir/{id}', [ClientController::class, 'delete'])->name('clientes.delete');
         });
 
-        Route::get('/sellers/cadastrar', [SellerController::class, 'createSeller'])->name('sellers.add');
+        Route::prefix('vendedores')->group(function () {
+            Route::get('/', [SellerController::class, 'index'])->name('admin.vendedores.list');
+            Route::get('/cadastrar', [SellerController::class, 'createSeller'])->name('admin.vendedores.add');
+            Route::post('/salvar', [SellerController::class, 'store'])->name('admin.vendedores.store');
+            Route::get('/editar/{id}', [SellerController::class, 'editSeller'])->name('admin.vendedores.edit');
+            Route::post('/atualizar/{id}', [SellerController::class, 'update'])->name('admin.vendedores.update');
+            Route::get('/excluir/{id}', [SellerController::class, 'delete'])->name('admin.vendedores.delete');
+        });
 
         Route::get('/relatorio', [ReportController::class, 'adminReport'])->name('admin.report');
 

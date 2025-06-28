@@ -14,7 +14,7 @@
                     <li><a href="{{ route('home') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                     <li><a href="{{ route('veiculos.list') }}" class="{{ request()->routeIs('veiculos.*') ? 'active' : '' }}">Veículos</a></li>
                     <li><a href="{{ route('clientes.list') }}" class="{{ request()->routeIs('clientes.*') ? 'active' : '' }}">Clientes</a></li>
-                    <li><a href="" >Vendedores</a></li>
+                    <li><a href="{{ route('admin.vendedores.list') }}" class="{{ request()->routeIs('admin.vendedores.*') ? 'active' : '' }}">Vendedores</a></li>
                     <li><a href="">Nova Venda</a></li>
                     <li><a href="{{ route('admin.report') }}" class="{{ request()->routeIs('admin.report') ? 'active' : '' }}">Relatórios</a></li>
                 @endif
