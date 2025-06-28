@@ -13,7 +13,14 @@ class DashboardController extends Controller
         $veiculosDisponiveis = VehicleController::getNumberOfVehicles();
         $valorEstoque = VehicleController::getTotalValueOfVehicles();
         $vendedoresAtivos = SellerController::getNumberOfSellers();
-        return view('admin.dashboard', compact('veiculosDisponiveis', 'valorEstoque', 'vendedoresAtivos'));
+        $rankingVendedores = SellerController::getTopSellers();
+        $valorTotalVendas = SaleController::getTotalValueOfSales();
+        return view('admin.dashboard', compact(
+            'veiculosDisponiveis',
+            'valorEstoque',
+            'vendedoresAtivos',
+            'rankingVendedores',
+            'valorTotalVendas'));
     }
 
     public function sellerDashboard(Request $request)

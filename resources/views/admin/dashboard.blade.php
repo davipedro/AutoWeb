@@ -16,7 +16,7 @@
             <div class="dashboard-admin__stat-card dashboard-admin__stat-card--primary">
                 <div class="dashboard-admin__stat-content">
                     <div class="dashboard-admin__stat-label">Vendas do Mês</div>
-                    <div class="dashboard-admin__stat-value">{{ $vendasMes ?? '-' }}</div>
+                    <div class="dashboard-admin__stat-value">R$ {{ number_format($valorTotalVendas->total_vendas ?? '0', 2, ',', '.') }}</div>
                     @if(isset($porcentAumento))
                         <div class="dashboard-admin__stat-growth">
                             <i class="fas fa-arrow-up"></i> {{ $porcentAumento }} % em relação ao mês anterior
@@ -69,11 +69,11 @@
                             @foreach($rankingVendedores as $vendedor)
                                 <div class="dashboard-admin__ranking-item">
                                     <div class="dashboard-admin__ranking-info">
-                                        <h6 class="dashboard-admin__ranking-name">{{ $vendedor->nome }}</h6>
+                                        <h6 class="dashboard-admin__ranking-name">{{ $vendedor->nome_completo }}</h6>
                                         <small class="dashboard-admin__ranking-sales">{{ $vendedor->vendas }} vendas</small>
                                     </div>
                                     <div class="dashboard-admin__ranking-commission">
-                                        R$ {{ number_format($vendedor->comissao, 3, '.', '.') }}
+                                        R$ {{ number_format($vendedor->total_vendas, 2, ',', '.') }}
                                     </div>
                                 </div>
                             @endforeach

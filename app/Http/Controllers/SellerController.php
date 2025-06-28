@@ -178,4 +178,9 @@ class SellerController extends Controller
         return SellerRepository::getSellers();
     }
 
+    public static function getTopSellers()
+    {
+        return SellerRepository::getTopSellers();
+    }
+
 }
