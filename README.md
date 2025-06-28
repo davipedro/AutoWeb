@@ -39,28 +39,27 @@ git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
 # Acesse o diretório do projeto
 cd NOME_DO_REPOSITORIO
 
-# Instale as dependências PHP
-composer install
+# Instancie o .env
+Crie uma cópia do .env.example e remova o ".example" do arquivo.
 
-# Instale as dependências frontend (se aplicável)
-npm install && npm run dev
+# Inicialize o sail
+sail up -d
 
-# Copie o arquivo de ambiente
-cp .env.example .env
+# Instale as dependências
+sail npm i
 
-# Gere a chave da aplicação
-php artisan key:generate
+# Rode as migrations do banco
+sail artisan migrate
 
-# Configure o banco de dados no .env
-# DB_DATABASE=nome_do_banco
-# DB_USERNAME=seu_usuario
-# DB_PASSWORD=sua_senha
+# Rode a geração das chaves
+sail artisan key:generate
 
-# Rode as migrations
-php artisan migrate
+# Rode os seeders do banco
+ sail artisan migrate:fresh --seed
 
-# Inicie o servidor local
-php artisan serve
+#Para carregar a instância do frontend do projeto
+sail npm run dev
+
 
 ```
 ## 🛠️ Padronização de Commits
