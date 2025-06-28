@@ -142,4 +142,25 @@ class SellerRepository
 
         return $query->orderBy('nome_completo', 'ASC')->get();
     }
+
+    public static function getTopSellers($limit = 5)
+    {
+        return DB::table('sellers')
+            ->select(
+                'sellers.*',
+                DB::raw('SUM(sales.comissao) as total_vendas'),
+                DB::raw('COUNT(sales.id) as vendas'),
+                'users.email as email',
+                'users.name as nome_completo'
+            )
+            ->where('sellers.created_at', '>=', now()->subMonth())
+            ->leftJoin('sales', 'sales.vendedor_id', '=', 'sellers.id')
+            ->leftJoin('users', 'users.id', '=', 'sellers.user_id')
+            ->whereNull('sellers.deleted_at')
+            ->groupBy('sellers.id', 'users.email', 'users.name', 'sellers.created_at', 'sellers.deleted_at', /* outras colunas de sellers se necessário */)
+            ->orderByDesc('total_vendas')
+            ->limit($limit)
+            ->get();
+    }
+
 }
