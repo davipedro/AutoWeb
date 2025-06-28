@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\VehicleStatusEnum;
 use App\Models\Vehicle;
 use App\Repositories\VehicleRepository;
 use App\Models\Status;
@@ -23,12 +24,12 @@ class VehicleController extends Controller
             $collection = $veiculos->getCollection();
             $marcas = $collection->pluck('marca')->unique()->sort()->values();
             $anos = $collection->pluck('ano')->unique()->sortDesc()->values();
-            $status = $collection->pluck('status_nome')->unique()->sort()->values();
+            $status = $collection->pluck('status')->unique()->sort()->values();
         } else {
             // Sem filtros → traz tudo do banco
             $marcas = VehicleRepository::getAllMarcas();
             $anos = VehicleRepository::getAllAnos();
-            $status = VehicleRepository::getAllStatusNomes();
+            $status = VehicleStatusEnum::getAllValues();
         }
         return view('vehicles.list', compact('veiculos', 'filters', 'marcas', 'status', 'anos'));
     }
@@ -36,7 +37,7 @@ class VehicleController extends Controller
 
     public function createVehicle()
     {
-        $statuses = Status::all();
+        $statuses = VehicleStatusEnum::getAllValues();
         return view('vehicles.add', compact('statuses'));
     }
 
@@ -130,8 +131,7 @@ class VehicleController extends Controller
             return false;
         }
 
-        // Disponível se status_id != 12 e não deletado
-        return $vehicle->status_id != 12 && $vehicle->deleted_at === null;
+        return $vehicle->status != VehicleStatusEnum::Inactive->value && $vehicle->deleted_at === null;
     }
 
     public static function getVehicles()

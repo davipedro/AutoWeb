@@ -221,11 +221,11 @@
                                     name="status_id"
                                     class="form-select @error('status_id') error-input @enderror">
                                 <option value="">Selecione um status</option>
-                                @foreach ($statuses as $status)
-                                    @if ($status->nome !== "inativo")
-                                        <option value="{{ $status->id }}"
-                                            {{ old('status_id', $status->id == 1 ? $status->id : null) == $status->id ? 'selected' : '' }}>
-                                            {{ __('status.' . $status->nome) }}
+                                @foreach ($statuses as $index => $status)
+                                    @if ($status !== "inativo")
+                                        <option value="{{ $index }}"
+                                            {{ old('status', $index == 1 ? $index : null) == $index ? 'selected' : '' }}>
+                                            {{ __('status.' . $status) }}
                                         </option>
                                     @endif
                                 @endforeach
