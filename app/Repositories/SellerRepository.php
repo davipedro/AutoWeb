@@ -157,7 +157,7 @@ class SellerRepository
             ->leftJoin('sales', 'sales.vendedor_id', '=', 'sellers.id')
             ->leftJoin('users', 'users.id', '=', 'sellers.user_id')
             ->whereNull('sellers.deleted_at')
-            ->groupBy('sellers.id', 'users.email', 'users.name', 'sellers.created_at', 'sellers.deleted_at', /* outras colunas de sellers se necessário */)
+            ->groupBy('sellers.id', 'users.email', 'users.name', 'sellers.created_at', 'sellers.deleted_at')
             ->orderByDesc('total_vendas')
             ->limit($limit)
             ->get();

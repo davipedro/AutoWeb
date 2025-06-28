@@ -43,7 +43,7 @@
         <div class="relatorio-vendas__cards" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
             <div class="relatorio-vendas__card border-left-blue" style="flex: 1 1 220px;">
                 <p class="relatorio-vendas__card-label">Total de Vendas</p>
-                <h2 class="relatorio-vendas__card-valor">{{ $totalVendas }}</h2>
+                <h2 class="relatorio-vendas__card-valor">R$ {{ number_format($totalVendas->total_vendas ?? '0', 2, ',', '.') }}</h2>
                 <p class="relatorio-vendas__card-sub">Vendas no período</p>
             </div>
             <div class="relatorio-vendas__card border-left-cyan" style="flex: 1 1 220px;">
@@ -54,7 +54,7 @@
             <div class="relatorio-vendas__card border-left-green" style="flex: 1 1 220px;">
                 <p class="relatorio-vendas__card-label">Valor Total das Vendas</p>
                 <h2 class="relatorio-vendas__card-valor">R$ {{ number_format($valorTotalVendas, 2, ',', '.') }}</h2>
-                <p class="relatorio-vendas__card-sub">Valor total vendido no período</p>
+                <p class="relatorio-vendas__card-sub">Valor total vendido no mês</p>
             </div>
             <div class="relatorio-vendas__card border-left-orange" style="flex: 1 1 220px;">
                 <p class="relatorio-vendas__card-label">Comissões Pagas</p>

@@ -16,7 +16,7 @@ class ReportController extends Controller
 
         $vendedores = SellerController::getSellers();
         $vendas = SaleController::getSales($dataInicio, $dataFim ,$vendedorId);
-        $totalVendas = $vendas->count();
+        $totalVendas = SaleController::getTotalValueOfSales();
         $totalVendedores = $vendedores->count();
         $totalVendasVendedor = Sale::whereNull('deleted_at')
             ->when($vendedorId, function ($query) use ($vendedorId) {
