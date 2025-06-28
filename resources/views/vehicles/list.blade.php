@@ -10,11 +10,11 @@
         </div>
 
         <div>
-            <a href="{{ route('veiculos.add') }}" class="add-btn">+ Cadastrar Novo Veículo</a>
+            <a href="{{ route(auth()->user()->role . '.veiculos.add') }}" class="add-btn">+ Cadastrar Novo Veículo</a>
         </div>
     </div>
 
-    <form method="GET" action="{{ route('veiculos.list') }}" class="filters">
+    <form method="GET" action="{{ route(auth()->user()->role . '.veiculos.list') }}" class="filters">
         <div class="filter-options">
             <input
                 type="text"
@@ -65,7 +65,7 @@
                 <i class="fa fa-filter"></i> Filtrar
             </button>
 
-            <a href="{{ route('veiculos.list') }}" class="clear-filters-btn">
+            <a href="{{ route(auth()->user()->role . '.veiculos.list') }}" class="clear-filters-btn">
                 <i class="fa fa-times"></i> Limpar
             </a>
         </div>
@@ -140,7 +140,7 @@
                         </td>
                         <td>
                             @if(auth()->user() && auth()->user()->role === 'admin')
-                                <a href="{{ route('veiculos.edit', ['id' => $veiculo->id]) }}" class="edit-btn">
+                                <a href="{{ route('admin.veiculos.edit', ['id' => $veiculo->id]) }}" class="edit-btn">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <button class="delete-btn" onclick="openModal({{ $veiculo->id }})">
@@ -163,7 +163,7 @@
                                             <p>Tem certeza que deseja excluir este veículo?</p>
                                             <p><strong>Item:</strong> <strong>{{ $veiculo->marca }} {{ $veiculo->modelo }}</strong></p>
                                         </div>
-                                        <form method="GET" action="{{ route('veiculos.delete', $veiculo->id) }}">
+                                        <form method="GET" action="{{ route('admin.veiculos.delete', $veiculo->id) }}">
                                             @csrf
                                             <div class="modal-footer">
                                                 <button type="button" class="btn-cancel" onclick="closeModal({{ $veiculo->id }})">Cancelar</button>

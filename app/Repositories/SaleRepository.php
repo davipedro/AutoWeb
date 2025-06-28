@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class SaleRepository
 {
+    public static function create(array $validated)
+    {
+
+    }
+
     /**
      * Retorna a contagem de Sales de um vendedor para um intervalo de datas específico.
      */
@@ -37,7 +42,6 @@ class SaleRepository
             ->whereBetween('data_venda', [$startDate, $endDate])
             ->sum('comissao');
     }
-
     /**
      * Retorna as vendas paginadas de um vendedor para um intervalo de datas.
      *

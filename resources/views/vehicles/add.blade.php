@@ -6,7 +6,7 @@
     <div class="container">
         <!-- Header -->
         <div class="add-header">
-            <a href="{{ route('veiculos.list') }}" class="back-button">
+            <a href="{{ route(auth()->user()->role . '.veiculos.list') }}" class="back-button">
                 <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('veiculos.store') }}" method="POST">
+        <form action="{{ route(auth()->user()->role . '.veiculos.store') }}" method="POST">
             @csrf
 
             <div class="form-container">
@@ -253,7 +253,7 @@
 
             <!-- Botões de Ação -->
             <div class="form-actions">
-                <a href="{{ route('veiculos.list') }}" class="btn btn-secondary">
+                <a href="{{ route(auth()->user()->role . '.veiculos.list') }}" class="btn btn-secondary">
                     Cancelar
                 </a>
                 <button type="submit" class="btn btn-primary">

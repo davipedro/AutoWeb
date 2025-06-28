@@ -21,11 +21,11 @@
         </div>
 
         <div>
-            <a href="{{ route('clientes.add') }}" class="add-btn">+ Cadastrar Novo Cliente</a>
+            <a href="{{ route(auth()->user()->role . '.clientes.add') }}" class="add-btn">+ Cadastrar Novo Cliente</a>
         </div>
     </div>
 
-    <form method="GET" action="{{ route('clientes.list') }}" class="filters">
+    <form method="GET" action="{{ route(auth()->user()->role . '.clientes.list') }}" class="filters">
         <div class="filter-options">
             <input
                 type="text"
@@ -81,7 +81,7 @@
                 <i class="fa fa-filter"></i> Filtrar
             </button>
 
-            <a href="{{ route('clientes.list') }}" class="clear-filters-btn">
+            <a href="{{ route(auth()->user()->role . '.clientes.list') }}" class="clear-filters-btn">
                 <i class="fa fa-times"></i> Limpar
             </a>
         </div>
@@ -149,7 +149,7 @@
                         <td>{{ $cliente->cidade}}</td>
                         <td>
                             @if(auth()->user() && auth()->user()->role === 'admin')
-                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="edit-btn">
+                                <a href="{{ route('admin.clientes.edit', $cliente->id) }}" class="edit-btn">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <button class="delete-btn" onclick="openModal({{ $cliente->id }})">
@@ -174,7 +174,7 @@
                                             <p><strong>Item:</strong>
                                                 <strong>{{ $cliente->nome_completo }} - {{ $cliente->cpf }}</strong></p>
                                         </div>
-                                        <form method="GET" action="{{ route('clientes.delete', $cliente->id) }}">
+                                        <form method="GET" action="{{ route('admin.clientes.delete', $cliente->id) }}">
                                             @csrf
                                             <div class="modal-footer">
                                                 <button type="button" class="btn-cancel"

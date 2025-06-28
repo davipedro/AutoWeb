@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Cliente')
+@section('title', 'Registrar Nova Venda')
 
 @section('content')
 
@@ -46,42 +46,28 @@
                 Voltar
             </a>
             <div>
-                <h1 class="page-title">Cadastrar Novo Cliente</h1>
+                <h1 class="page-title">Registrar Nova Venda</h1>
                 <p class="page-subtitle">Preencha os dados do cliente</p>
             </div>
         </div>
 
         <!-- Form -->
-        <form action="{{ route(auth()->user()->role . '.clientes.store') }}" method="POST">
+        <form action="{{ route(auth()->user()->role . '.sell.store') }}" method="POST">
             @csrf
 
             <div class="form-container">
                 <!-- Informações Básicas -->
                 <div class="form-section">
-                    <h2 class="section-title">Informações Básicas</h2>
+                    <h2 class="section-title">Informações Pessoais</h2>
                     <p class="section-subtitle">Dados principais do cliente</p>
 
                     <div class="form-grid">
-                        <!-- Nome Completo -->
-                        <div class="form-group">
-                            <label for="nome_completo" class="form-label">Nome do cliente</label>
-                            <input type="text"
-                                   id="nome_completo"
-                                   name="nome_completo"
-                                   placeholder="Insira o nome do cliente"
-                                   minlength="2"
-                                   value="{{ old('nome_completo') }}"
-                                   class="form-input @error('nome_completo') error-input @enderror">
-                            @error('nome_completo')
-                            <p class="error-message">{{ $message }}</p>
-                            @enderror
-                        </div>
-
                         <!-- CPF e RG -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="cpf" class="form-label">CPF</label>
                                 <input type="text"
+                                       required
                                        id="cpf"
                                        name="cpf"
                                        placeholder="123.456.789-00"
@@ -95,6 +81,7 @@
                             <div class="form-group">
                                 <label for="rg" class="form-label">RG</label>
                                 <input type="text"
+                                       required
                                        id="rg"
                                        name="rg"
                                        placeholder="12.345.678-9"
@@ -106,11 +93,28 @@
                             </div>
                         </div>
 
+                        <!-- Nome Completo -->
+                        <div class="form-group">
+                            <label for="nome_completo" class="form-label">Nome do cliente</label>
+                            <input type="text"
+                                   required
+                                   id="nome_completo"
+                                   name="nome_completo"
+                                   placeholder="Insira o nome do cliente"
+                                   minlength="2"
+                                   value="{{ old('nome_completo') }}"
+                                   class="form-input @error('nome_completo') error-input @enderror">
+                            @error('nome_completo')
+                            <p class="error-message">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <!-- Email e Telefone -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text"
+                                       required
                                        id="email"
                                        name="email"
                                        placeholder="email@example.com"
@@ -124,6 +128,7 @@
                             <div class="form-group">
                                 <label for="telefone" class="form-label">Telefone</label>
                                 <input type="text"
+                                       required
                                        id="telefone"
                                        name="telefone"
                                        placeholder="(01) 23456-7890"
@@ -139,6 +144,7 @@
                         <div class="form-group">
                             <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                             <input type="date"
+                                   required
                                    id="data_nascimento"
                                    name="data_nascimento"
                                    value="{{ old('data_nascimento') }}"
@@ -148,46 +154,25 @@
                             @enderror
                         </div>
 
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label for="endereco" class="form-label">Endereço</label>
+                            <input type="text"
+                                   required
+                                   id="endereco"
+                                   name="endereco"
+                                   placeholder="Rua Gavea, 21, Bairro Jardim"
+                                   value="{{ old('endereco') }}"
+                                   class="form-input @error('endereco') error-input @enderror">
+                            @error('endereco')
+                            <p class="error-message">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                <!-- Informações de endereço -->
-                <div class="form-section">
-                    <h2 class="section-title">Endereço e Observações</h2>
-                    <p class="section-subtitle">Informações sobre residência e observações</p>
-
-                    <div class="form-grid">
-                        <!-- Endereço, Cidade e Estado -->
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="endereco" class="form-label">Endereço</label>
-                                <input type="text"
-                                       id="endereco"
-                                       name="endereco"
-                                       placeholder="Rua Gavea, 21, Bairro Jardim"
-                                       value="{{ old('endereco') }}"
-                                       class="form-input @error('endereco') error-input @enderror">
-                                @error('endereco')
-                                <p class="error-message">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="complemento" class="form-label">Complemento</label>
-                                <input type="text"
-                                       id="complemento"
-                                       name="complemento"
-                                       placeholder="Apto 301"
-                                       value="{{ old('complemento') }}"
-                                       class="form-input @error('complemento') error-input @enderror">
-                                @error('complemento')
-                                <p class="error-message">{{ $message }}</p>
-                                @enderror
-                            </div>
-
                             <div class="form-group">
                                 <label for="cidade" class="form-label">Cidade</label>
                                 <input type="text"
+                                       required
                                        id="cidade"
                                        name="cidade"
                                        placeholder="Belo Horizonte"
@@ -204,20 +189,21 @@
                                         name="estado"
                                         class="form-select @error('estado') error-input @enderror">
                                     <option value="">Selecione um estado</option>
-                                        @foreach ($estados as $sigla => $nome)
-                                            <option value="{{ $sigla }}" {{ old('estado') == $sigla ? 'selected' : '' }}>
-                                                {{ $nome }}
-                                            </option>
-                                        @endforeach
+                                    @foreach ($estados as $sigla => $nome)
+                                        <option value="{{ $sigla }}" {{ old('estado') == $sigla ? 'selected' : '' }}>
+                                            {{ $nome }}
+                                        </option>
+                                    @endforeach
                                 </select>
-                                    @error('estado')
-                                    <p class="error-message">{{ $message }}</p>
+                                @error('estado')
+                                <p class="error-message">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="cep" class="form-label">CEP</label>
                                 <input type="text"
+                                       required
                                        id="cep"
                                        name="cep"
                                        placeholder="37203-000"
@@ -228,18 +214,104 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Observações -->
+                <!-- Informações de endereço -->
+                <div class="form-section">
+                    <h2 class="section-title">Informações da Venda</h2>
+                    <p class="section-subtitle">Dados principais da transação</p>
+
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="observacoes" class="form-label">Observações</label>
-                            <textarea id="observacoes"
-                                      name="observacoes"
-                                      rows="4"
-                                      placeholder="Informações adicionais sobre o veículo..."
-                                      class="form-textarea @error('observacoes') error-input @enderror">{{ old('observacoes') }}</textarea>
-                            @error('observacoes')
+                            <label for="veiculo" class="form-label">Veículo</label>
+                            <select id="veiculo"
+                                    name="veiculo"
+                                    class="form-select @error('estado') error-input @enderror">
+                                <option value="">Selecione um veículo</option>
+                                @foreach ($veiculos as $veiculo)
+                                    <option value="{{ $veiculo->id }}" {{ old('estado') == $veiculo->nome ? 'selected' : '' }}>
+                                        {{ $veiculo->marca }} {{ $veiculo->modelo }} - {{ $veiculo->ano }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('estado')
                             <p class="error-message">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vendedor_cpf" class="form-label">CPF do Vendedor</label>
+                            <input type="text"
+                                   required
+                                   id="vendedor_cpf"
+                                   name="vendedor_cpf"
+                                   placeholder="00.000.000-00"
+                                   value="{{ old('vendedor_cpf') }}"
+                                   class="form-input @error('vendedor_cpf') error-input @enderror">
+                            @error('vendedor_cpf')
+                            <p class="error-message">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data_venda" class="form-label">Data da Venda</label>
+                            <input type="date"
+                                   required
+                                   id="data_venda"
+                                   name="data_venda"
+                                   value="{{ old('data_venda') }}"
+                                   class="form-input @error('data_venda') error-input @enderror">
+                            @error('data_venda')
+                            <p class="error-message">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <br>
+                        <h2 class="section-title">Informações Financeiras</h2>
+                        <p class="section-subtitle">Valores e forma de pagamento</p>
+
+                        <!-- Valor da Venda -->
+                        <div class="form-group">
+                            <label for="valor_venda" class="form-label">Valor da Venda (R$)</label>
+                            <input type="text"
+                                   id="valor_venda"
+                                   name="valor_venda"
+                                   placeholder="R$ 0,00"
+                                   value="{{ old('valor_venda') }}"
+                                   inputmode="decimal"
+                                   class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="metodo_pagamento" class="form-label">Método Pagamento</label>
+                            <select id="metodo_pagamento"
+                                    name="metodo_pagamento"
+                                    class="form-select @error('estado') error-input @enderror">
+                                <option value="metodo_pagamento">Selecione o Método</option>
+                                @foreach ($metodosPagamento as $metodo)
+                                    <option value="{{ $metodo }}" {{ old('estado') == $metodo ? 'selected' : '' }}>
+                                        {{ $metodo }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('metodo_pagamento')
+                            <p class="error-message">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+                        <!-- Valor da Comissao -->
+                        <div class="form-group">
+                            <label for="valor_comissao" class="form-label">Comissão Calculada</label>
+                            <input type="text"
+                                   id="valor_comissao"
+                                   name="valor_comissao"
+                                   placeholder="R$ 0,00"
+                                   value="{{ old('valor_comissao') }}"
+                                   inputmode="decimal"
+                                   readonly
+                                   class="form-input form-input-readonly">
                         </div>
                     </div>
                 </div>
@@ -247,7 +319,7 @@
 
             <!-- Botões de Ação -->
             <div class="form-actions">
-                <a href="{{ route(auth()->user()->role . '.clientes.list') }}" class="btn btn-secondary">
+                <a href="{{ route(auth()->user()->role . '.dashboard') }}" class="btn btn-secondary">
                     Cancelar
                 </a>
                 <button type="submit" class="btn btn-primary">
@@ -261,9 +333,19 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const form = document.querySelector('form');
+                const valorVendaInput = document.getElementById('valor_venda');
+                const valorComissaoInput = document.getElementById('valor_comissao');
+                const vendedorCpfInput = document.getElementById('vendedor_cpf');
+                const rawCommissions = @json($porcentagemComissao ?? []);
+                const cpfInput = document.getElementById('cpf');
+
+                const cleanCommissions = {};
+                for (const punctuatedCpf in rawCommissions) {
+                    const cleanCpf = punctuatedCpf.replace(/\D/g, ''); // Limpa a chave
+                    cleanCommissions[cleanCpf] = rawCommissions[punctuatedCpf]; // Associa a comissão à chave limpa
+                }
 
                 // === Máscara CPF ===
-                const cpfInput = document.getElementById('cpf');
                 cpfInput.addEventListener('input', function (e) {
                     let value = e.target.value.replace(/\D/g, '');
                     if (value.length > 11) value = value.slice(0, 11);
@@ -271,6 +353,63 @@
                     value = value.replace(/(\d{3})(\d)/, '$1.$2');
                     value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
                     e.target.value = value;
+                });
+
+                vendedorCpfInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 11) value = value.slice(0, 11);
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                    e.target.value = value;
+                });
+
+
+                function formatCurrency(value) {
+                    if (isNaN(value) || value === 0) {
+                        return 'R$ 0,00';
+                    }
+                    return new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(value);
+                }
+
+                function cleanCurrency(value) {
+                    if (!value) return 0.00;
+                    let numericString = value.replace(/\D/g, '');
+                    return parseFloat(numericString) / 100;
+                }
+
+                function calculateAndDisplayCommission() {
+                    const inputCpf = vendedorCpfInput.value.replace(/\D/g, '');
+                    const commissionRate = cleanCommissions[inputCpf] || 0;
+                    const saleValue = cleanCurrency(valorVendaInput.value);
+                    const commissionValue = saleValue * commissionRate;
+                    valorComissaoInput.value = formatCurrency(commissionValue);
+                }
+
+                valorVendaInput.addEventListener('input', function() {
+                    let rawValue = this.value.replace(/\D/g, '');
+                    this.value = formatCurrency(parseFloat(rawValue) / 100);
+                    calculateAndDisplayCommission();
+                });
+
+                vendedorCpfInput.addEventListener('blur', function() {
+                    calculateAndDisplayCommission();
+                });
+
+                form.addEventListener('submit', function(e) {
+                    valorVendaInput.value = cleanCurrency(valorVendaInput.value).toFixed(2);
+                    valorComissaoInput.value = cleanCurrency(valorComissaoInput.value).toFixed(2);
+                });
+
+                if (valorVendaInput.value && vendedorCpfInput.value) {
+                    calculateAndDisplayCommission();
+                }
+
+                valorVendaInput.addEventListener('input', function(e) {
+                    formatCurrency(e.target);
                 });
 
                 // === Máscara RG ===
@@ -322,13 +461,6 @@
 
                         return digito2 === parseInt(cpf.charAt(10));
                     }
-
-                    if (cpf && !validarCPF(cpf)) {
-                        alert("CPF inválido!");
-                        cpfInput.classList.add("error-input");
-                    } else {
-                        cpfInput.classList.remove("error-input");
-                    }
                 });
 
                 // === Máscara para Telefone ===
@@ -337,7 +469,7 @@
                 telefoneInput.addEventListener('input', function (e) {
                     let value = e.target.value.replace(/\D/g, '');
 
-                    // Aplica a máscara manualmente
+                    // Máscara manual
                     if (value.length > 11) {
                         value = value.slice(0, 11);
                     }

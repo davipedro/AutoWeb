@@ -46,7 +46,7 @@ class ClientController extends Controller
             $validated = $this->validateData($request);
             ClientRepository::create($validated);
 
-            return redirect()->route('clientes.list')->with('success', 'Cliente cadastrado com sucesso!');
+            return redirect()->route(auth()->user()->role . '.clientes.list')->with('success', 'Cliente cadastrado com sucesso!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
@@ -68,7 +68,7 @@ class ClientController extends Controller
             // (Opcional) Verifique se o cliente existe e não foi soft deleted
             $cliente = ClientRepository::findById($id);
             if (!$cliente) {
-                return redirect()->route('clientes.list')
+                return redirect()->route(auth()->user()->role . '.clientes.list')
                     ->with('error', 'Cliente não encontrado ou indisponível para edição.');
             }
 
@@ -82,7 +82,7 @@ class ClientController extends Controller
             // Atualização
             ClientRepository::update($id, $validated);
 
-            return redirect()->route('clientes.list')->with('success', 'Cliente atualizado com sucesso!');
+            return redirect()->route(auth()->user()->role . '.clientes.list')->with('success', 'Cliente atualizado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar cliente: ' . $e->getMessage());
         }
@@ -91,7 +91,7 @@ class ClientController extends Controller
     public function delete($id)
     {
         ClientRepository::delete($id);
-        return redirect()->route('clientes.list')->with('success', 'Cliente removido com sucesso!');
+        return redirect()->route(auth()->user()->role . '.clientes.list')->with('success', 'Cliente removido com sucesso!');
     }
 
     protected function validateData(Request $request, $id = null)
