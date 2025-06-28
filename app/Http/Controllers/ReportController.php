@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Repositories\SaleRepository;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -16,15 +17,16 @@ class ReportController extends Controller
 
         $vendedores = SellerController::getSellers();
         $vendas = SaleController::getSales($dataInicio, $dataFim ,$vendedorId);
-        $totalVendas = $vendas->count();
-        $totalVendedores = $vendedores->count();
+        $totalVendas = $vendas->total();
+        $totalVendedores = SellerController::getNumberOfSellers();
         $totalVendasVendedor = Sale::whereNull('deleted_at')
             ->when($vendedorId, function ($query) use ($vendedorId) {
                 return $query->where('vendedor_id', $vendedorId);
             })
             ->count();
-        $valorTotalVendas = $vendas->sum('valor_total');
-        $valorComissoesPagas = $vendas->sum('comissao');
+
+        $valorTotalVendas = SaleRepository::getTotalValueOfAllSales();
+        $valorComissoesPagas = SaleRepository::getTotalCommissionsPaid();
         $vendedorSelecionadoNome = null;
 
         return view('admin.report', compact(

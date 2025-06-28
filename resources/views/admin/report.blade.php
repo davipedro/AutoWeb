@@ -48,7 +48,7 @@
             </div>
             <div class="relatorio-vendas__card border-left-cyan" style="flex: 1 1 220px;">
                 <p class="relatorio-vendas__card-label">Total de Vendedores</p>
-                <h2 class="relatorio-vendas__card-valor">{{ $totalVendasVendedor }}</h2>
+                <h2 class="relatorio-vendas__card-valor">{{ $totalVendedores }}</h2>
                 <p class="relatorio-vendas__card-sub">{{ $vendedorSelecionadoNome ?? 'Todos os vendedores' }}</p>
             </div>
             <div class="relatorio-vendas__card border-left-green" style="flex: 1 1 220px;">

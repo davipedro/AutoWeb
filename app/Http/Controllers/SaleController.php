@@ -232,6 +232,11 @@ class SaleController extends Controller
         return SaleRepository::getFilteredSale([], $sellerId);
     }
 
+    public static function getAllSales()
+    {
+        return SaleRepository::getFilteredSale();
+    }
+
     public static function getTotalValueOfSales()
     {
         return SaleRepository::getTotalValueOfSales();

@@ -155,4 +155,17 @@ class SaleRepository
             ->paginate($perPage)
             ->withQueryString();
     }
+
+    public static function getTotalValueOfAllSales(): float
+    {
+        return Sale::whereNull('deleted_at')
+            ->sum('valor_total');
+    }
+
+    // pega o total de das comissões pagas
+    public static function getTotalCommissionsPaid(): float
+    {
+        return Sale::whereNull('deleted_at')
+            ->sum('comissao');
+    }
 }
